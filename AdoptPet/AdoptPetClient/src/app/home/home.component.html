@@ -21,28 +21,30 @@
 
 				<div class="distance">
 					<button (click)="onShowMile()">
-						{{ distance }} miles <i class="fa-solid fa-angle-down"></i>
+						{{ mile }} miles <i class="fa-solid fa-angle-down"></i>
 					</button>
 
 					@if (isShownMiles === true) {
 					<div class="miles">
 						<ul>
-							@for (mile of miles; track $index) {
+							@for (mile of miles; track $index) { @if (mile === 'Any') {
+							<li (click)="onChooseMile('')" class="mile-item">{{ mile }} miles</li>
+							} @else {
 							<li (click)="onChooseMile(mile)" class="mile-item">{{ mile }} miles</li>
-							}
+							} }
 						</ul>
 					</div>
 					}
 				</div>
 
-				<div class="city-name">
+				<!-- <div class="city-name">
 					<input
-						[(ngModel)]="cityName"
+						[(ngModel)]="location"
 						name="cityName"
 						type="text"
 						placeholder="Enter city"
 					/>
-				</div>
+				</div> -->
 
 				<div class="search-btn">
 					<button (click)="onSearch()">Search</button>
@@ -54,56 +56,56 @@
 			<div class="sidebar">
 				<div class="breed">
 					<span>BREED</span>
-					<select>
-						@for (item of breeds; track $index) {
-                            <option class="bg-white" value="{{item}}">{{item}}</option>
-                        }
+					<select [(ngModel)]="breed" name="breed">
+						@for (item of breeds; track $index) { @if(item === 'Any') {
+						<option class="bg-white" value="">{{ item }}</option>
+						} @else {
+						<option class="bg-white" value="{{ item }}">{{ item }}</option>
+						} }
 					</select>
 				</div>
 
 				<div class="age">
 					<span>AGE</span>
 					<select>
-						@for (age of ages; track $index) {
-						<option class="bg-white" value="{{ age }}">{{ age }}</option>
-						}
+						@for (item of ages; track $index) { @if(item === 'Any') {
+						<option class="bg-white" value="">{{ item }}</option>
+						} @else {
+						<option class="bg-white" value="{{ item }}">{{ item }}</option>
+						} }
 					</select>
 				</div>
 
 				<div class="size">
 					<span>SIZE</span>
 					<select>
-						@for (size of sizes; track $index) {
-						<option class="bg-white" value="{{ size }}">{{ size }}</option>
-						}
+						@for (item of sizes; track $index) { @if(item === 'Any') {
+						<option class="bg-white" value="">{{ item }}</option>
+						} @else {
+						<option class="bg-white" value="{{ item }}">{{ item }}</option>
+						} }
 					</select>
 				</div>
 
 				<div class="gender">
 					<span>GENDER</span>
 					<select>
-						@for (gender of gender; track $index) {
-						<option class="bg-white" value="{{ gender }}">{{ gender }}</option>
-						}
-					</select>
-
-				</div>
-
-				<div class="good-with">
-					<span>GOOD WITH</span>
-					<select>
-						@for (goodWith of goodWith; track $index) {
-						<option class="bg-white" value="{{ goodWith }}">{{ goodWith }}</option>
-						}
+						@for (item of genders; track $index) { @if(item === 'Any') {
+						<option class="bg-white" value="">{{ item }}</option>
+						} @else {
+						<option class="bg-white" value="{{ item }}">{{ item }}</option>
+						} }
 					</select>
 				</div>
 
 				<div class="color">
 					<span>COLOR</span>
 					<select>
-						@for (color of colors; track $index) {
-						<option class="bg-white" value="{{ color }}">{{ color }}</option>
-						}
+						@for (item of colors; track $index) { @if(item === 'Any') {
+						<option class="bg-white" value="">{{ item }}</option>
+						} @else {
+						<option class="bg-white" value="{{ item }}">{{ item }}</option>
+						} }
 					</select>
 				</div>
 			</div>
