@@ -1,0 +1,23 @@
+header {
+    background-color: var(--color-base);
+}
+
+.section {
+    @apply flex justify-between items-center;
+}
+
+.logo-name {
+    @apply text-2xl text-white;
+}
+
+.account {
+    @apply flex justify-between items-center gap-2;
+    img{
+        width: 25px;
+    }
+
+    .account-name {
+        @apply text-white;
+    }
+
+}

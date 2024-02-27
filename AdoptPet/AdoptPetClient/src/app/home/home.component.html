@@ -1,0 +1,114 @@
+<div class="wrapper">
+	<div class="container-fluid">
+		<!-- search -->
+		<div class="search">
+			<div class="search-section">
+				<div class="choose-type">
+					<button (click)="onShowType()">
+						{{ petType }}s <i class="fa-solid fa-angle-down"></i>
+					</button>
+
+					@if (isShownTypes === true) {
+					<div class="pet-types">
+						<ul>
+							@for (type of types; track $index) {
+							<li (click)="onChooseType(type)" class="type-item">{{ type }}s</li>
+							}
+						</ul>
+					</div>
+					}
+				</div>
+
+				<div class="distance">
+					<button (click)="onShowMile()">
+						{{ distance }} miles <i class="fa-solid fa-angle-down"></i>
+					</button>
+
+					@if (isShownMiles === true) {
+					<div class="miles">
+						<ul>
+							@for (mile of miles; track $index) {
+							<li (click)="onChooseMile(mile)" class="mile-item">{{ mile }} miles</li>
+							}
+						</ul>
+					</div>
+					}
+				</div>
+
+				<div class="city-name">
+					<input
+						[(ngModel)]="cityName"
+						name="cityName"
+						type="text"
+						placeholder="Enter city"
+					/>
+				</div>
+
+				<div class="search-btn">
+					<button (click)="onSearch()">Search</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="content">
+			<div class="sidebar">
+				<div class="breed">
+					<span>BREED</span>
+					<select>
+						@for (item of breeds; track $index) {
+                            <option class="bg-white" value="{{item}}">{{item}}</option>
+                        }
+					</select>
+				</div>
+
+				<div class="age">
+					<span>AGE</span>
+					<select>
+						@for (age of ages; track $index) {
+						<option class="bg-white" value="{{ age }}">{{ age }}</option>
+						}
+					</select>
+				</div>
+
+				<div class="size">
+					<span>SIZE</span>
+					<select>
+						@for (size of sizes; track $index) {
+						<option class="bg-white" value="{{ size }}">{{ size }}</option>
+						}
+					</select>
+				</div>
+
+				<div class="gender">
+					<span>GENDER</span>
+					<select>
+						@for (gender of gender; track $index) {
+						<option class="bg-white" value="{{ gender }}">{{ gender }}</option>
+						}
+					</select>
+
+				</div>
+
+				<div class="good-with">
+					<span>GOOD WITH</span>
+					<select>
+						@for (goodWith of goodWith; track $index) {
+						<option class="bg-white" value="{{ goodWith }}">{{ goodWith }}</option>
+						}
+					</select>
+				</div>
+
+				<div class="color">
+					<span>COLOR</span>
+					<select>
+						@for (color of colors; track $index) {
+						<option class="bg-white" value="{{ color }}">{{ color }}</option>
+						}
+					</select>
+				</div>
+			</div>
+
+			<div class="pets-container">dăd</div>
+		</div>
+	</div>
+</div>
