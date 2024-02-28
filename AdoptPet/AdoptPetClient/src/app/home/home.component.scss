@@ -74,10 +74,10 @@
 }
 
 .content {
-	@apply container mx-auto flex justify-start items-start;
-
+	@apply container mx-auto flex flex-col md:flex-row justify-start items-start;
+	 
 	.sidebar {
-		@apply min-w-[300px] p-2;
+		@apply min-w-[100%] md:min-w-[300px] p-2;
 		//
 
 		div {
@@ -88,16 +88,38 @@
 				background-color: #e2e8f0;
 			}
 
-            select {
-                @apply w-full p-2 border-none outline-none rounded-md;
-                // box-shadow: 0px 0px 1px 1px var(--color-base);
-                background-color: #e2e8f0;
-            }
+			select {
+				@apply w-full p-2 border-none outline-none rounded-md;
+				// box-shadow: 0px 0px 1px 1px var(--color-base);
+				background-color: #e2e8f0;
+			}
 		}
 	}
 
 	.pets-container {
-		@apply w-full;
-		background-color: green;
+		@apply w-full min-h-screen ;
+	}
+
+	.pet-item {
+		@apply lg:w-1/4 md:w-1/2 p-4 w-full cursor-pointer rounded-md;
+		transition: 300ms;
+		&:hover {
+			transform: scale(1.4);
+			z-index: 2;
+			background-color: #f1f5f9;
+		}
+	}
+
+	.pagination {
+		@apply my-4 flex justify-end items-center gap-4 text-2xl;
+
+		button {
+			@apply py-2 px-4 rounded-md;
+			transition: 100ms;
+			&:hover {
+				background-color: var(--color-base);
+				color: white;
+			} 
+		}
 	}
 }

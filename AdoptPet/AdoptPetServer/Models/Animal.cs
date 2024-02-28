@@ -3,6 +3,7 @@
     public class Animals
     {
         public List<Animal> animals { get; set; } = [];
+        public Pagination pagination { get; set; } = null!;
     }
 
     public class AnimalSearch
@@ -17,6 +18,7 @@
         public string url { get; set; } = string.Empty;
         public string type { get; set; } = string.Empty;
         public string species { get; set; } = string.Empty;
+        public BreadSecond breeds { get; set; } = null!;
         public string age { get; set; } = string.Empty;
         public string gender { get; set; } = string.Empty;
         public string size { get; set; } = string.Empty;
@@ -28,6 +30,14 @@
         public DateTime status_changed_at { get; set; }
         public DateTime published_at { get; set; }
         public Contact contact { get; set; } = null!;
+    }
+
+    public class BreadSecond
+    {
+        public string primary { get; set; } = string.Empty;
+        public string secondary { get; set; } = string.Empty;
+        public string mixed { get; set; } = string.Empty;
+        public string unknown { get; set; } = string.Empty;
     }
 
     public class Photo

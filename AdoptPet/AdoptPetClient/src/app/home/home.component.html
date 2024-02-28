@@ -1,10 +1,10 @@
-<div class="wrapper">
+<div class="wrapper" (click)="preStack()">
 	<div class="container-fluid">
 		<!-- search -->
 		<div class="search">
 			<div class="search-section">
 				<div class="choose-type">
-					<button (click)="onShowType()">
+					<button (click)="onShowType($event)">
 						{{ petType }}s <i class="fa-solid fa-angle-down"></i>
 					</button>
 
@@ -12,7 +12,7 @@
 					<div class="pet-types">
 						<ul>
 							@for (type of types; track $index) {
-							<li (click)="onChooseType(type)" class="type-item">{{ type }}s</li>
+							<li (click)="onChooseType(type,$event)" class="type-item">{{ type }}s</li>
 							}
 						</ul>
 					</div>
@@ -20,7 +20,7 @@
 				</div>
 
 				<div class="distance">
-					<button (click)="onShowMile()">
+					<button (click)="onShowMile($event)">
 						{{ mile }} miles <i class="fa-solid fa-angle-down"></i>
 					</button>
 
@@ -28,26 +28,13 @@
 					<div class="miles">
 						<ul>
 							@for (mile of miles; track $index) { @if (mile === 'Any') {
-							<li (click)="onChooseMile('')" class="mile-item">{{ mile }} miles</li>
+							<li (click)="onChooseMile('', $event)" class="mile-item">{{ mile }} miles</li>
 							} @else {
-							<li (click)="onChooseMile(mile)" class="mile-item">{{ mile }} miles</li>
+							<li (click)="onChooseMile(mile, $event)" class="mile-item">{{ mile }} miles</li>
 							} }
 						</ul>
 					</div>
 					}
-				</div>
-
-				<!-- <div class="city-name">
-					<input
-						[(ngModel)]="location"
-						name="cityName"
-						type="text"
-						placeholder="Enter city"
-					/>
-				</div> -->
-
-				<div class="search-btn">
-					<button (click)="onSearch()">Search</button>
 				</div>
 			</div>
 		</div>
@@ -56,7 +43,7 @@
 			<div class="sidebar">
 				<div class="breed">
 					<span>BREED</span>
-					<select [(ngModel)]="breed" name="breed">
+					<select (change)="breeedChange($event)" [(ngModel)]="breed" name="breed">
 						@for (item of breeds; track $index) { @if(item === 'Any') {
 						<option class="bg-white" value="">{{ item }}</option>
 						} @else {
@@ -67,7 +54,7 @@
 
 				<div class="age">
 					<span>AGE</span>
-					<select>
+					<select (change)="ageChange($event)" [(ngModel)]="age" name="age">
 						@for (item of ages; track $index) { @if(item === 'Any') {
 						<option class="bg-white" value="">{{ item }}</option>
 						} @else {
@@ -78,7 +65,7 @@
 
 				<div class="size">
 					<span>SIZE</span>
-					<select>
+					<select (change)="sizeChange($event)" [(ngModel)]="size" name="size">
 						@for (item of sizes; track $index) { @if(item === 'Any') {
 						<option class="bg-white" value="">{{ item }}</option>
 						} @else {
@@ -89,7 +76,7 @@
 
 				<div class="gender">
 					<span>GENDER</span>
-					<select>
+					<select (change)="genderChange($event)" [(ngModel)]="gender" name="gender">
 						@for (item of genders; track $index) { @if(item === 'Any') {
 						<option class="bg-white" value="">{{ item }}</option>
 						} @else {
@@ -100,7 +87,7 @@
 
 				<div class="color">
 					<span>COLOR</span>
-					<select>
+					<select (change)="colorChange($event)" [(ngModel)]="color" name="color">
 						@for (item of colors; track $index) { @if(item === 'Any') {
 						<option class="bg-white" value="">{{ item }}</option>
 						} @else {
@@ -110,7 +97,61 @@
 				</div>
 			</div>
 
-			<div class="pets-container">dăd</div>
+			<div class="pets-container">
+
+				<!-- animals lists -->
+				<div class="flex flex-wrap">
+					@for (item of animals; track $index) {
+
+					<div class="pet-item">
+						<a class="block relative h-48 rounded overflow-hidden">
+							@if (item.photos.length > 0) {
+							<img
+								alt="ecommerce"
+								class="object-cover object-center w-full h-full block"
+								src="{{ item.photos[0].small }}"
+							/>
+							}@else {
+							<img
+								alt="ecommerce"
+								class="object-cover object-center w-full h-full block"
+								src="/assets/no-pet.svg"
+							/>
+							}
+						</a>
+
+						<div class="mt-4">
+							<h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">
+								{{ item.name }}
+							</h3>
+							<h2 class="text-gray-900 title-font text-lg font-medium">
+								{{ item.breeds.primary }}
+							</h2>
+							<!-- <p class="mt-1">$16.00</p> -->
+						</div>
+					</div>
+
+					}
+				</div>
+
+				<!-- pagination -->
+				@if (animals.length > 0) {
+				<div class="pagination">
+					<button (click)="onPrePage()">
+						<i class="fa-solid fa-angle-left"></i><span class="ml-2">Pre</span>
+					</button>
+
+					<div class="page">
+						<span>{{current_page}}</span>
+						<span>/</span>
+						<span>{{total_pages}}</span>
+					</div>
+					<button (click)="onNextPage()">
+						<span class="mr-2">Next</span><i class="fa-solid fa-chevron-right"></i>
+					</button>
+				</div>
+				}
+			</div>
 		</div>
 	</div>
 </div>

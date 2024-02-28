@@ -6,7 +6,6 @@ namespace AdoptPet.Services
 {
     public class PetService
     {
-
         private async Task<Token> GetAccessToken()
         {
             var url = "https://api.petfinder.com/v2/oauth2/token";
