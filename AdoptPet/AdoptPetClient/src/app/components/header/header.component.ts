@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { GoogleService } from '../../services/google.service';
 import { LoginStore } from '../../shared/stores/login.store';
 import { patchState } from '@ngrx/signals';
+import { UserStore } from '../../shared/stores/user.store';
 
 declare var google: any;
 
@@ -14,17 +15,18 @@ declare var google: any;
 })
 export class HeaderComponent {
 	loginStore = inject(LoginStore);
-	isloggedIn: boolean = false;
+	userStore = inject(UserStore);
+	isShowMenuProfile: boolean = false;
+
 	constructor(private googleService: GoogleService) {}
 
 	ngOnInit() {
-		this.isloggedIn = this.loginStore.isLoggedIn();
 		google.accounts.id.initialize({
 			client_id: '826248673827-j1rj2ve04imgq3suubondvk264ppdjh6.apps.googleusercontent.com',
 			callback: (res: any) => {
 				this.googleService.saveCredential(res.credential);
 				patchState(this.loginStore, { isLoggedIn: true });
-				this.isloggedIn = true;
+				window.location.reload();
 			},
 		});
 	}
@@ -36,5 +38,14 @@ export class HeaderComponent {
 			shape: 'rectangle',
 			width: 200,
 		});
+	}
+
+	onShowMenuProfile() {
+		this.isShowMenuProfile = !this.isShowMenuProfile;
+	}
+
+	onLogout() {
+		this.googleService.clearCredential();
+		window.location.reload();
 	}
 }

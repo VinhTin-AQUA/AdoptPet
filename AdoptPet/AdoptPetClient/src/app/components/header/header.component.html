@@ -5,11 +5,19 @@
 				<span class="logo-name">AdoptPet</span>
 			</div>
 
-			@if(isloggedIn === true) {
-			<button class="account">
-				<img src="/assets/user-solid.svg" alt="" />
-				<span class="account-name">Hồ Vĩnh Tín</span>
+			@if(loginStore.isLoggedIn() === true) {
+			<button class="account" (click)="onShowMenuProfile()">
+				<img class="rounded-full" src="{{userStore.picture()}}" alt="" />
+				<span class="account-name">{{userStore.name()}}</span>
 			</button>
+
+			@if(isShowMenuProfile === true) {
+				<div class="profile">
+					<div (click)="onLogout()" class="profile-item">
+						Logout
+					</div>
+				</div>
+			}
 			}@else {
 			<button id="gg-btn"></button>
 			}

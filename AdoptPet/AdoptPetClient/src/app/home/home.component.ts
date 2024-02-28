@@ -113,12 +113,11 @@ export class HomeComponent {
 	constructor(private petService: PetfinderService) {}
 
 	ngOnInit() {
-		
-		// this.getBreeds()
+		this.getBreeds();
 	}
 
 	private getBreeds() {
-		patchState(this.loadingStore, {isLoading: true});
+		patchState(this.loadingStore, { isLoading: true });
 		this.petService.getBreeds(this.petType).subscribe({
 			next: (res: any) => {
 				// console.log(res);
@@ -128,7 +127,7 @@ export class HomeComponent {
 			},
 			error: err => {
 				console.log(err);
-				patchState(this.loadingStore, {isLoading: false});
+				patchState(this.loadingStore, { isLoading: false });
 			},
 		});
 	}
@@ -139,7 +138,7 @@ export class HomeComponent {
 	}
 
 	search() {
-		patchState(this.loadingStore, {isLoading: true});
+		patchState(this.loadingStore, { isLoading: true });
 		this.petService
 			.getAnimals(
 				this.petType,
@@ -156,11 +155,11 @@ export class HomeComponent {
 					this.animals = res.animals;
 					this.total_pages = res.pagination.total_pages;
 					// console.log(this.animals);
-					patchState(this.loadingStore, {isLoading: false});
+					patchState(this.loadingStore, { isLoading: false });
 				},
 				error: (err: any) => {
 					console.log(err);
-					patchState(this.loadingStore, {isLoading: false});
+					patchState(this.loadingStore, { isLoading: false });
 				},
 			});
 	}

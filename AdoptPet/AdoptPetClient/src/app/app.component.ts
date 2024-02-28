@@ -9,6 +9,8 @@ import { LoginStore } from './shared/stores/login.store';
 import { GoogleService } from './services/google.service';
 import { patchState } from '@ngrx/signals';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { jwtDecode } from 'jwt-decode';
+import { UserStore } from './shared/stores/user.store';
 
 @Component({
 	selector: 'app-root',
@@ -20,7 +22,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AppComponent {
 	title = 'AdoptPet';
 	loginStore = inject(LoginStore);
-
+	userStore = inject(UserStore)
 	constructor(private googleService: GoogleService, private jwtHelper: JwtHelperService) {}
 
 	ngOnInit() {
@@ -35,6 +37,9 @@ export class AppComponent {
 			patchState(this.loginStore, { isLoggedIn: false });
 		} else {
 			patchState(this.loginStore, { isLoggedIn: true });
+
+			var decoded:any = jwtDecode(credential);
+			patchState(this.userStore, {name: decoded.name, picture: decoded.picture})
 		}
 	}
 }
