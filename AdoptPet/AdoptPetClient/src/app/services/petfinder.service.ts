@@ -30,4 +30,9 @@ export class PetfinderService {
 			`/Pet/get-animals?type=${type}&breed=${breed}&age=${age}&size=${size}&gender=${gender}&color=${color}&page=${page}&limit=${limit}`;
 		return this.http.get(url);
 	}
+
+	getAnimal(id: string) {
+		const url = this.baseUrl + '/Pet/get-one?id=' + id;
+		return this.http.get(url);
+	}
 }

@@ -3,11 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { PetfinderService } from '../services/petfinder.service';
 import { LoadingStore } from '../shared/stores/loading.store';
 import { patchState } from '@ngrx/signals';
+import { RouterLink } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
 	standalone: true,
-	imports: [FormsModule],
+	imports: [FormsModule, RouterLink],
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.scss',
 })
@@ -57,57 +58,6 @@ export class HomeComponent {
 
 	animals: any = [];
 	total_pages: number = 0;
-	animalTemps = [
-		{
-			name: 'Coco Pebbles',
-			age: 'Young',
-			breed: 'Affenpinscher',
-			photos: [
-				{
-					small: 'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/70844219/1/?bust=1708864906&width=300',
-				},
-			],
-		},
-		{ name: 'Coco Pebbles', age: 'Young', breed: 'Affenpinscher', photos: [] },
-		{ name: 'Coco Pebbles', age: 'Young', breed: 'Affenpinscher', photos: [] },
-		{
-			name: 'Coco Pebbles',
-			age: 'Young',
-			breed: 'Affenpinscher',
-			photos: [
-				{
-					small: 'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/70844219/2/?bust=1708864907&width=600',
-				},
-			],
-		},
-		{ name: 'Coco Pebbles', age: 'Young', breed: 'Affenpinscher', photos: [] },
-		{
-			name: 'Coco Pebbles',
-			age: 'Young',
-			breed: 'Affenpinscher',
-			photos: [
-				{
-					small: 'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/70844219/2/?bust=1708864907&width=600',
-				},
-			],
-		},
-		{ name: 'Coco Pebbles', age: 'Young', breed: 'Affenpinscher', photos: [] },
-		{ name: 'Coco Pebbles', age: 'Young', breed: 'Affenpinscher', photos: [] },
-		{ name: 'Coco Pebbles', age: 'Young', breed: 'Affenpinscher', photos: [] },
-		{
-			name: 'Coco Pebbles',
-			age: 'Young',
-			breed: 'Affenpinscher',
-			photos: [
-				{
-					small: 'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/70843457/1/?bust=1708921425&width=100',
-				},
-			],
-		},
-		{ name: 'Coco Pebbles', age: 'Young', breed: 'Affenpinscher', photos: [] },
-		{ name: 'Coco Pebbles', age: 'Young', breed: 'Affenpinscher', photos: [] },
-		{ name: 'Coco Pebbles', age: 'Young', breed: 'Affenpinscher', photos: [] },
-	];
 	loadingStore = inject(LoadingStore);
 
 	constructor(private petService: PetfinderService) {}

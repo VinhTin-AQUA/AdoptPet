@@ -103,7 +103,7 @@
 				<div class="flex flex-wrap">
 					@for (item of animals; track $index) {
 
-					<div class="pet-item">
+					<div routerLink="/details/{{item.id}}" class="pet-item">
 						<a class="block relative h-48 rounded overflow-hidden">
 							@if (item.photos.length > 0) {
 							<img

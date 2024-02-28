@@ -1,0 +1,98 @@
+@defer (when loadingStore.isLoading() === false) {
+	<section class="text-gray-600 body-font">
+		<div class="container px-5 py-24 mx-auto">
+			<!-- images -->
+			<div class="columns-2 md:columns-3 lg:columns-4 gap-2">
+				@for (photo of photos; track $index) {
+				<div class="p-2 w-full">
+					<a class="block relative rounded overflow-hidden">
+						<img
+							alt="ecommerce"
+							class="object-cover object-center w-full h-full block"
+							src="{{ photo.full }}"
+						/>
+					</a>
+				</div>
+				}
+			</div>
+	
+			<!-- info -->
+	
+			<div class="info">
+				<!-- name -->
+				<div class="name">
+					{{ name }}
+				</div>
+	
+				<!-- about -->
+				<div class="about">
+					<div class="health">
+						<span>Health</span>
+						<div class="health-detail">
+							<span>{{ health }}</span>
+						</div>
+					</div>
+	
+					<div class="breed">
+						Breed: <span>{{ breed }}</span>
+					</div>
+	
+					<hr />
+	
+					<div class="other">
+						<span>{{ age }} ● {{ gender }} ● {{ size }}</span>
+					</div>
+	
+					<hr />
+	
+					<div class="description">
+						Description: <span>{{ description }}</span>
+					</div>
+	
+					<hr />
+	
+					<div class="date">
+						<div class="status-changed">
+							Status changed at: <span>{{ status_changed_at }}</span>
+						</div>
+						<div class="published-at">
+							Status changed at: <span>{{ published_at }}</span>
+						</div>
+					</div>
+	
+					<hr />
+	
+					<div class="contact">
+						<div class="email">
+							Email: <span>{{ email }}</span>
+						</div>
+	
+						<div class="phone">
+							Phone: <span>{{ phone }}</span>
+						</div>
+	
+						<div class="address">
+							Address: <span>{{ address }}</span>
+						</div>
+	
+						<div class="city">
+							City: <span>{{ city }}</span>
+						</div>
+	
+						<div class="state">
+							State: <span>{{ state }}</span>
+						</div>
+	
+						<div class="postcode">
+							Postcode: <span>{{ postcode }}</span>
+						</div>
+	
+						<div class="country">
+							Country: <span>{{ country }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

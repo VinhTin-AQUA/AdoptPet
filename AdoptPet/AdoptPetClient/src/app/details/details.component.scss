@@ -1,0 +1,42 @@
+.info {
+    @apply bg-[#f1f5f9] my-3 p-5 rounded-md;
+    color: black;
+
+    .name {
+        @apply text-5xl py-3;
+        
+        font-weight: bold;
+    }
+
+    .about {
+
+        span {
+            font-weight: 600;
+        }
+
+        * {
+            @apply my-3;
+        }
+
+        .health {
+            span {
+                @apply text-3xl;
+            }
+
+            .health-detail {
+                @apply text-lg;
+            }
+        }
+
+
+            .breed {
+               
+            }
+
+            .other {
+
+            }
+
+        
+    }
+}
