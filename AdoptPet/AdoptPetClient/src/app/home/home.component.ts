@@ -114,7 +114,7 @@ export class HomeComponent {
 
 	ngOnInit() {
 		
-		this.getBreeds()
+		// this.getBreeds()
 	}
 
 	private getBreeds() {
