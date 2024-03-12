@@ -478,11 +478,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\AdoptPet.csproj",
+      "projectUniqueName": "C:\\Users\\tinho\\Desktop\\Projects\\AdoptPet\\AdoptPet\\AdoptPetServer\\AdoptPet.csproj",
       "projectName": "AdoptPet",
-      "projectPath": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\AdoptPet.csproj",
+      "projectPath": "C:\\Users\\tinho\\Desktop\\Projects\\AdoptPet\\AdoptPet\\AdoptPetServer\\AdoptPet.csproj",
       "packagesPath": "C:\\Users\\tinho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\obj\\",
+      "outputPath": "C:\\Users\\tinho\\Desktop\\Projects\\AdoptPet\\AdoptPet\\AdoptPetServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

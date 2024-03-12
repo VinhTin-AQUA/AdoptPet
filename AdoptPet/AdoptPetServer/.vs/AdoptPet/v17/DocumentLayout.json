@@ -1,22 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\",
+  "WorkspaceRootPath": "C:\\Users\\tinho\\Desktop\\Projects\\AdoptPet\\AdoptPet\\AdoptPetServer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{770AEB28-8FFE-4762-B89B-1463E9768235}|AdoptPet.csproj|c:\\users\\tinho\\desktop\\adoptpet\\adoptpet\\adoptpetserver\\models\\animal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{770AEB28-8FFE-4762-B89B-1463E9768235}|AdoptPet.csproj|solutionrelative:models\\animal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{770AEB28-8FFE-4762-B89B-1463E9768235}|AdoptPet.csproj|c:\\users\\tinho\\desktop\\adoptpet\\adoptpet\\adoptpetserver\\services\\petservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{770AEB28-8FFE-4762-B89B-1463E9768235}|AdoptPet.csproj|c:\\users\\tinho\\desktop\\projects\\adoptpet\\adoptpet\\adoptpetserver\\services\\petservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{770AEB28-8FFE-4762-B89B-1463E9768235}|AdoptPet.csproj|solutionrelative:services\\petservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{770AEB28-8FFE-4762-B89B-1463E9768235}|AdoptPet.csproj|c:\\users\\tinho\\desktop\\adoptpet\\adoptpet\\adoptpetserver\\controllers\\petcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{770AEB28-8FFE-4762-B89B-1463E9768235}|AdoptPet.csproj|solutionrelative:controllers\\petcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{770AEB28-8FFE-4762-B89B-1463E9768235}|AdoptPet.csproj|c:\\users\\tinho\\desktop\\adoptpet\\adoptpet\\adoptpetserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{770AEB28-8FFE-4762-B89B-1463E9768235}|AdoptPet.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,52 +22,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PetController.cs",
-              "DocumentMoniker": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\Controllers\\PetController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PetController.cs",
-              "ToolTip": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\Controllers\\PetController.cs",
-              "RelativeToolTip": "Controllers\\PetController.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAADwvx4AAABiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T16:08:27.996Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PetService.cs",
-              "DocumentMoniker": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\Services\\PetService.cs",
-              "RelativeDocumentMoniker": "Services\\PetService.cs",
-              "ToolTip": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\Services\\PetService.cs",
-              "RelativeToolTip": "Services\\PetService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEQAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T16:08:58.555Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAABRAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T16:13:00.451Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Animal.cs",
-              "DocumentMoniker": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\Models\\Animal.cs",
-              "RelativeDocumentMoniker": "Models\\Animal.cs",
-              "ToolTip": "C:\\Users\\tinho\\Desktop\\AdoptPet\\AdoptPet\\AdoptPetServer\\Models\\Animal.cs",
-              "RelativeToolTip": "Models\\Animal.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAUAAAA",
+              "Title": "PetService.cs",
+              "DocumentMoniker": "C:\\Users\\tinho\\Desktop\\Projects\\AdoptPet\\AdoptPet\\AdoptPetServer\\Services\\PetService.cs",
+              "RelativeDocumentMoniker": "Services\\PetService.cs",
+              "ToolTip": "C:\\Users\\tinho\\Desktop\\Projects\\AdoptPet\\AdoptPet\\AdoptPetServer\\Services\\PetService.cs",
+              "RelativeToolTip": "Services\\PetService.cs",
+              "ViewState": "AQIAADAAAAAAAAAAAAAYwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-27T16:46:05.934Z",
+              "WhenOpened": "2024-03-11T16:37:08.556Z",
               "EditorCaption": ""
             }
           ]
