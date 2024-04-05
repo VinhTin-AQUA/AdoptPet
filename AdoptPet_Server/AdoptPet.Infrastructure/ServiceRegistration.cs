@@ -37,11 +37,14 @@ namespace AdoptPet.Infrastructure
             services.AddSingleton(emailConfig!);
             services.AddScoped<IEmailSenderService, EmailSenderService>();
 
-            // repository
-            services.AddScoped<IAccountRepository, AccountRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            // repositories
+            services.AddTransient<IAccountRepository, AccountRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IGenericRepository<Breed>, BreedRepository>();
 
+
+            // services
             services.AddTransient<IJwtService, JwtService>();
             services.AddTransient<ContextSeedService>();
 
