@@ -8,5 +8,6 @@ namespace AdoptPet.Domain.Entities
         public int Id { get; set; }
         public int PetId { get; set; }
         public int ColourId { get; set; }
+        public int Status { get; set; }
     }
 }

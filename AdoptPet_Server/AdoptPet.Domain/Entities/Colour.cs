@@ -6,5 +6,6 @@ namespace AdoptPet.Domain.Entities
     {
         public int Id { get; set; }
         public string ColourName { get; set; } = string.Empty;
+        public int Status { get; set; }
     }
 }
