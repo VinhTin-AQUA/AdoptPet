@@ -25,7 +25,7 @@ namespace AdoptPet.Infrastructure.Repositories
             return null;
         }
 
-        public async Task DeleteAsync(Breed model)
+        public async Task DeletePermanentlyAsync(Breed model)
         {
             context.Breeds.Remove(model);
             await context.SaveChangesAsync();
@@ -43,6 +43,13 @@ namespace AdoptPet.Infrastructure.Repositories
                 .Where(b => b.Id == id)
                 .FirstOrDefaultAsync();
             return r;
+        }
+
+        public async Task SoftDelete(Breed model)
+        {
+            model.Status = 1; // xóa mềm
+            context.Breeds.Update(model);
+            await context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Breed model)

@@ -71,8 +71,8 @@ namespace AdoptPet.API.Controllers
         }
 
         [HttpDelete]
-        [Route("delete-breed/{id}")] // https://localhost:7245/api/Breed/delete-breed/12
-        public async Task<IActionResult> DeleteBreed(int id)
+        [Route("delete-permanently-breed/{id}")] // https://localhost:7245/api/Breed/delete-breed/12
+        public async Task<IActionResult> DeletePermanentlyBreed(int id)
         {
             var breed = await genericRepository.GetByIdAsync(id);
 
@@ -80,7 +80,21 @@ namespace AdoptPet.API.Controllers
             {
                 return BadRequest(new Success<object> { Status = false, Messages = ["Breed not found"], Data = null });
             }
-            await genericRepository.DeleteAsync(breed);
+            await genericRepository.DeletePermanentlyAsync(breed);
+            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+        }
+
+        [HttpPut]
+        [Route("soft-delete-breed/{id}")] // https://localhost:7245/api/Breed/delete-breed/12
+        public async Task<IActionResult> DeleteBreed(int id)
+        {
+            var breed = await genericRepository.GetByIdAsync(id);
+
+            if (breed == null)
+            {
+                return BadRequest(new Success<object> { Status = false, Messages = ["Breed not found"], Data = null });
+            }
+            await genericRepository.SoftDelete(breed);
             return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
         }
     }

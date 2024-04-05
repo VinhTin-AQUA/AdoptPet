@@ -11,5 +11,6 @@ namespace AdoptPet.Domain.Entities
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
+        public int Status {  get; set; }
     }
 }
