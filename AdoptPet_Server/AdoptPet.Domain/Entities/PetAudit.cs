@@ -18,7 +18,6 @@ namespace AdoptPet.Domain.Entities
         public byte PetVaccined { get; set; }
         public byte PetMicrochipped { get; set; }
         public DateTime PetEntryDate { get; set; }
-        public byte Status { get; set; }
         public int Version { get; set; }
         public DateTime ChangeDate { get; set; }
         public int Status { get; set; }
