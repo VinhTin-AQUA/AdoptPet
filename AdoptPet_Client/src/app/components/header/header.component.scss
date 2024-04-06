@@ -1,0 +1,7 @@
+.menu-item {
+    @apply hover:text-lime-500 border-transparent text-gray-500 border-b-4 hover:border-lime-300 inline-flex items-center px-1 pt-1 text-sm font-medium;
+}
+
+.actived {
+    @apply text-lime-500 border-lime-300 border-b-4;
+}
