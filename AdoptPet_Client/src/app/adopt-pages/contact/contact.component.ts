@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+
+
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -9,4 +11,5 @@ import { Component } from '@angular/core';
 })
 export class ContactComponent {
 
+    
 }
