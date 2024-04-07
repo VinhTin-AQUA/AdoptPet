@@ -1,0 +1,159 @@
+.banner {
+	background-image: url('/assets/volunteer/banner-volunteer.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+	.banner-content {
+		@apply w-full h-full px-32 py-52;
+
+		background: rgba(0,0,0,0.5);
+
+		h1 {
+			@apply text-6xl text-white mb-3;
+			font-weight: 500;
+		}
+
+		.breadcrumb {
+			@apply bg-lime-400 px-5 py-2 inline-block rounded-lg my-auto;
+		}
+
+		.breadcrumb-body {
+			@apply flex justify-start items-center gap-1;
+		}
+
+		.breadcrumb-body a {
+			@apply underline ;
+		}
+
+		.breadcrumb-body span {
+			font-weight: 300;
+		}
+
+		.breadcrumb-body .arrow-point {
+			@apply inline-block;
+			width: 10px;
+			height: 10px;
+			border-top: 3px solid black;
+			border-right: 3px solid black;
+			transform: rotate(45deg);
+		}
+	}
+}
+
+.jumbotron {
+	@apply container mx-auto relative;
+
+	.jumbotron-adoption-process {
+		@apply p-16;
+
+		h1 {
+			@apply text-4xl;
+		}
+
+		p {
+			font-weight: 300;
+		}
+	}
+
+	.adopt-condition {
+		@apply p-16;
+
+		.adopt-condition-body {
+			@apply bg-lime-100 p-4 rounded-xl;
+		}
+
+		h1 {
+			@apply text-2xl;
+		}
+
+		p {
+			font-weight: 300;
+			font: bold;
+		}
+	}
+}
+
+.volunteer {
+
+	.volunteer-title {
+		@apply text-4xl text-center uppercase;
+	}
+
+	.volunteer-info {
+		@apply py-6;
+	}
+
+	.name {
+		@apply text-3xl text-center py-3;
+	}
+
+	.avatar img {
+		@apply rounded-full;
+	}
+
+	.content p {
+		font-weight: 300;
+	}
+	
+	.responsibility {
+		@apply bg-lime-200 text-lime-800 p-5 rounded-xl;
+		font: bold;
+	}
+
+	.join {
+		@apply p-10 bg-lime-100 rounded-xl;
+		background-image: url('/assets/volunteer/adopt-calltoaction.png');
+		background-repeat: no-repeat;
+		background-position: top right;
+	}
+
+	.join h1 {
+		@apply text-center text-2xl uppercase py-5;
+	}
+
+	.join a {
+		@apply rounded-full w-1/2 uppercase text-2xl;
+	}
+
+	.join p {
+		@apply block w-2/3;
+		font-weight: 300;
+	}
+
+}
+
+.animal {
+    @apply rounded-3xl container mx-auto my-10 bg-lime-100 p-5;
+
+    .animal-title {
+        @apply mx-auto;
+
+        h1 {
+            @apply text-3xl uppercase text-center;
+        }
+
+        img {
+            @apply mx-auto;
+        }
+    }
+
+    .animal-list {
+        @apply flex items-center justify-center p-10;
+    }
+
+    .animal-item {
+        @apply w-1/4 p-4 block;
+
+        .name-item {
+            @apply text-3xl py-3;
+        }
+        
+        span {
+            font-weight: 300;
+        }
+    }
+
+    a {
+        @apply mx-auto w-1/2 rounded-full;
+    }
+}
