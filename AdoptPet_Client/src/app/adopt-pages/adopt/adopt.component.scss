@@ -1,0 +1,160 @@
+.banner {
+	background-image: url('/assets/bg-adopt/jumbotron-adopt.jpg');
+
+	.banner-content {
+		@apply w-full h-full px-32 py-52;
+
+		background: linear-gradient(
+			90deg,
+			rgba(0, 0, 0, 0.8) 0%,
+			rgba(93, 93, 93, 0.8) 37%,
+			rgba(149, 149, 149, 0) 73%,
+			rgba(193, 193, 193, 0) 100%
+		);
+
+		h1 {
+			@apply text-6xl text-white mb-3;
+			font-weight: 500;
+		}
+
+		.breadcrumb {
+			@apply bg-lime-400 px-5 py-2 inline-block rounded-lg my-auto;
+		}
+
+		.breadcrumb-body {
+			@apply flex justify-start items-center gap-1;
+		}
+
+		.breadcrumb-body a {
+			@apply underline;
+		}
+
+		.breadcrumb-body span {
+			font-weight: 300;
+		}
+
+		.breadcrumb-body .arrow-point {
+			@apply inline-block;
+			width: 10px;
+			height: 10px;
+			border-top: 3px solid black;
+			border-right: 3px solid black;
+			transform: rotate(45deg);
+		}
+	}
+}
+
+.jumbotron {
+	@apply container mx-auto relative;
+
+	.jumbotron-adoption-process {
+		@apply p-16;
+
+		h1 {
+			@apply text-4xl;
+		}
+
+		p {
+			font-weight: 300;
+		}
+	}
+
+	.adopt-condition {
+		@apply p-16;
+
+		.adopt-condition-body {
+			@apply bg-lime-100 p-4 rounded-xl;
+		}
+
+		h1 {
+			@apply text-2xl;
+		}
+
+		p {
+			font-weight: 300;
+			font: bold;
+		}
+	}
+}
+
+.adopt-pet {
+	.adopt-pet-title {
+		@apply text-5xl text-center uppercase;
+	}
+
+	.pet-sample {
+		@apply flex items-center justify-center gap-4 py-10;
+	}
+
+	.pet-sample-btn {
+		@apply text-2xl px-6 py-3 rounded-full bg-lime-500 text-lime-100 hover:bg-[#fde68a] hover:text-lime-500 duration-150;
+	}
+
+	.active {
+		@apply bg-[#fde68a] text-lime-500;
+	}
+
+    .find-animal {
+        @apply pb-10;
+    }
+
+	.pet-form {
+		@apply grid grid-cols-3 gap-10;
+	}
+
+	.form-group {
+		label {
+			@apply block;
+		}
+
+		select, #pet-name {
+            @apply border duration-100 border-lime-400 rounded-lg w-full p-2 outline-none;
+
+            &:focus {
+                box-shadow: 0px 0px 1px 1px #a3e635;
+            }
+		}
+
+        button {
+            @apply uppercase px-6 py-3 rounded-full;
+        }
+	}
+
+    .pet-list {
+        @apply grid grid-cols-5 gap-7;
+    }
+
+    .pet-item {
+        @apply p-6 bg-lime-100 rounded-md block duration-150;
+
+        &:hover {
+            img {
+                transform: scale(1.2);
+            }
+            box-shadow: 0px 0px 1px 1px gray;
+        }
+
+        h3 {
+            @apply py-2 text-2xl;
+        }
+
+        p {
+            @apply p-2;
+            border-bottom: 1px solid gray;
+        }
+
+        span {
+            font-weight: 300;
+        }
+
+        .pet-img {
+            overflow: hidden;
+        }
+
+        img {
+            @apply duration-150;
+            transition: transform 0.3s ease;
+            
+        }
+    }
+}
