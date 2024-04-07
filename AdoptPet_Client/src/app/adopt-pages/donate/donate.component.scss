@@ -1,0 +1,163 @@
+.banner {
+	background-image: url('/assets/bg-donate/jumbotron-support.jpeg');
+
+	.banner-content {
+		@apply w-full h-full px-32 py-52;
+
+        background-color: rgba(0,0,0,0.5);
+
+		h1 {
+			@apply text-6xl text-white mb-3;
+			font-weight: 500;
+		}
+
+		.breadcrumb {
+			@apply bg-lime-400 px-5 py-2 inline-block rounded-lg my-auto;
+		}
+
+		.breadcrumb-body {
+			@apply flex justify-start items-center gap-1;
+		}
+
+		.breadcrumb-body a {
+			@apply underline;
+		}
+
+		.breadcrumb-body span {
+			font-weight: 300;
+		}
+
+		.breadcrumb-body .arrow-point {
+			@apply inline-block;
+			width: 10px;
+			height: 10px;
+			border-top: 3px solid black;
+			border-right: 3px solid black;
+			transform: rotate(45deg);
+		}
+	}
+}
+
+.jumbotron {
+	@apply container mx-auto relative;
+
+	.jumbotron-adoption-process {
+		@apply p-16;
+
+		h1 {
+			@apply text-4xl;
+		}
+
+		p {
+			font-weight: 300;
+			a {
+				@apply underline text-blue-600;
+			}
+		}
+	}
+
+	.adopt-condition {
+		@apply p-16;
+
+		.adopt-condition-body {
+			@apply bg-lime-100 p-4 rounded-xl;
+		}
+
+		h1 {
+			@apply text-2xl;
+		}
+
+		p {
+			font-weight: 300;
+			font: bold;
+		}
+	}
+}
+
+.donor {
+    @apply rounded-3xl container mx-auto my-10 bg-lime-100 p-5;
+
+    .donor-header {
+        @apply text-3xl text-center uppercase;
+    }
+
+    .donor-list {
+        @apply grid grid-cols-4 gap-5 p-2;
+    }
+
+    .donor-item {
+        @apply p-10 bg-lime-200 rounded-xl; 
+
+        h1 {
+            @apply text-center;
+        }
+    }
+
+    a {
+        @apply w-1/2 mx-auto rounded-full;
+    }
+}
+
+.other-donation {
+
+	.donation-title {
+		@apply text-4xl text-center uppercase py-10;
+	}
+
+	.donation-list {
+		@apply flex  justify-around items-center;
+		background-image: url("/assets/bg-donate/pattern1.png");
+	}
+
+	.donation-item {
+		@apply text-center;
+	}
+
+	p {
+		@apply py-2;
+	}
+
+	.donation-item .img {
+		@apply p-5 bg-white border border-lime-500 rounded-full;
+	}
+
+	a.btn-primary {
+		@apply rounded-full w-1/4 m-auto mt-5;
+	}
+}
+
+.animal {
+    @apply rounded-3xl container mx-auto my-10 bg-lime-100 p-5;
+
+    .animal-title {
+        @apply mx-auto;
+
+        h1 {
+            @apply text-3xl uppercase text-center;
+        }
+
+        img {
+            @apply mx-auto;
+        }
+    }
+
+    .animal-list {
+        @apply flex items-center justify-center p-10;
+    }
+
+    .animal-item {
+        @apply w-1/4 p-4 block;
+
+        .name-item {
+            @apply text-3xl py-3;
+        }
+        
+        span {
+            font-weight: 300;
+        }
+    }
+
+    a {
+        @apply mx-auto w-1/2 rounded-full;
+    }
+}
