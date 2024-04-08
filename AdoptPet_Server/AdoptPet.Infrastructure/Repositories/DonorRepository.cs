@@ -1,22 +1,24 @@
-﻿using AdoptPet.Application.Interfaces.IRepositories;
+﻿
+
+using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdoptPet.Infrastructure.Repositories
 {
-    public class BreedRepository : IGenericRepository<Breed>
+    public class DonorRepository : IGenericRepository<Donor>
     {
         private readonly AdoptPetDbContext context;
 
-        public BreedRepository(AdoptPetDbContext context)
+        public DonorRepository(AdoptPetDbContext context)
         {
             this.context = context;
         }
 
-        public async Task<Breed?> AddAsync(Breed model)
+        public async Task<Donor?> AddAsync(Donor model)
         {
-            context.Breeds.Add(model);
+            context.Donors.Add(model);
             var r = await context.SaveChangesAsync();
             if (r > 0)
             {
@@ -25,38 +27,37 @@ namespace AdoptPet.Infrastructure.Repositories
             return null;
         }
 
-        public async Task DeletePermanentlyAsync(Breed model)
+        public async Task DeletePermanentlyAsync(Donor model)
         {
-            context.Breeds.Remove(model);
+            context.Donors.Remove(model);
             await context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Breed>> GetAllAsync()
+        public async Task<ICollection<Donor>> GetAllAsync()
         {
-            var r = await context.Breeds.Where(c => c.Status == 0).ToListAsync();
+            var r = await context.Donors.Where(c => c.Status == 0).ToListAsync();
             return r;
         }
 
-        public async Task<Breed?> GetByIdAsync(int id)
+        public async Task<Donor?> GetByIdAsync(int id)
         {
-            var r = await context.Breeds
+            var r = await context.Donors
                 .Where(b => b.Id == id && b.Status == 0)
                 .FirstOrDefaultAsync();
             return r;
         }
 
-        public async Task SoftDelete(Breed model)
+        public async Task SoftDelete(Donor model)
         {
-            model.Status = 1; // xóa mềm
-            context.Breeds.Update(model);
+            model.Status = 1; 
+            context.Donors.Update(model);
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Breed model)
+        public async Task UpdateAsync(Donor model)
         {
-            context.Breeds.Update(model);
+            context.Donors.Update(model);
             await context.SaveChangesAsync();
         }
-
     }
 }
