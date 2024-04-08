@@ -27,7 +27,7 @@
 		<a routerLink="/admin/role-manager" 
 			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
 			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
-			<i class="fa-solid fa-users"></i>
+			<i class="fa-brands fa-critical-role text-xs mr-2"></i>
 			Roles
 		</a>
 
@@ -44,11 +44,11 @@
 		<a routerLink="/admin/volunteer-role" 
 			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
 			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
-			<i class="fa-solid fa-users"></i>
+			<i class="fa-brands fa-critical-role text-xs mr-2"></i>
 			Volunteer Roles 
 		</a>
 
-		<a routerLink="/admin/volu" 
+		<a routerLink="/admin/volunteer-audit" 
 			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
 			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
 			<i class="fa-solid fa-users"></i>
@@ -58,80 +58,46 @@
 		<!-- pet -->
 		<p class="uppercase text-xs text-gray-600 mb-4 mt-4 tracking-wider">Pets</p>
 
-		<a routerLink="./email.html" 
-		routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-		class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
-			<i class="fas fa-envelope-open-text text-xs mr-2"></i>
+		<a routerLink="/admin/pet-manager" 
+			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
+			<i class="fa-solid fa-cat text-xs mr-2"></i>
 			Pet Manager
 		</a>
 
-		<a routerLink="./email.html"
-		routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-		class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
-			<i class="fas fa-envelope-open-text text-xs mr-2"></i>
+		<a routerLink="/admin/breed-manager"
+			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
+			<i class="fa-solid fa-paw text-xs mr-2"></i>
 			Breeds
 		</a>
 
-		<a routerLink="./email.html" 
-		routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-		class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
+		<a routerLink="/admin/color-manager" 
+			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
 			<i class="fas fa-envelope-open-text text-xs mr-2"></i>
 			Colors
 		</a>
 
+		<!-- Donors -->
 		<p class="uppercase text-xs text-gray-600 mb-4 mt-4 tracking-wider">Donors</p>
 
-		<a routerLink="./email.html" 
-		routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-		class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
+		<a routerLink="/admin/donor-manager" 
+			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
 			<i class="fas fa-envelope-open-text text-xs mr-2"></i>
 			Donor Manager
 		</a>
 
-		<a routerLink="./email.html" 
-		routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-		class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
-			<i class="fas fa-envelope-open-text text-xs mr-2"></i>
-			Colors
-		</a>
-
-		<!-- end link -->
-
-		<p class="uppercase text-xs text-gray-600 mb-4 mt-4 tracking-wider">UI Elements</p>
-
-		<!-- link -->
-		<a
-		routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-		routerLink="./typography.html"
-			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500"
-		>
-			<i class="fa-solid fa-font text-xs mr-2"></i>
-			typography
-		</a>
-		<!-- end link -->
-
-		<!-- link -->
-		<a
-		routerLink="#"
+		<!-- Others -->
+		<p class="uppercase text-xs text-gray-600 mb-4 mt-4 tracking-wider">Others</p>
+		<a routerLink="/admin/location-manager"
 			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
 			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500"
 		>
-			<i class="fas fa-box-open text-xs mr-2"></i>
-			Content
+			<i class="fa-solid fa-location-dot text-xs mr-2"></i>
+			Location
 		</a>
-		<!-- end link -->
-
-		<!-- link -->
-		<a
-		routerLink="#"
-			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500"
-		>
-			<i class="fas fa-swatchbook text-xs mr-2"></i>
-			colors
-		</a>
-		<!-- end link -->
+		
 	</div>
-	<!-- end sidebar content -->
 </div>
-<!-- end sidbar -->

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-
-
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -10,8 +8,4 @@ import { Component } from '@angular/core';
   styleUrl: './contact.component.scss'
 })
 export class ContactComponent {
-
-  ngAfterViewChecked() {
-		window.scrollTo(0, 0);
-	}
 }

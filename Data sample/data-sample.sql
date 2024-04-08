@@ -94,8 +94,6 @@ DBCC CHECKIDENT ('dbo.VolunteerRoleXVolunteers', RESEED, 0)
 go
 DBCC CHECKIDENT ('dbo.Volunteers', RESEED, 0)
 go
-DBCC CHECKIDENT ('dbo.__EFMigrationsHistory', RESEED, 0)
-go
 
 -- insert pets
 INSERT INTO Pets VALUES('Chó','Loài động vật có sự đa dạng về kích thước, màu sắc và hình dạng, từ chó săn lớn đến chó nhỏ như chihuahua. Chúng thường được nuôi làm thú cưng hoặc làm công việc như canh gác, dẫn đường, hoặc làm nhiệm vụ cứu hộ. Sự trung thành và thông minh của chó đã làm cho chúng trở thành bạn đồng hành lý tưởng cho con người từ hàng ngàn năm nay.','/');
