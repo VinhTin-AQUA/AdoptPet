@@ -11,5 +11,7 @@ import { Component } from '@angular/core';
 })
 export class ContactComponent {
 
-    
+  ngAfterViewChecked() {
+		window.scrollTo(0, 0);
+	}
 }

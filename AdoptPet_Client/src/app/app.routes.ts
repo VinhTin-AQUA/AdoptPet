@@ -20,5 +20,9 @@ export const routes: Routes = [
 		path: 'adopt-pet',
 		loadChildren: () => import('./adopt-pages/adopt-page.routes').then(r => r.adoptRoutes),
 	},
+	{
+		path: 'admin',
+		loadChildren: () => import('./admin-dashboard/admin.routes').then(r => r.adminRoutes),
+	},
 	{ path: '**', redirectTo: 'adopt' },
 ];
