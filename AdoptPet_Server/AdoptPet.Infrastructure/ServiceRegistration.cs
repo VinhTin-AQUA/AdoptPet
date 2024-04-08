@@ -46,6 +46,7 @@ namespace AdoptPet.Infrastructure
             services.AddTransient<IGenericRepository<Donor>, DonorRepository>();
             services.AddTransient<IGenericRepository<DonorPet>, DonorPetRepositories>();
             services.AddTransient<IGenericRepository<DonorPetAudit>, DonorPetAuditRepositories>();
+            services.AddTransient<IGenericRepository<Location>, LocationRepository>();
 
 
             // services
