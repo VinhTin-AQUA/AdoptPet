@@ -18,7 +18,7 @@ namespace AdoptPet.API.Controllers
             this.genericRepository = genericRepository;
         }
         [HttpGet]
-        [Route("get-location-by-id{id}")]
+        [Route("get-location-by-id/{id}")]
         public async Task<IActionResult> GetBreedById(int id)
         {
             var r = await genericRepository.GetByIdAsync(id);
