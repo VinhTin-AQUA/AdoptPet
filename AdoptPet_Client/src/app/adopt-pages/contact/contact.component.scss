@@ -1,0 +1,91 @@
+.banner {
+	background-image: url('/assets/conact/contact-banner.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+	.banner-content {
+		@apply w-full h-full px-32 py-52;
+
+		background: rgba(0,0,0,0.4);
+
+		h1 {
+			@apply text-6xl text-white mb-3;
+			font-weight: 500;
+		}
+
+		.breadcrumb {
+			@apply bg-lime-400 px-5 py-2 inline-block rounded-lg my-auto;
+		}
+
+		.breadcrumb-body {
+			@apply flex justify-start items-center gap-1;
+		}
+
+		.breadcrumb-body a {
+			@apply underline ;
+		}
+
+		.breadcrumb-body span {
+			font-weight: 300;
+		}
+
+		.breadcrumb-body .arrow-point {
+			@apply inline-block;
+			width: 10px;
+			height: 10px;
+			border-top: 3px solid black;
+			border-right: 3px solid black;
+			transform: rotate(45deg);
+		}
+	}
+}
+
+.contact-information {
+    @apply py-10;
+}
+
+.contact {
+    h1 {
+        @apply text-4xl;
+    }
+
+    span, a {
+        @apply block py-1;
+        font-weight: 300;
+    }
+
+    a {
+        @apply text-blue-500;
+    }
+
+}
+
+.Feedback {
+    h1 {
+        @apply text-4xl;
+    }
+
+    .name-email {
+        @apply grid grid-cols-2 gap-4;
+
+    }
+
+    .form-group {
+        @apply py-2;
+
+        label {
+            font-weight: 300
+        }
+
+        .input {
+            @apply duration-150 border border-lime-500 rounded-md outline-none px-3 py-[0.32rem] w-full;
+        
+            &:focus {
+                box-shadow: 0px 0px 1px 1px #a3e635;
+            }
+        }
+    }
+    
+}
+
+// 

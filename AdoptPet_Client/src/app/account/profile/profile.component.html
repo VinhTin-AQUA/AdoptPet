@@ -1,0 +1,161 @@
+<app-header></app-header>
+
+<div class="bg-gray-100 wrapper">
+	<div class="container mx-auto py-8">
+		<div class="grid grid-cols-2 gap-5">
+			<div class="">
+				<img
+					class="rounded-full w-96 h-96 border mx-auto"
+					src="/assets/leg-icon-512.png"
+					alt="image description"
+				/>
+			</div>
+
+			<div>
+				<form>
+					<div class="grid gap-6 mb-6 md:grid-cols-2">
+						<div>
+							<label
+								for="first_name"
+								class="block mb-2 text-sm font-medium text-gray-900"
+								>Họ</label
+							>
+							<input
+								type="text"
+								id="first_name"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
+								placeholder="John"
+								required
+							/>
+						</div>
+						<div>
+							<label
+								for="last_name"
+								class="block mb-2 text-sm font-medium text-gray-900"
+								>Tên</label
+							>
+							<input
+								type="text"
+								id="last_name"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+								placeholder="Doe"
+								required
+							/>
+						</div>
+						<div>
+							<label
+								for="company"
+								class="block mb-2 text-sm font-medium text-gray-900"
+								>Số điện thoại</label
+							>
+							<input
+								type="text"
+								id="company"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+								placeholder="Flowbite"
+								required
+							/>
+						</div>
+						<div>
+							<label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
+								>Email</label
+							>
+							<input
+                                readonly
+								type="tel"
+								id="phone"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+								placeholder="123-45-678"
+								pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+								required
+							/>
+						</div>
+						<!-- <div>
+							<label
+								for="website"
+								class="block mb-2 text-sm font-medium text-gray-900"
+								>Website URL</label
+							>
+							<input
+								type="url"
+								id="website"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+								placeholder="flowbite.com"
+								required
+							/>
+						</div>
+						<div>
+							<label
+								for="visitors"
+								class="block mb-2 text-sm font-medium text-gray-900"
+								>Unique visitors (per month)</label
+							>
+							<input
+								type="number"
+								id="visitors"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+								placeholder=""
+								required
+							/>
+						</div> -->
+					</div>
+					<!-- <div class="mb-6">
+						<label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+							>Email address</label
+						>
+						<input
+							type="email"
+							id="email"
+							class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+							placeholder="john.doe@company.com"
+							required
+						/>
+					</div>
+					<div class="mb-6">
+						<label for="password" class="block mb-2 text-sm font-medium text-gray-900"
+							>Password</label
+						>
+						<input
+							type="password"
+							id="password"
+							class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+							placeholder="•••••••••"
+							required
+						/>
+					</div>
+					<div class="mb-6">
+						<label
+							for="confirm_password"
+							class="block mb-2 text-sm font-medium text-gray-900"
+							>Confirm password</label
+						>
+						<input
+							type="password"
+							id="confirm_password"
+							class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+							placeholder="•••••••••"
+							required
+						/>
+					</div> -->
+
+					<button
+						type="submit"
+						class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800"
+					>
+						Thay đổi thông tin
+					</button>
+
+					<a
+                        routerLink="/change-pasword"
+						type="submit"
+						class="ml-3 text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800"
+					>
+						Đổi mật khẩu
+					</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<app-footer></app-footer>
