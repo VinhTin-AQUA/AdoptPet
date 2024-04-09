@@ -44,7 +44,7 @@ namespace AdoptPet.Infrastructure.Repositories
                             join breed in _context.Breeds on petBreed.BreedId equals breed.Id
                             where breed.Id == breedId
                             select pet;
-
+            
             return await petsByBreed.ToListAsync();
         }
 

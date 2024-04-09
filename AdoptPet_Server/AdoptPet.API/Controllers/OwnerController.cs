@@ -1,4 +1,4 @@
-﻿using AdoptPet.Application.DTOs.Breed;
+﻿using AdoptPet.Application.DTOs.BreedDto;
 using AdoptPet.Application.DTOs;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;

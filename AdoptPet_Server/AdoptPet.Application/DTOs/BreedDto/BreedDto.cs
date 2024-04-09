@@ -1,5 +1,5 @@
 ﻿
-namespace AdoptPet.Application.DTOs.Breed
+namespace AdoptPet.Application.DTOs.BreedDto
 {
     public class BreedDto
     {
