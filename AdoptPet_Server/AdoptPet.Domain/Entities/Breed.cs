@@ -8,6 +8,6 @@ namespace AdoptPet.Domain.Entities
         public string BreedName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ThumbPath { get; set; } = string.Empty;
-        public byte Status { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

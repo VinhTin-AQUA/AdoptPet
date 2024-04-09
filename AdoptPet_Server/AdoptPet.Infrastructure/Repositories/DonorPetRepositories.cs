@@ -34,19 +34,19 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<ICollection<DonorPet>> GetAllAsync()
         {
-            var r = await context.DonorPets.Where(c => c.Status == 0).ToListAsync();
+            var r = await context.DonorPets.Where(c => c.IsDeleted == false).ToListAsync();
             return r;
         }
         public async Task<DonorPet?> GetByIdAsync(int id)
         {
             var r = await context.DonorPets
-                .Where(b => b.Id == id && b.Status == 0)
+                .Where(b => b.Id == id && b.IsDeleted == false)
                 .FirstOrDefaultAsync();
             return r;
         }
         public async Task SoftDelete(DonorPet model)
         {
-            model.Status = 1;
+            model.IsDeleted = true;
             context.DonorPets.Update(model);
             await context.SaveChangesAsync();
         }

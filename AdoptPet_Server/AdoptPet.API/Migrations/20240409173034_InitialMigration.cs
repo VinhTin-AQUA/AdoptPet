@@ -20,7 +20,7 @@ namespace AdoptPet.API.Migrations
                     BreedName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ThumbPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,7 +34,7 @@ namespace AdoptPet.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ColourName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +51,7 @@ namespace AdoptPet.API.Migrations
                     Version = table.Column<int>(type: "int", nullable: false),
                     NewTotalDonation = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     OldTotalDonation = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     DonorId = table.Column<int>(type: "int", nullable: false),
                     PetId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -68,7 +68,7 @@ namespace AdoptPet.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LastDonation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalDonation = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     PetId = table.Column<int>(type: "int", nullable: false),
                     DonorId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -87,7 +87,7 @@ namespace AdoptPet.API.Migrations
                     TotalDonation = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -105,7 +105,7 @@ namespace AdoptPet.API.Migrations
                     DistrictCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProvinceCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,7 +119,7 @@ namespace AdoptPet.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     PetId = table.Column<int>(type: "int", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -146,7 +146,7 @@ namespace AdoptPet.API.Migrations
                     PetEntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Version = table.Column<int>(type: "int", nullable: false),
                     ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     PetId = table.Column<int>(type: "int", nullable: false),
                     UserChangeId = table.Column<int>(type: "int", nullable: false),
                     VolunteerId = table.Column<int>(type: "int", nullable: false),
@@ -166,7 +166,7 @@ namespace AdoptPet.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BreedId = table.Column<int>(type: "int", nullable: false),
                     PetId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,7 +181,7 @@ namespace AdoptPet.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PetId = table.Column<int>(type: "int", nullable: false),
                     ColourId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -196,7 +196,7 @@ namespace AdoptPet.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PetId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -220,6 +220,7 @@ namespace AdoptPet.API.Migrations
                     PetMicrochipped = table.Column<byte>(type: "tinyint", nullable: false),
                     PetEntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<byte>(type: "tinyint", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     VolunteerId = table.Column<int>(type: "int", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false),
                     OwnerId = table.Column<int>(type: "int", nullable: false)
@@ -250,7 +251,7 @@ namespace AdoptPet.API.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -283,7 +284,7 @@ namespace AdoptPet.API.Migrations
                     VolunteerId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserChangeId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -298,7 +299,7 @@ namespace AdoptPet.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -313,7 +314,7 @@ namespace AdoptPet.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VolunteerId = table.Column<int>(type: "int", nullable: false),
                     RoleId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -328,7 +329,7 @@ namespace AdoptPet.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     LocationId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },

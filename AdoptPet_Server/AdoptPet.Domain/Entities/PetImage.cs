@@ -7,6 +7,6 @@ namespace AdoptPet.Domain.Entities
         public int Id { get; set; }
         public string ImgPath { get; set; } = string.Empty;
         public int PetId { get; set; }
-        public byte Status { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

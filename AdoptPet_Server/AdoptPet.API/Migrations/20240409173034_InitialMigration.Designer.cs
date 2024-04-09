@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdoptPet.API.Migrations
 {
     [DbContext(typeof(AdoptPetDbContext))]
-    [Migration("20240409132037_InitialMigration")]
+    [Migration("20240409173034_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -48,6 +48,9 @@ namespace AdoptPet.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -77,9 +80,6 @@ namespace AdoptPet.API.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -117,8 +117,8 @@ namespace AdoptPet.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ThumbPath")
                         .IsRequired()
@@ -141,8 +141,8 @@ namespace AdoptPet.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -157,15 +157,15 @@ namespace AdoptPet.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.Property<decimal>("TotalDonation")
                         .HasColumnType("decimal(10,2)");
@@ -190,14 +190,14 @@ namespace AdoptPet.API.Migrations
                     b.Property<int>("DonorId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("LastDonation")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PetId")
                         .HasColumnType("int");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.Property<decimal>("TotalDonation")
                         .HasColumnType("decimal(10,2)");
@@ -218,6 +218,9 @@ namespace AdoptPet.API.Migrations
                     b.Property<int>("DonorId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("LastDonation")
                         .HasColumnType("datetime2");
 
@@ -229,9 +232,6 @@ namespace AdoptPet.API.Migrations
 
                     b.Property<int>("PetId")
                         .HasColumnType("int");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.Property<int>("Version")
                         .HasColumnType("int");
@@ -253,12 +253,12 @@ namespace AdoptPet.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ProvinceCity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.Property<string>("Street")
                         .IsRequired()
@@ -285,6 +285,9 @@ namespace AdoptPet.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
@@ -294,9 +297,6 @@ namespace AdoptPet.API.Migrations
 
                     b.Property<int>("PetId")
                         .HasColumnType("int");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -310,6 +310,9 @@ namespace AdoptPet.API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
@@ -372,6 +375,9 @@ namespace AdoptPet.API.Migrations
                     b.Property<DateTime>("ChangeDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
@@ -414,9 +420,6 @@ namespace AdoptPet.API.Migrations
                     b.Property<byte>("PetWormed")
                         .HasColumnType("tinyint");
 
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
-
                     b.Property<int>("UserChangeId")
                         .HasColumnType("int");
 
@@ -442,11 +445,11 @@ namespace AdoptPet.API.Migrations
                     b.Property<int>("BreedId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PetId")
                         .HasColumnType("int");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -464,11 +467,11 @@ namespace AdoptPet.API.Migrations
                     b.Property<int>("ColourId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PetId")
                         .HasColumnType("int");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -487,11 +490,11 @@ namespace AdoptPet.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PetId")
                         .HasColumnType("int");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
@@ -509,15 +512,15 @@ namespace AdoptPet.API.Migrations
                     b.Property<DateTime>("DateStart")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -536,6 +539,9 @@ namespace AdoptPet.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("LastChange")
                         .HasColumnType("datetime2");
 
@@ -543,9 +549,6 @@ namespace AdoptPet.API.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<byte>("OldStatus")
-                        .HasColumnType("tinyint");
-
-                    b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
                     b.Property<int>("UserChangeId")
@@ -575,12 +578,12 @@ namespace AdoptPet.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -595,12 +598,12 @@ namespace AdoptPet.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("RoleId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
 
                     b.Property<int>("VolunteerId")
                         .HasColumnType("int");

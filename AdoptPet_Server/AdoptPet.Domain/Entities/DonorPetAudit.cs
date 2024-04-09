@@ -9,7 +9,7 @@ namespace AdoptPet.Domain.Entities
         public int Version { get; set; }
         public decimal NewTotalDonation { get; set; }
         public decimal OldTotalDonation { get; set; }
-        public byte Status { get; set; }
+        public bool IsDeleted { get; set; }
 
         // khoa ngoai
         public int DonorId { get; set; }

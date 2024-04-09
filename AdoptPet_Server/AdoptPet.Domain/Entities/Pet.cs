@@ -18,7 +18,7 @@ namespace AdoptPet.Domain.Entities
         public byte PetMicrochipped { get; set; }
         public DateTime PetEntryDate { get; set; }
         public byte Status { get; set; }
-
+        public bool IsDeleted { get; set; }
 
         // khoa ngoai
         public int VolunteerId { get; set; }

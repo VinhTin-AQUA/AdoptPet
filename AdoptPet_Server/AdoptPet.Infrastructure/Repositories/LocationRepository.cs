@@ -33,19 +33,19 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<ICollection<Location>> GetAllAsync()
         {
-            var r = await context.Locations.Where(c => c.Status == 0).ToListAsync();
+            var r = await context.Locations.Where(c => c.IsDeleted == false).ToListAsync();
             return r;
         }
 
         public async Task <Location?> GetByIdAsync(int id)
         {
-            var r = await context.Locations.Where(b => b.Id == id && b.Status == 0).FirstOrDefaultAsync();
+            var r = await context.Locations.Where(b => b.Id == id && b.IsDeleted == false).FirstOrDefaultAsync();
             return r;
         }
 
         public async Task SoftDelete(Location model)
         {
-            model.Status = 1;
+            model.IsDeleted = true;
             context.Update(model);
             await context.SaveChangesAsync();
         }

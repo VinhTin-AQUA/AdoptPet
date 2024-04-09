@@ -8,7 +8,7 @@ namespace AdoptPet.Domain.Entities
         
         public string Name { get; set; } = string.Empty;
         public DateTime DateStart { get; set; }
-        public byte Status { get; set; }
+        public bool IsDeleted { get; set; }
 
         // khoa ngoai
         public int LocationId { get; set; }

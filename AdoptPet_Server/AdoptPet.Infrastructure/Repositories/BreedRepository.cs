@@ -33,21 +33,21 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<ICollection<Breed>> GetAllAsync()
         {
-            var r = await context.Breeds.Where(c => c.Status == 0).ToListAsync();
+            var r = await context.Breeds.Where(c => c.IsDeleted == false).ToListAsync();
             return r;
         }
 
         public async Task<Breed?> GetByIdAsync(int id)
         {
             var r = await context.Breeds
-                .Where(b => b.Id == id && b.Status == 0)
+                .Where(b => b.Id == id && b.IsDeleted == false)
                 .FirstOrDefaultAsync();
             return r;
         }
 
         public async Task SoftDelete(Breed model)
         {
-            model.Status = 1; // xóa mềm
+            model.IsDeleted = true; // xóa mềm
             context.Breeds.Update(model);
             await context.SaveChangesAsync();
         }

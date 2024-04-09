@@ -20,7 +20,7 @@ namespace AdoptPet.Domain.Entities
         public DateTime PetEntryDate { get; set; }
         public int Version { get; set; }
         public DateTime ChangeDate { get; set; }
-        public byte Status { get; set; }
+        public bool IsDeleted { get; set; }
 
         // khoa ngoai
         public int PetId { get; set; }

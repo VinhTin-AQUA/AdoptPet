@@ -12,6 +12,6 @@ namespace AdoptPet.Domain.Entities
         public int VolunteerId { get; set; }
         public string UserId { get; set; } = string.Empty;
         public int UserChangeId { get; set; }
-        public byte Status { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

@@ -11,6 +11,6 @@ namespace AdoptPet.Domain.Entities
         // khoa ngoai
         public int LocationId { get; set; }
         public string UserId { get; set; } = string.Empty;
-        public byte Status { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
