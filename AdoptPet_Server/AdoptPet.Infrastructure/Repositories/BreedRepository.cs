@@ -33,7 +33,7 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<ICollection<Breed>> GetAllAsync()
         {
-            var r = await context.Breeds.Where(c => c.Status == 0).ToListAsync();
+            var r = await context.Breeds.Where(c => c.Status == 1).ToListAsync();
             return r;
         }
 
