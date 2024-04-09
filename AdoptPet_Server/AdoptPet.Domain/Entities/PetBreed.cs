@@ -7,6 +7,6 @@ namespace AdoptPet.Domain.Entities
         public int Id { get; set; }
         public int BreedId { get; set; }
         public int PetId { get; set; }
-        public int Status { get; set; }
+        public byte Status { get; set; }
     }
 }

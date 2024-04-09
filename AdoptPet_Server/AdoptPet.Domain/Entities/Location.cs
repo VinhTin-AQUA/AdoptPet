@@ -10,6 +10,6 @@ namespace AdoptPet.Domain.Entities
         public string DistrictCity { get; set; } = string.Empty;
         public string ProvinceCity { get; set; } = string.Empty;
         public string ZipCode { get; set; } = string.Empty;
-        public int Status { get; set; }
+        public byte Status { get; set; }
     }
 }

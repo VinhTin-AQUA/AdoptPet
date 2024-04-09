@@ -9,6 +9,6 @@ namespace AdoptPet.Domain.Entities
         public int Id { get; set; }
         public int VolunteerId { get; set; }
         public string RoleId { get; set; } = string.Empty;
-        public int Status { get; set; }
+        public byte Status { get; set; }
     }
 }

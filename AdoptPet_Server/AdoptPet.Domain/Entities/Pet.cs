@@ -19,6 +19,7 @@ namespace AdoptPet.Domain.Entities
         public DateTime PetEntryDate { get; set; }
         public byte Status { get; set; }
 
+
         // khoa ngoai
         public int VolunteerId { get; set; }
         public int LocationId { get; set; }
