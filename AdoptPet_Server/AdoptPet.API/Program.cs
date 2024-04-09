@@ -40,7 +40,7 @@ try
 catch (Exception ex)
 {
     var logger = scope.ServiceProvider.GetService<ILogger<Program>>();
-    logger!.LogError("Erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: " + ex.InnerException, ex.InnerException);
+    logger!.LogError("Error: " + ex.InnerException, ex.InnerException);
 }
 
 app.Run();
