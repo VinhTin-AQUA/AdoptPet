@@ -1,0 +1,17 @@
+.action-menu {
+    .search {
+        @apply px-4 py-2 outline-none border rounded-full inline-block;
+
+        input {
+            @apply  outline-none border-none inline-block;
+        }
+    }
+}
+
+.pet-section {
+    @apply pt-3;
+
+    .pet-list {
+        @apply grid grid-cols-4 gap-2;
+    }
+}

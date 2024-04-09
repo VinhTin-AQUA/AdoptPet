@@ -11,6 +11,7 @@ import { DonorManagerComponent } from './donor/donor-manager/donor-manager.compo
 import { LocationManagerComponent } from './other/location-manager/location-manager.component';
 import { AddVolunteerComponent } from './volunteer/add-volunteer/add-volunteer.component';
 import { VolunteerAuditComponent } from './volunteer/volunteer-audit/volunteer-audit.component';
+import { AddPetComponent } from './pet/add-pet/add-pet.component';
 
 export const adminRoutes: Routes = [
 	{
@@ -25,6 +26,7 @@ export const adminRoutes: Routes = [
 			{ path: 'volunteer-audit', component: VolunteerAuditComponent, title: 'Volunteer audit' },
 			{ path: 'add-volunteer', component: AddVolunteerComponent, title: 'Add volunteer' },
 			{ path: 'pet-manager', component: PetManagerComponent, title: 'Pet manager' },
+			{ path: 'add-pet', component: AddPetComponent, title: 'Add pet' },
 			{ path: 'breed-manager', component: BreedManagerComponent, title: 'Breed manager' },
 			{ path: 'color-manager', component: ColorManagerComponent, title: 'Color manager' },
 			{ path: 'donor-manager', component: DonorManagerComponent, title: 'Donor manager' },

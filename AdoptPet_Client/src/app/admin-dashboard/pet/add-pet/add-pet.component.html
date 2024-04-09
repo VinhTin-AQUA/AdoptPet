@@ -1,0 +1,264 @@
+<!-- <app-header></app-header> -->
+
+<div class="wrapper">
+	<div class="container mx-auto py-2">
+		<div class="">
+
+            <h1 class="text-3xl ">Thêm thú cưng</h1>
+
+            <!-- thêm ảnh -->
+            <div class="img-input">
+
+                <div>
+                    <label
+                        for="first_name"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Chọn hình ảnh</label
+                    >
+                    <input
+                        type="file"
+                        id="first_name"
+                        class="w-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
+                        placeholder="John"
+                        required
+                    />
+                </div>
+
+                <div class="w-full max-h-[500px]">
+
+                </div>
+            </div>
+
+            <form>
+                <div class="grid gap-6 mb-6 md:grid-cols-2">
+
+                    <!-- ten thu cung -->
+                    <div>
+                        <label
+                            for="first_name"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Tên thú cưng</label
+                        >
+                        <input
+                            type="text"
+                            id="first_name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
+                            placeholder="Sữa"
+                            required
+                        />
+                    </div>
+                    
+                    <!-- email -->
+                    <div>
+                        <label
+                            for="last_name"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Email chủ thú cưng</label
+                        >
+                        <input
+                            type="text"
+                            id="last_name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                            placeholder="name@gmail.com"
+                            required
+                        />
+                    </div>
+
+                    <!-- do tuôi -->
+                    <div>
+                        <label
+                            for="company"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Độ tuổi</label
+                        >
+                        <!-- <input
+                            type="text"
+                            id="company"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                            placeholder="Flowbite"
+                            required
+                        /> -->
+
+                        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <option selected value="0">Trẻ</option>
+                            <option value="1">Trưởng thành</option>
+                            <option value="2">Già</option>
+                        </select>
+                    </div>
+
+                    <!-- dia diem -->
+                    <div>
+                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
+                            >Địa điểm</label
+                        >
+                        <input
+                            readonly
+                            type="tel"
+                            id="phone"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                            placeholder="123-45-678"
+                            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                            required
+                        />
+                    </div>
+
+                    <!-- gioi tinh -->
+                    <div>
+                        <label
+                            for="website"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Giới tính</label
+                        >
+                        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <option selected value="0">Đực</option>
+                            <option value="1">Cái</option>
+                            <option value="2">Khác</option>
+                        </select>
+                    </div>
+
+                    <!-- triet san -->
+                    <div>
+                        <label
+                            for="visitors"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Triệt sản</label
+                        >
+                        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <option selected value="0">Có</option>
+                            <option value="1">Không</option>
+                            <option value="1">Chưa rõ</option>
+                        </select>
+                    </div>
+
+                    <!-- tay giun -->
+                    <div>
+                        <label
+                            for="visitors"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Tẩy giun</label
+                        >
+                        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <option selected value="0">Có</option>
+                            <option value="1">Không</option>
+                            <option value="1">Chưa rõ</option>
+                        </select>
+                    </div>
+
+                    <!-- vac xin -->
+                    <div>
+                        <label
+                            for="visitors"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Tim vắc xin</label
+                        >
+                        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <option selected value="0">Có</option>
+                            <option value="1">Không</option>
+                            <option value="1">Chưa rõ</option>
+                        </select>
+                    </div>
+
+                    <!-- microchipped -->
+                    <div>
+                        <label
+                            for="visitors"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >microchipped</label
+                        >
+                        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <option selected value="0">Có</option>
+                            <option value="1">Không</option>
+                            <option value="1">Chưa rõ</option>
+                        </select>
+                    </div>
+
+                    <!-- entry date -->
+                    <div>
+                        <label
+                            for="visitors"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >entry date</label
+                        >
+                        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <option selected value="0">Có</option>
+                            <option value="1">Không</option>
+                            <option value="1">Chưa rõ</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="mb-6">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+                        >Email address</label
+                    >
+                    <input
+                        type="email"
+                        id="email"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                        placeholder="john.doe@company.com"
+                        required
+                    />
+                </div> -->
+
+                <!-- <div class="mb-6">
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
+                        >Địa chỉ</label
+                    >
+                    <input
+                        type="password"
+                        id="password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                        placeholder="•••••••••"
+                        required
+                    />
+                </div>
+
+                <div class="mb-6">
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
+                        >Password</label
+                    >
+                    <input
+                        type="password"
+                        id="password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                        placeholder="•••••••••"
+                        required
+                    />
+                </div> -->
+                
+                <div class="mb-6">
+                    <label
+                        for="confirm_password"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Mô tả</label
+                    >
+                    <!-- <input
+                        type="password"
+                        id="confirm_password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                        placeholder="•••••••••"
+                        required
+                    /> -->
+
+                    <textarea class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:" name="" id="" cols="30" rows="10"></textarea>
+                </div>
+
+                <button
+                    type="submit"
+                    class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800"
+                >
+                    Thêm
+                </button>
+
+                <a
+                    routerLink="/admin/pet-manager"
+                    class="ml-3 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                >
+                    Hủy
+                </a>
+            </form>
+			
+		</div>
+	</div>
+</div>
+
+<!-- <app-footer></app-footer> --><p>add-pet works!</p>
