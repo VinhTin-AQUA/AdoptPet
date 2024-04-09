@@ -48,13 +48,6 @@
 			Vai trò tình nguyện viên 
 		</a>
 
-		<a routerLink="/admin/volunteer-audit" 
-			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
-			<i class="fa-solid fa-users"></i>
-			Lịch sử chỉnh sửa 
-		</a>
-
 		<!-- pet -->
 		<p class="uppercase text-xs text-gray-600 mb-4 mt-4 tracking-wider">Quản lý thú cưng</p>
 
@@ -88,6 +81,31 @@
 			<i class="fas fa-envelope-open-text text-xs mr-2"></i>
 			Danh sách người tài trợ
 		</a>
+
+		<!-- lich sử -->
+		<p class="uppercase text-xs text-gray-600 mb-4 mt-4 tracking-wider">Lịch sử</p>
+
+		<a routerLink="/admin/volunteer-audit" 
+			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
+			<i class="fa-solid fa-users"></i>
+			Tình nguyện viên
+		</a>
+
+		<a routerLink="/admin/donor-pet-audit" 
+			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
+			<i class="fa-solid fa-users"></i>
+			Tài trợ
+		</a>
+
+		<a routerLink="/admin/pet-audit" 
+			routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+			class="mb-3 capitalize font-medium text-sm hover:text-teal-600 transition ease-in-out duration-500" >
+			<i class="fa-solid fa-users"></i>
+			Thú cưng
+		</a>
+
 
 		<!-- Others -->
 		<p class="uppercase text-xs text-gray-600 mb-4 mt-4 tracking-wider">Khác</p>

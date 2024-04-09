@@ -96,11 +96,11 @@
     }
 
     .donor-list {
-        @apply flex items-center justify-center gap-2 p-2;
+        @apply grid grid-cols-4 gap-2 p-2;
     }
 
     .donor-item {
-        @apply w-1/4 p-10 bg-lime-200 rounded-xl; 
+        @apply p-10 bg-lime-200 rounded-xl; 
 
         h1 {
             @apply text-center;
