@@ -1,0 +1,108 @@
+<!-- <app-header></app-header> -->
+
+<div class="wrapper">
+	<div class="container mx-auto py-2">
+		<div class="">
+
+            <h1 class="text-3xl ">Thêm giống</h1>
+
+            <!-- thêm ảnh -->
+            <div class="img-input">
+
+                <div>
+                    <label
+                        for="first_name"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Chọn 1 hình ảnh</label
+                    >
+                    <input
+                        type="file"
+                        id="first_name"
+                        class="w-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
+                        placeholder="John"
+                        required
+                    />
+                </div>
+
+                <!-- danh sách hình ảnh đã chọn -->
+                <div class="w-full max-h-[500px]">
+
+                </div>
+            </div>
+
+            <form>
+                
+                <div class="mb-6">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+                        >Tên giống</label
+                    >
+                    <input
+                        type="text"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                        placeholder="..."
+                        required
+                    />
+                </div>
+
+                <!-- <div class="mb-6">
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
+                        >Địa chỉ</label
+                    >
+                    <input
+                        type="password"
+                        id="password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                        placeholder="•••••••••"
+                        required
+                    />
+                </div>
+
+                <div class="mb-6">
+                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
+                        >Password</label
+                    >
+                    <input
+                        type="password"
+                        id="password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                        placeholder="•••••••••"
+                        required
+                    />
+                </div> -->
+                
+                <div class="mb-6">
+                    <label
+                        for="confirm_password"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Mô tả</label
+                    >
+                    <!-- <input
+                        type="password"
+                        id="confirm_password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                        placeholder="•••••••••"
+                        required
+                    /> -->
+
+                    <textarea class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:" name="" id="" cols="30" rows="10"></textarea>
+                </div>
+
+                <button
+                    type="submit"
+                    class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800"
+                >
+                    Thêm
+                </button>
+
+                <a
+                    routerLink="/admin/pet-manager"
+                    class="ml-3 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                >
+                    Hủy
+                </a>
+            </form>
+			
+		</div>
+	</div>
+</div>
+
