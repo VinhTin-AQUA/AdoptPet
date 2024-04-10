@@ -1,0 +1,117 @@
+<!-- <app-header></app-header> -->
+<div class="wrapper">
+	<div class="container mx-auto py-2">
+		<div class="">
+
+            <!-- infor -->
+            <div class="grid grid-cols-2 gap-3">
+
+                <div class="pet-image">
+                    <div class="image">
+                        <img src="https://www.hanoipetadoption.com/admin/user-content/Animal/600017d4-ccbe-4c49-a4c3-3800e38afa7a.jpeg" alt="">
+                    </div>
+                </div>
+
+                <div class="infor">
+                    <h1 class="text-3xl">Pom</h1>
+
+                    <div class="breed">
+                        <h1>Giống: <span>Chó tây</span> </h1>
+                    </div>
+
+                    <div class="color">
+                        <h1>Màu sắc: <span>Trắng nâu</span> </h1>
+                    </div>
+
+                    <div class="age">
+                        <h1>Tuổi: <span>Thanh niên</span> </h1> 
+                    </div>
+
+                    <div class="weight">
+                        <h1>Cân nặng: <span>6</span> </h1>
+                    </div>
+
+                    <div class="gender">
+                        <h1>Giới tính:  <span>Đực</span></h1>
+                    </div>
+
+                    <div class="gender">
+                        <h1>Ngày nhận nuôi:  <span>12/02/2003</span></h1>
+                    </div>
+
+                     <!-- thong tin them -->
+                    <div class="pt-3">
+                        <div class="font-thin">
+                            <h1><i class="status-info text-danger fas fa-times-circle"></i> Tẩy giun</h1>
+                            <h1><i class="status-info text-success fas fa-check-circle"></i> Tim vắc xin</h1>
+                            <h1><i class="status-info text-warning fas fa-question-circle"></i> Gắn microchip</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="text-3xl pb-6">Nhận nuôi ảo</h1>
+
+            <form>
+                <div class="grid gap-6 mb-6 md:grid-cols-2">
+
+                    <!-- email -->
+                    <div>
+                        <label
+                            for="last_name"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Email chủ thú cưng</label
+                        >
+                        <input
+                            type="email"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                            placeholder="name@gmail.com"
+                            required
+                        />
+                    </div>
+
+                    <!-- dia diem -->
+                    <div>
+                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
+                            >Địa điểm</label
+                        >
+                        <input
+                            type="tel"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                            placeholder="450 Lê Văn Việt, Tăng Nhơn Phú A, Thủ Đức, Hồ Chí Minh"
+                            required
+                        />
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+                        >Email address</label
+                    >
+                    <input
+                        type="email"
+                        id="email"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                        placeholder="john.doe@company.com"
+                        required
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800"
+                >
+                    Nhận nuôi
+                </button>
+
+                <a
+                    routerLink="/adopt-pet/adopt-pet-detail"
+                    class="ml-3 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                >
+                    Hủy
+                </a>
+            </form>
+			
+		</div>
+	</div>
+</div>
+

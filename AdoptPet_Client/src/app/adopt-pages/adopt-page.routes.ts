@@ -7,6 +7,7 @@ import { NewsComponent } from './news/news.component';
 import { VolunteerComponent } from './volunteer/volunteer.component';
 import { AdoptPagesComponent } from './adopt-pages.component';
 import { AdoptPetDetailComponent } from './adopt-pet-detail/adopt-pet-detail.component';
+import { VirtualAdoptionComponent } from './virtual-adoption/virtual-adoption.component';
 
 export const adoptRoutes: Routes = [
 	{
@@ -16,6 +17,7 @@ export const adoptRoutes: Routes = [
 			{ path: '', component: HomeComponent, title: 'Trang chủ' },
 			{ path: 'adopt', component: AdoptComponent, title: 'Nhận nuôi' },
 			{ path: 'adopt-pet-detail', component: AdoptPetDetailComponent, title: 'Chi tiết nhận nuôi' },
+			{ path: 'virtual-adoption', component: VirtualAdoptionComponent, title: 'Nhận nuôi ảo' },
 			{ path: 'contact', component: ContactComponent, title: 'Liên hệ' },
 			{ path: 'donate', component: DonateComponent, title: 'Ủng hộ' },
 			{ path: 'news', component: NewsComponent, title: 'Tin tức' },
