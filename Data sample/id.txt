@@ -1,0 +1,15 @@
+* color : 58
+ 
+* breed
+- chó: 1 - 5
+- mèo: 6 - 10
+- thỏ: 11 - 15
+- ngựa: 16 - 20
+- chim: 21 - 25
+
+* volunteer
+
+* location
+
+
+* owner

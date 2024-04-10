@@ -104,7 +104,6 @@ namespace AdoptPet.API.Migrations
                     Wards = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DistrictCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProvinceCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

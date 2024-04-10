@@ -44,7 +44,6 @@ namespace AdoptPet.API.Controllers
                 Wards = model.Wards,
                 DistrictCity = model.DistrictCity,
                 ProvinceCity = model.ProvinceCity,
-                ZipCode = model.ZipCode
             };
 
             var r = await genericRepository.AddAsync(newLocation);
@@ -65,7 +64,6 @@ namespace AdoptPet.API.Controllers
             oldLoction.Wards = model.Wards;
             oldLoction.DistrictCity = model.DistrictCity;
             oldLoction.ProvinceCity = model.ProvinceCity;
-            oldLoction.ZipCode = model.ZipCode;
 
             /* cap nhat anhr */
 

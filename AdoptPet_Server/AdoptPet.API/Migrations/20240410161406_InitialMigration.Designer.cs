@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdoptPet.API.Migrations
 {
     [DbContext(typeof(AdoptPetDbContext))]
-    [Migration("20240409173034_InitialMigration")]
+    [Migration("20240410161406_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -265,10 +265,6 @@ namespace AdoptPet.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Wards")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ZipCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
