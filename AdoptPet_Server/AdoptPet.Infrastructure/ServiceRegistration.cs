@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VolunteerRoles.Infrastructure.Repositories;
 
 namespace AdoptPet.Infrastructure
 {
@@ -50,6 +51,7 @@ namespace AdoptPet.Infrastructure
             services.AddTransient<IGenericRepository<Location>, LocationRepository>();
             services.AddTransient<IGenericRepository<Owner>, OwnerRepository>();
             services.AddTransient<IGenericRepository<Pet>, PetRepository>();
+            services.AddTransient<IVolunteerRoleRepository, VolunteerRoleRepository>();
             
 
 
