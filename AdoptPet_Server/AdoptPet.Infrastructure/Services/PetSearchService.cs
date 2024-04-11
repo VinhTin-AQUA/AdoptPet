@@ -21,6 +21,7 @@ namespace AdoptPet.Infrastructure.Services
     public async Task<List<Pet>> GetPetsByBreedAsync(int breedId)
     {
         // Implement logic to get pets by breed from the repository
+
         // Example:
         return await _petRepository.GetPetsByBreedAsync(breedId);
     }
