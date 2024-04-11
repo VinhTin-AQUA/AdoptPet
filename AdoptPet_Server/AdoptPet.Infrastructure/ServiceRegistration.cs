@@ -36,6 +36,7 @@ namespace AdoptPet.Infrastructure
                     .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig!);
             services.AddScoped<IEmailSenderService, EmailSenderService>();
+            services.AddTransient<VolunteerRoleService>();
 
             // repositories
             services.AddTransient<IAccountRepository, AccountRepository>();
@@ -48,6 +49,8 @@ namespace AdoptPet.Infrastructure
             services.AddTransient<IGenericRepository<DonorPetAudit>, DonorPetAuditRepositories>();
             services.AddTransient<IGenericRepository<Location>, LocationRepository>();
             services.AddTransient<IGenericRepository<Owner>, OwnerRepository>();
+            services.AddTransient<IGenericRepository<Pet>, PetRepository>();
+            
 
 
             // services
