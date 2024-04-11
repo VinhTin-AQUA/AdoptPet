@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <form>
+            <form [formGroup]="petForm">
 
                 <!-- thong tin co ban -->
                 <div class="p-4 border mt-4 rounded-md">
@@ -49,6 +49,7 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
                                 placeholder="Sữa"
                                 required
+                                formControlName="petName"
                             />
                         </div>
 
@@ -64,6 +65,7 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="name@gmail.com"
                                 required
+                                formControlName="email"
                             />
                         </div>
 
@@ -74,19 +76,13 @@
                                 class="block mb-2 text-sm font-medium text-gray-900"
                                 >Độ tuổi</label
                             >
-                            <!-- <input
-                                type="text"
-                                id="company"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                                placeholder="Flowbite"
-                                required
-                            /> -->
-
+                 
                             <input
                                 type="text"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="ngày cụ thể hoặc số tuổi hoặc khoản"
                                 required
+                                formControlName="age"
                             />
                         </div>
                     </div>
@@ -107,11 +103,12 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="TP. Hồ Chí Minh"
                                 required
+                                formControlName="province"
                             />
                         </div>
 
 
-                        <!-- tinh thanh pho -->
+                        <!-- quan huyen -->
                         <div>
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
                                 >Quận / Huyện</label
@@ -121,10 +118,11 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="Quận 1"
                                 required
+                                formControlName="district"
                             />
                         </div>
 
-                        <!-- tinh thanh pho -->
+                        <!-- xa -->
                         <div>
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
                                 >Thị xã / Phường</label
@@ -134,6 +132,21 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="Quận 1"
                                 required
+                                formControlName="wards"
+                            />
+                        </div>
+
+                        <!-- so nha -->
+                        <div>
+                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
+                                >Số nhà</label
+                            >
+                            <input
+                                type="tel"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+                                placeholder="221"
+                                required
+                                formControlName="street"
                             />
                         </div>
                     </div>
@@ -156,6 +169,7 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="2kg"
                                 required
+                                formControlName="weight"
                             />
                         </div>
 
@@ -166,7 +180,8 @@
                                 class="block mb-2 text-sm font-medium text-gray-900"
                                 >Giới tính</label
                             >
-                            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <select formControlName="petGender"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
                                 <option selected value="0">Đực</option>
                                 <option value="1">Cái</option>
                                 <option value="2">Khác</option>

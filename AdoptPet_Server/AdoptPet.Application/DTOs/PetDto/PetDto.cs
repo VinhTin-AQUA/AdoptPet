@@ -9,12 +9,11 @@ namespace AdoptPet.Application.DTOs.PetDto
         public string PetDescription { get; set; }
         public decimal PetWeight { get; set; }
         public string PetAge { get; set; }
-        public bool PetGender { get; set; } // Assuming PetGender is a bool as you defined in Pet class
-        public string Gender => PetGender? "Male" : "Female";
-        public bool PetDesexed { get; set; }
-        public bool PetWormed { get; set; }
-        public bool PetVaccined { get; set; }
-        public bool PetMicrochipped { get; set; }
+        public byte PetGender { get; set; } // Assuming PetGender is a bool as you defined in Pet class
+        public byte PetDesexed { get; set; }
+        public byte PetWormed { get; set; }
+        public byte PetVaccined { get; set; }
+        public byte PetMicrochipped { get; set; }
         public DateTime PetEntryDate { get; set; }
         public string BreedName { get; set; }
         public string BreedDescription { get; set; }
@@ -30,10 +29,10 @@ namespace AdoptPet.Application.DTOs.PetDto
             PetWeight = pet.PetWeight;
             PetAge = pet.PetAge;
             PetGender = pet.PetGender;
-            PetDesexed = pet.PetDesexed == 1;
-            PetWormed = pet.PetWormed == 1;
-            PetVaccined = pet.PetVaccined == 1;
-            PetMicrochipped = pet.PetMicrochipped == 1;
+            PetDesexed = pet.PetDesexed;
+            PetWormed = pet.PetWormed;
+            PetVaccined = pet.PetVaccined;
+            PetMicrochipped = pet.PetMicrochipped;
             PetEntryDate = pet.PetEntryDate;
             BreedName = breed.BreedName;
             BreedDescription = breed.Description;
