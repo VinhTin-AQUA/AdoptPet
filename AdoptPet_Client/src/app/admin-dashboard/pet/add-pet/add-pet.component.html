@@ -98,13 +98,14 @@
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
                                 >Tỉnh thành phố</label
                             >
-                            <input
-                                type="tel"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                                placeholder="TP. Hồ Chí Minh"
-                                required
+                            <select (change)="onProviceChanged()"
                                 formControlName="province"
-                            />
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                               
+                                @for (p of provinces; track $index) {
+                                    <option value="{{p.province_id}}">{{p.province_name}}</option>
+                                }
+                            </select>
                         </div>
 
 
@@ -113,13 +114,23 @@
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
                                 >Quận / Huyện</label
                             >
-                            <input
+                            <!-- <input
                                 type="tel"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="Quận 1"
                                 required
                                 formControlName="district"
-                            />
+                                (change)="onDistrictChanged()"
+                            /> -->
+
+                            <select (change)="onDistrictChanged()"
+                                formControlName="district"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            
+                                @for (d of districts; track $index) {
+                                    <option value="{{d.district_id}}">{{d.district_name}}</option>
+                                }
+                            </select>
                         </div>
 
                         <!-- xa -->
@@ -127,13 +138,23 @@
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
                                 >Thị xã / Phường</label
                             >
-                            <input
+                            <!-- <input
                                 type="tel"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="Quận 1"
                                 required
-                                formControlName="wards"
-                            />
+                                formControlName="ward"
+                                (change)="onWardsChanged()"
+                            /> -->
+
+                            <select (change)="onWardsChanged()"
+                            formControlName="ward"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                        
+                            @for (w of wards; track $index) {
+                                <option value="{{w.ward_id}}">{{w.ward_name}}</option>
+                            }
+                        </select>
                         </div>
 
                         <!-- so nha -->
@@ -195,7 +216,8 @@
                                 class="block mb-2 text-sm font-medium text-gray-900"
                                 >Triệt sản</label
                             >
-                            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <select formControlName="petDesexed"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
                                 <option selected value="0">Có</option>
                                 <option value="1">Không</option>
                                 <option value="1">Chưa rõ</option>
@@ -209,7 +231,8 @@
                                 class="block mb-2 text-sm font-medium text-gray-900"
                                 >Tẩy giun</label
                             >
-                            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <select formControlName="petWormed"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
                                 <option selected value="0">Có</option>
                                 <option value="1">Không</option>
                                 <option value="1">Chưa rõ</option>
@@ -223,7 +246,8 @@
                                 class="block mb-2 text-sm font-medium text-gray-900"
                                 >Tim vắc xin</label
                             >
-                            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <select formControlName="petVaccined"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
                                 <option selected value="0">Có</option>
                                 <option value="1">Không</option>
                                 <option value="1">Chưa rõ</option>
@@ -237,7 +261,8 @@
                                 class="block mb-2 text-sm font-medium text-gray-900"
                                 >Mã định danh (microchip)</label
                             >
-                            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                            <select formControlName="microchipped"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
                                 <option selected value="0">Có</option>
                                 <option value="1">Không</option>
                                 <option value="1">Chưa rõ</option>
@@ -255,6 +280,7 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="2kg"
                                 required
+                                formControlName="petEntryDate"
                             />
                         </div>
                     </div>
