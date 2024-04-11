@@ -7,9 +7,15 @@
 - ngựa: 16 - 20
 - chim: 21 - 25
 
-* volunteer
-
 * location
+- Hà Nội: 1 - 5
+- Hồ Chí Minh 6 - 10
+- bình định 11 - 15
+- Phú yên 16 - 20
 
+
+* roles
+
+* volunteer
 
 * owner

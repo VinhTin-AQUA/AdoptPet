@@ -40,7 +40,7 @@ namespace AdoptPet.API.Controllers
         {
             Owner newOwner = new Owner()
             {
-                Name = model.Name
+       
             };
 
             var r = await genericRepository.AddAsync(newOwner);
@@ -57,7 +57,6 @@ namespace AdoptPet.API.Controllers
             {
                 return BadRequest(new Success<object> { Status = false, Messages = ["Owner not found"], Data = null });
             }
-            oldOwner.Name = model.Name;
 
             /* cap nhat anhr */
 

@@ -167,10 +167,6 @@ namespace AdoptPet.API.Migrations
                     b.Property<decimal>("TotalDonation")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Donors");
@@ -283,10 +279,6 @@ namespace AdoptPet.API.Migrations
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PetId")
                         .HasColumnType("int");
@@ -510,10 +502,6 @@ namespace AdoptPet.API.Migrations
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()

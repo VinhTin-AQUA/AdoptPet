@@ -6,7 +6,6 @@ namespace AdoptPet.Domain.Entities
     {
         public int Id { get; set; }
         
-        public string Name { get; set; } = string.Empty;
         public DateTime DateStart { get; set; }
         public bool IsDeleted { get; set; }
 
