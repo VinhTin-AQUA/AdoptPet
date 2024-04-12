@@ -1,6 +1,8 @@
-﻿using AdoptPet.Domain.Entities;
+﻿using AdoptPet.Application.DTOs;
+using AdoptPet.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace AdoptPet.API.Controllers
 {
@@ -20,7 +22,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetVolunteerRoles()
         {
             var roles = await _volunteerRoleService.GetAllVolunteerRolesAsync();
-            return Ok(roles);
+            return Ok();
         }
 
         [HttpGet]
@@ -30,9 +32,9 @@ namespace AdoptPet.API.Controllers
             var role = await _volunteerRoleService.GetVolunteerRoleByIdAsync(id);
             if (role == null)
             {
-                return NotFound();
+                return NotFound(new Success<object> { Status = true, Messages = ["vai trò không tìm thấy"], Data = null });
             }
-            return Ok(role);
+            return Ok(new Success<VolunteerRole> { Status = true, Messages = [], Data = role });
         }
 
         [HttpPost]
@@ -40,7 +42,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> AddVolunteerRole(VolunteerRole role)
         {
             var newRole = await _volunteerRoleService.AddVolunteerRoleAsync(role);
-            return CreatedAtAction(nameof(GetVolunteerRole), new { id = newRole.Id }, newRole);
+            return Ok(new Success<VolunteerRole> { Status = true, Messages = [], Data = newRole });
         }
 
         [HttpPut]
@@ -50,9 +52,9 @@ namespace AdoptPet.API.Controllers
             var updated = await _volunteerRoleService.UpdateVolunteerRoleAsync(role);
             if (!updated)
             {
-                return NotFound();
+                return BadRequest(new Success<object> { Status = false, Messages = ["Có lỗi trong quá trình cập nhật. Xin vui lòng thử lại"], Data = null });
             }
-            return NoContent();
+            return Ok(new Success<VolunteerRole> { Status = true, Messages = ["Cập nhật thành công"], Data = role });
         }
 
         [HttpDelete]
@@ -62,9 +64,9 @@ namespace AdoptPet.API.Controllers
             var deleted = await _volunteerRoleService.DeleteVolunteerRoleAsync(id);
             if (!deleted)
             {
-                return NotFound();
+                return BadRequest(new Success<object> { Status = false, Messages = ["Có lỗi trong quá trình xóa. Xin vui lòng thử lại"], Data = null });
             }
-            return NoContent();
+            return Ok(new Success<int> { Status = true, Messages = ["Xóa thành công"], Data = id });
         }
 
         [HttpDelete]
@@ -74,9 +76,9 @@ namespace AdoptPet.API.Controllers
             var deleted = await _volunteerRoleService.SoftDeleteVolunteerRoleAsync(id);
             if (!deleted)
             {
-                return NotFound();
+                return BadRequest(new Success<object> { Status = false, Messages = ["Có lỗi trong quá trình xóa. Xin vui lòng thử lại"], Data = null });
             }
-            return NoContent();
+            return Ok(new Success<int> { Status = true, Messages = ["Xóa thành công"], Data = id });
         }
     }
 }

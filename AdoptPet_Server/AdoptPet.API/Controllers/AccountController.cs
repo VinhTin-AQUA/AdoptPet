@@ -97,7 +97,7 @@ namespace AdoptPet.API.Controllers
 
             if (user == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Incorrect email or password"] });
+                return NotFound(new Success<object> { Status = false, Messages = ["Incorrect email or password"] });
             }
 
             var r = await accountRepository.SignInAsync(user, model.Password);
@@ -130,7 +130,7 @@ namespace AdoptPet.API.Controllers
             if (user == null)
             {
 
-                return BadRequest(new Success<object> { Status = false, Messages = ["This email has not been registered."] });
+                return NotFound(new Success<object> { Status = false, Messages = ["This email has not been registered."] });
             }
 
             if (user.EmailConfirmed == true)
@@ -168,7 +168,7 @@ namespace AdoptPet.API.Controllers
             var user = await accountRepository.GetUserByEmailAsync(email);
             if (user == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Incorrect Email or Password"] });
+                return NotFound(new Success<object> { Status = false, Messages = ["Incorrect Email or Password"] });
             }
 
             if (user.EmailConfirmed == true)
@@ -204,7 +204,7 @@ namespace AdoptPet.API.Controllers
             var user = await accountRepository.GetUserByEmailAsync(email);
             if (user == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Email is incorrect"] });
+                return NotFound(new Success<object> { Status = false, Messages = ["Email is incorrect"] });
             }
 
             try
@@ -234,7 +234,7 @@ namespace AdoptPet.API.Controllers
             var user = await accountRepository.GetUserByEmailAsync(model.Email);
             if (user == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Email is incorrect"] });
+                return NotFound(new Success<object> { Status = false, Messages = ["Email is incorrect"] });
             }
 
             try
@@ -272,7 +272,7 @@ namespace AdoptPet.API.Controllers
             var user = await accountRepository.GetUserByEmailAsync(model.Email);
             if (user == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Incorrect email or password"] });
+                return NotFound(new Success<object> { Status = false, Messages = ["Incorrect email or password"] });
             }
             var r = await accountRepository.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
             if (r.Succeeded == false)
