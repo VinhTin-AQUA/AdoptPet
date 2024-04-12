@@ -5,8 +5,11 @@ namespace AdoptPet.Application.Interfaces.IRepositories
 {
     public interface IRoleRepository
     {
-        Task<IdentityResult> CreateRoleAsync(string roleName);
+        Task<IdentityResult> CreateRoleAsync(IdentityRole newRole);
         Task<IdentityResult> DeleteRoleAsync(string roleName);
         Task<IdentityResult> AddRoleRoUserAsync(AppUser user, string roleName);
+        Task<ICollection<IdentityRole>> GetAllRoles();
+        Task<bool> RoleExits(string roleName);
+
     }
 }

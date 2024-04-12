@@ -6,6 +6,7 @@ import { ChangePasswordComponent } from './account/change-password/change-passwo
 import { ForgotPasswordComponent } from './account/forgot-password/forgot-password.component';
 import { NoticeComponent } from './notice/notice.component';
 import { ResetPasswordComponent } from './account/reset-password/reset-password.component';
+import { PageNotFoundComponent } from './sharedPages/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
 	{ path: '', redirectTo: 'adopt-pet', pathMatch: 'full' },
@@ -24,5 +25,5 @@ export const routes: Routes = [
 		path: 'admin',
 		loadChildren: () => import('./admin-dashboard/admin.routes').then(r => r.adminRoutes),
 	},
-	{ path: '**', redirectTo: 'adopt' },
+	{ path: '**', component: PageNotFoundComponent, title: 'Page not found' },
 ];

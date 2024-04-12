@@ -1,5 +1,6 @@
 ﻿using AdoptPet.Application.Interfaces;
 using AdoptPet.Application.Interfaces.IRepositories;
+using AdoptPet.Application.Interfaces.IService;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Domain.Settings;
 using AdoptPet.Infrastructure.Data;
@@ -57,6 +58,7 @@ namespace AdoptPet.Infrastructure
 
             // services
             services.AddTransient<IJwtService, JwtService>();
+            services.AddTransient<IImageService, ImageService>();
             services.AddTransient<ContextSeedService>();
 
             return services;

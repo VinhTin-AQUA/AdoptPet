@@ -1,6 +1,8 @@
 ﻿using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace AdoptPet.Infrastructure.Repositories
 {
@@ -21,9 +23,9 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-        public async Task<IdentityResult> CreateRoleAsync(string roleName)
+        public async Task<IdentityResult> CreateRoleAsync(IdentityRole newRole)
         {
-            var r = await roleManager.CreateAsync(new IdentityRole(roleName));
+            var r = await roleManager.CreateAsync(newRole);
             return r;
         }
 
@@ -37,6 +39,22 @@ namespace AdoptPet.Infrastructure.Repositories
             }
             var r = await roleManager.DeleteAsync(role);
             return r;
+        }
+
+        public async Task<ICollection<IdentityRole>> GetAllRoles()
+        {
+            var roles = await roleManager.Roles.ToListAsync();
+            return roles;
+        }
+
+        public async Task<bool> RoleExits(string roleName)
+        {
+            var r = await roleManager.FindByNameAsync(roleName);
+            if (r == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

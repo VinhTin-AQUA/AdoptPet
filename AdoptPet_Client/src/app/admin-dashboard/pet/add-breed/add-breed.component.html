@@ -21,7 +21,10 @@
                         class="w-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
                         placeholder="John"
                         required
+                        (change)="onImageSelected($event)"
                     />
+
+                    <img [src]="selectedImageOnView" alt=""  >
                 </div>
 
                 <!-- danh sách hình ảnh đã chọn -->
@@ -30,7 +33,7 @@
                 </div>
             </div>
 
-            <form>
+            <form [formGroup]="breedForm">
                 
                 <div class="mb-6">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
@@ -41,7 +44,12 @@
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                         placeholder="..."
                         required
+                        formControlName="breedName"
                     />
+                    @if (submitted === true && breedForm.hasError('required', 'breedName')) {
+                        <small class="text-red-500">Tên giống không được để trống</small>
+                    }
+                    
                 </div>
 
                 <!-- <div class="mb-6">
@@ -84,10 +92,16 @@
                         required
                     /> -->
 
-                    <textarea class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:" name="" id="" cols="30" rows="10"></textarea>
+                    <textarea formControlName="description"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:" name="" id="" cols="30" rows="10"></textarea>
+                
+                    @if (submitted === true && breedForm.hasError('required', 'description')) {
+                        <small class="text-red-500">Mô tả không được để trống</small>
+                    }
                 </div>
 
                 <button
+                    (click)="onSubmit()"
                     type="submit"
                     class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800"
                 >

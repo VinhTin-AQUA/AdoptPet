@@ -93,6 +93,10 @@ go
 DBCC CHECKIDENT ('dbo.Volunteers', RESEED, 0)
 go
 
+select * from Breeds
+
+delete from Breeds
+
 
 /* insert colours */
 INSERT INTO Colours(ColourName, IsDeleted) VALUES ('Apricot', 0);
@@ -155,7 +159,6 @@ INSERT INTO Colours(ColourName, IsDeleted) VALUES ('Roan', 0);
 INSERT INTO Colours(ColourName, IsDeleted) VALUES ('Spotteda', 0);
 
 /* insert breed */
-select count(*) from Breeds
 
 -- Chó
 insert INTO Breeds(BreedName,[Description],ThumbPath,IsDeleted) VALUES (N'Affenpinscher',N'Affenpinscher có vẻ ngoài gần giống với một con khỉ, với khuôn mặt ngắn và bộ lông nổi bật. Chúng thường được biết đến với tính cách tự tin, năng động và yêu thích sự chú ý từ chủ nhân.','/',0);

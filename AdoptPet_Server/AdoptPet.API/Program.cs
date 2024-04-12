@@ -1,5 +1,6 @@
-using AdoptPet.Infrastructure;
+﻿using AdoptPet.Infrastructure;
 using AdoptPet.Infrastructure.Services;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// allow cors
+builder.Services.AddCors(c =>
+{
+    c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 
 
 
@@ -26,10 +33,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// cấu hình file tĩnh
+app.UseStaticFiles();
+
 
 using var scope = app.Services.CreateScope();
 try

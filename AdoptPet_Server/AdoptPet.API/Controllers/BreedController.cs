@@ -1,6 +1,7 @@
 ﻿using AdoptPet.Application.DTOs;
 using AdoptPet.Application.DTOs.BreedDto;
 using AdoptPet.Application.Interfaces.IRepositories;
+using AdoptPet.Application.Interfaces.IService;
 using AdoptPet.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,12 @@ namespace AdoptPet.API.Controllers
     public class BreedController : ControllerBase
     {
         private readonly IGenericRepository<Breed> genericRepository;
+        private readonly IImageService imageService;
 
-        public BreedController(IGenericRepository<Breed> genericRepository)
+        public BreedController(IGenericRepository<Breed> genericRepository, IImageService imageService)
         {
             this.genericRepository = genericRepository;
+            this.imageService = imageService;
         }
 
         [HttpGet]
@@ -37,7 +40,7 @@ namespace AdoptPet.API.Controllers
 
         [HttpPost]
         [Route("add-breed")]
-        public async Task<IActionResult> AddBreed(BreedDto model)
+        public async Task<IActionResult> AddBreed([FromForm] BreedDto model, IFormFile file)
         {
             Breed newBreed = new Breed()
             {
@@ -45,8 +48,14 @@ namespace AdoptPet.API.Controllers
                 Description = model.Description,
                 ThumbPath = ""
             };
-
             var r = await genericRepository.AddAsync(newBreed);
+
+            if (file != null)
+            {
+                await imageService.SaveImage(file, "Breeds", newBreed.Id.ToString());
+                newBreed.ThumbPath = file.FileName;
+            }
+
             return Ok(new Success<Breed> { Status = true, Messages = [], Data = r });
         }
 

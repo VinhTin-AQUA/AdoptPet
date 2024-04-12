@@ -8,6 +8,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
+import { LocationService } from '../../../services/location.service';
 
 @Component({
 	selector: 'app-add-pet',
@@ -22,7 +23,7 @@ export class AddPetComponent {
 	districts: any = [];
 	wards: any = [];
 
-	constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+	constructor(private formBuilder: FormBuilder, private locationService: LocationService) {}
 
 	ngOnInit() {
 		this.petForm = this.formBuilder.group({
@@ -42,41 +43,35 @@ export class AddPetComponent {
 			petEntryDate: [new Date()],
 		});
 
-		this.getProvices();
-	}
-
-	private getProvices() {
-		this.http.get('https://vapi.vnappmob.com/api/province').subscribe({
+		this.locationService.getProvices().subscribe({
 			next: (res: any) => {
 				this.provinces = res.results;
 				// console.log(this.provinces);
 				this.petForm.controls['province'].setValue(this.provinces[0].province_id);
-        this.getDistricts(this.petForm.controls['province'].value);
+				this.getDistricts(this.petForm.controls['province'].value);
 			},
 		});
 	}
 
 	private getDistricts(provinceId: string) {
-		this.http.get('https://vapi.vnappmob.com/api/province/district/' + provinceId).subscribe({
+		this.locationService.getDistricts(provinceId).subscribe({
 			next: (res: any) => {
 				this.districts = res.results;
 				// console.log(this.provinces);
 				this.petForm.controls['district'].setValue(this.districts[0].district_id);
-        this.getWards(this.districts[0].district_id);
+				this.getWards(this.districts[0].district_id);
 			},
 		});
 	}
 
-  private getWards(districtId: string) {
-    this.http.get('https://vapi.vnappmob.com/api/province/ward/' + districtId).subscribe({
+	private getWards(districtId: string) {
+		this.locationService.getWards(districtId).subscribe({
 			next: (res: any) => {
 				this.wards = res.results;
 				this.petForm.controls['ward'].setValue(this.wards[0].ward_id);
-      },
+			},
 		});
-  }
-
-
+	}
 
 	onProviceChanged() {
 		this.getDistricts(this.petForm.controls['province'].value);
