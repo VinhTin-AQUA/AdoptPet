@@ -43,7 +43,7 @@ namespace VolunteerRoles.Infrastructure.Repositories
 
         public async Task SoftDelete(VolunteerRole model)
         {
-            model.IsDeleted = false; // Assuming Status field indicates soft delete
+            model.IsDeleted = !model.IsDeleted; // Assuming Status field indicates soft delete
             _context.Entry(model).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }

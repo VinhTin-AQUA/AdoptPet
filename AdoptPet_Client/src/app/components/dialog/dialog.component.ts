@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { DialogStore } from '../../shared/stores/dialogStore';
 import { patchState } from '@ngrx/signals';
+import { DialogStore } from '../../shared/stores/DialogStore';
 
 @Component({
 	selector: 'app-dialog',

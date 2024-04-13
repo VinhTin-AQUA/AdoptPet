@@ -22,7 +22,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetVolunteerRoles()
         {
             var roles = await _volunteerRoleService.GetAllVolunteerRolesAsync();
-            return Ok();
+            return Ok(new Success<List<VolunteerRole>>{ Status = true, Messages = [], Data = roles });
         }
 
         [HttpGet]
@@ -38,7 +38,7 @@ namespace AdoptPet.API.Controllers
         }
 
         [HttpPost]
-        [Route("add-volunteerrole")]
+        [Route("add-volunteerrole")] 
         public async Task<IActionResult> AddVolunteerRole(VolunteerRole role)
         {
             var newRole = await _volunteerRoleService.AddVolunteerRoleAsync(role);
@@ -69,8 +69,8 @@ namespace AdoptPet.API.Controllers
             return Ok(new Success<int> { Status = true, Messages = ["Xóa thành công"], Data = id });
         }
 
-        [HttpDelete]
-        [Route("soft-delete-volunteerrole")]
+        [HttpPut]
+        [Route("soft-delete-volunteerrole/{id}")]
         public async Task<IActionResult> SoftDeleteVolunteerRole(int id)
         {
             var deleted = await _volunteerRoleService.SoftDeleteVolunteerRoleAsync(id);

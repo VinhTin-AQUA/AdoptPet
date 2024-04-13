@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Role } from '../../../shared/models/role/role';
 import { RoleService } from '../../../services/role.service';
-import { FormsModule } from '@angular/forms';
-import { DialogStore } from '../../../shared/stores/dialogStore';
 import { patchState } from '@ngrx/signals';
+import { DialogStore } from '../../../shared/stores/DialogStore';
 
 @Component({
 	selector: 'app-role-manager',

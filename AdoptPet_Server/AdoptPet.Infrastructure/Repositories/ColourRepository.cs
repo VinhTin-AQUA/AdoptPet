@@ -32,21 +32,21 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<ICollection<Colour>> GetAllAsync()
         {
-            var r = await context.Colours.Where(c => c.IsDeleted == false).ToListAsync();
+            var r = await context.Colours.ToListAsync();
             return r;
         }
 
         public async Task<Colour?> GetByIdAsync(int id)
         {
             var r = await context.Colours
-                .Where(b => b.Id == id && b.IsDeleted == false)
+                .Where(b => b.Id == id)
                 .FirstOrDefaultAsync();
             return r;
         }
 
         public async Task SoftDelete(Colour model)
         {
-            model.IsDeleted = true; 
+            model.IsDeleted = !model.IsDeleted; 
             context.Colours.Update(model);
             await context.SaveChangesAsync();
         }
