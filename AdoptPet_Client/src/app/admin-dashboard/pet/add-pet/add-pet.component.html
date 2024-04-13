@@ -41,7 +41,7 @@
                             <label
                                 for="first_name"
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Tên thú cưng</label
+                                >Tên thú cưng  <span class="text-red-600">*</span></label
                             >
                             <input
                                 type="text"
@@ -58,7 +58,7 @@
                             <label
                                 for="last_name"
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Email chủ thú cưng</label
+                                >Email chủ thú cưng <span class="text-red-600">*</span></label
                             >
                             <input
                                 type="email"
@@ -74,7 +74,7 @@
                             <label
                                 for="company"
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Độ tuổi</label
+                                >Độ tuổi <span class="text-red-600">*</span></label
                             >
                  
                             <input
@@ -96,7 +96,7 @@
                         <!-- tinh thanh pho -->
                         <div>
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Tỉnh thành phố</label
+                                >Tỉnh thành phố <span class="text-red-600">*</span></label
                             >
                             <select (change)="onProviceChanged()"
                                 formControlName="province"
@@ -112,7 +112,7 @@
                         <!-- quan huyen -->
                         <div>
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Quận / Huyện</label
+                                >Quận / Huyện <span class="text-red-600">*</span></label
                             >
                             <!-- <input
                                 type="tel"
@@ -136,7 +136,7 @@
                         <!-- xa -->
                         <div>
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Thị xã / Phường</label
+                                >Thị xã / Phường <span class="text-red-600">*</span></label
                             >
                             <!-- <input
                                 type="tel"
@@ -183,7 +183,7 @@
                             <label
                                 for="website"
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Câng nặng</label
+                                >Câng nặng <span class="text-red-600">*</span></label
                             >
                             <input
                                 type="number"
@@ -199,7 +199,7 @@
                             <label
                                 for="website"
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Giới tính</label
+                                >Giới tính <span class="text-red-600">*</span></label
                             >
                             <select formControlName="petGender"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
@@ -214,7 +214,7 @@
                             <label
                                 for="visitors"
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Triệt sản</label
+                                >Triệt sản <span class="text-red-600">*</span></label
                             >
                             <select formControlName="petDesexed"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
@@ -229,7 +229,7 @@
                             <label
                                 for="visitors"
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Tẩy giun</label
+                                >Tẩy giun <span class="text-red-600">*</span></label
                             >
                             <select formControlName="petWormed"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
@@ -244,7 +244,7 @@
                             <label
                                 for="visitors"
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Tim vắc xin</label
+                                >Tim vắc xin <span class="text-red-600">*</span></label
                             >
                             <select formControlName="petVaccined"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
@@ -259,7 +259,7 @@
                             <label
                                 for="visitors"
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Mã định danh (microchip)</label
+                                >Mã định danh (microchip) <span class="text-red-600">*</span></label
                             >
                             <select formControlName="microchipped"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
@@ -273,7 +273,7 @@
                         <div>
                             <label
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Ngày nhận nuôi</label
+                                >Ngày nhận nuôi <span class="text-red-600">*</span></label
                             >
                             <input
                                 type="date"
@@ -329,7 +329,7 @@
                     <label
                         for="confirm_password"
                         class="block mb-2 text-sm font-medium text-gray-900"
-                        >Mô tả</label
+                        >Mô tả <span class="text-red-600">*</span></label
                     >
                     <!-- <input
                         type="password"

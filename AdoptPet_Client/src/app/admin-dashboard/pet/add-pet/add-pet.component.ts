@@ -47,7 +47,7 @@ export class AddPetComponent {
 			next: (res: any) => {
 				this.provinces = res.results;
 				// console.log(this.provinces);
-				this.petForm.controls['province'].setValue(this.provinces[0].province_id);
+				this.petForm.controls['province'].setValue('01');
 				this.getDistricts(this.petForm.controls['province'].value);
 			},
 		});

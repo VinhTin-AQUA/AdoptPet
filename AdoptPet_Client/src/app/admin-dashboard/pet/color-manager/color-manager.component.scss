@@ -16,6 +16,6 @@
     @apply pt-3;
 
     .pet-list {
-        @apply flex flex-wrap;
+        @apply flex flex-wrap gap-2;
     }
 }
