@@ -4,6 +4,7 @@ using AdoptPet.Application.DTOs.BreedDto;
 using AdoptPet.Application.DTOs.Location;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdoptPet.API.Controllers
@@ -12,16 +13,16 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class LocationController : ControllerBase
     {
-        private readonly IGenericRepository<Location> genericRepository;
-        public LocationController (IGenericRepository<Location> genericRepository)
+        private readonly LocationService locationService;
+        public LocationController (LocationService locationService)
         {
-            this.genericRepository = genericRepository;
+            this.locationService = locationService;
         }
         [HttpGet]
         [Route("get-location-by-id/{id}")]
         public async Task<IActionResult> GetBreedById(int id)
         {
-            var r = await genericRepository.GetByIdAsync(id);
+            var r = await locationService.GetByIdAsync(id);
 
             return Ok(new Success<Location> { Status = true, Messages = [], Data = r });
         }
@@ -30,7 +31,7 @@ namespace AdoptPet.API.Controllers
         [Route("get-all-location")]
         public async Task<IActionResult> GetAllLocation()
         {
-            var locations = await genericRepository.GetAllAsync();
+            var locations = await locationService.GetAllAsync();
             return Ok(new Success<List<Location>> { Status = true, Messages = [], Data = locations.ToList() });
         }
 
@@ -38,15 +39,7 @@ namespace AdoptPet.API.Controllers
         [Route("add-location")]
         public async Task<IActionResult> AddLocation(LocationDto model)
         {
-            Location newLocation = new Location()
-            {
-                Street = model.Street,
-                Wards = model.Wards,
-                DistrictCity = model.DistrictCity,
-                ProvinceCity = model.ProvinceCity,
-            };
-
-            var r = await genericRepository.AddAsync(newLocation);
+            var r = await locationService.AddAsync(model);
             return Ok(new Success<Location> { Status = true, Messages = [], Data = r });
         }
 
@@ -54,35 +47,15 @@ namespace AdoptPet.API.Controllers
         [Route("update-location/{id}")]
         public async Task<IActionResult> UpdateLocation(int id, LocationDto model)
         {
-            var oldLoction = await genericRepository.GetByIdAsync(id);
-
-            if (oldLoction == null)
-            {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Location not found"], Data = null });
-            }
-            oldLoction.Street = model.Street;
-            oldLoction.Wards = model.Wards;
-            oldLoction.DistrictCity = model.DistrictCity;
-            oldLoction.ProvinceCity = model.ProvinceCity;
-
-            /* cap nhat anhr */
-
-            await genericRepository.UpdateAsync(oldLoction);
-
-            return Ok(new Success<LocationDto> { Status = true, Messages = ["Update successfully"], Data = model });
+            var oldLoction = await locationService.UpdateAsync(id, model);
+            return Ok(new Success<Location> { Status = true, Messages = ["Update successfully"], Data = oldLoction });
         }
 
         [HttpDelete]
-        [Route("delete-permanently-location/{id}")] // 
+        [Route("delete-permanently-location/{id}")] 
         public async Task<IActionResult> DeletePermanentlyLocation(int id)
         {
-            var location = await genericRepository.GetByIdAsync(id);
-
-            if (location == null)
-            {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Location not found"], Data = null });
-            }
-            await genericRepository.DeletePermanentlyAsync(location);
+            await locationService.DeletePermanentlyAsync(id);
             return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
         }
 
@@ -90,13 +63,7 @@ namespace AdoptPet.API.Controllers
         [Route("soft-delete-location/{id}")] 
         public async Task<IActionResult> DeleteLoction(int id)
         {
-            var location = await genericRepository.GetByIdAsync(id);
-
-            if (location == null)
-            {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Location not found"], Data = null });
-            }
-            await genericRepository.SoftDelete(location);
+            await locationService.SoftDelete(id);
             return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
         }
     }
