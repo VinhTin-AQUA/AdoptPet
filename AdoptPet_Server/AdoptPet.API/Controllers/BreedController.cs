@@ -27,7 +27,7 @@ namespace AdoptPet.API.Controllers
         {
             var r = await genericRepository.GetByIdAsync(id);
 
-            return Ok(new Success<Breed> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Breed> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpGet]
@@ -35,7 +35,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetAllBreeds()
         {
             var breeds = await genericRepository.GetAllAsync();
-            return Ok(new Success<List<Breed>> { Status = true, Messages = [], Data = breeds.ToList() });
+            return Ok(new Success<List<Breed>> { Status = true, Title = "", Messages = [], Data = breeds.ToList() });
         }
 
         [HttpPost]
@@ -56,7 +56,7 @@ namespace AdoptPet.API.Controllers
                 newBreed.ThumbPath = file.FileName;
             }
 
-            return Ok(new Success<Breed> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Breed> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpPut]
@@ -67,7 +67,7 @@ namespace AdoptPet.API.Controllers
 
             if(oldBreed == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Breed not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "Không tìm thấy thú cưng", Messages = ["Xin vui lòng thử lại."], Data = null });
             }
             oldBreed.Description = model.Description;
             oldBreed.BreedName = model.BreedName;
@@ -76,7 +76,7 @@ namespace AdoptPet.API.Controllers
 
             await genericRepository.UpdateAsync(oldBreed);
 
-            return Ok(new Success<BreedDto> { Status = true, Messages = ["Update successfully"], Data = model });
+            return Ok(new Success<BreedDto> { Status = true, Title = "", Messages = ["Update successfully"], Data = model });
         }
 
         [HttpDelete]
@@ -87,10 +87,10 @@ namespace AdoptPet.API.Controllers
 
             if(breed == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Breed not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Xin vui lòng thử lại"], Data = null });
             }
             await genericRepository.DeletePermanentlyAsync(breed);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Xóa thành công"], Data = null });
         }
 
         [HttpPut]
@@ -101,10 +101,10 @@ namespace AdoptPet.API.Controllers
 
             if (breed == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Breed not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "Không tìm thấy giống", Messages = ["Xin vui lòng thử lại"], Data = null });
             }
             await genericRepository.SoftDelete(breed);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
     }
 }

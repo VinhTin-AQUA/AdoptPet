@@ -21,7 +21,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetDonorById(int id)
         {
             var r = await genericRepository.GetByIdAsync(id);
-            return Ok(new Success<Donor> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Donor> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpGet]
@@ -29,7 +29,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetAllDonor()
         {
             var donors = await genericRepository.GetAllAsync();
-            return Ok(new Success<List<Donor>> { Status = true, Messages = [], Data = donors.ToList() });
+            return Ok(new Success<List<Donor>> { Status = true, Title = "", Messages = [], Data = donors.ToList() });
         }
 
         [HttpPost]
@@ -43,7 +43,7 @@ namespace AdoptPet.API.Controllers
             };
 
             var r = await genericRepository.AddAsync(newDonor);
-            return Ok(new Success<Donor> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Donor> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpPut]
@@ -54,7 +54,7 @@ namespace AdoptPet.API.Controllers
 
             if (oldDonor == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Donor not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Donor not found"], Data = null });
             }
             oldDonor.Name = model.Name;
             oldDonor.TotalDonation = model.TotalDonation;
@@ -63,7 +63,7 @@ namespace AdoptPet.API.Controllers
 
             await genericRepository.UpdateAsync(oldDonor);
 
-            return Ok(new Success<DonorDto> { Status = true, Messages = ["Update successfully"], Data = model });
+            return Ok(new Success<DonorDto> { Status = true, Title = "", Messages = ["Update successfully"], Data = model });
         }
 
         [HttpDelete]
@@ -74,10 +74,10 @@ namespace AdoptPet.API.Controllers
 
             if (donor == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Donor not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Donor not found"], Data = null });
             }
             await genericRepository.DeletePermanentlyAsync(donor);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
 
         [HttpPut]
@@ -88,10 +88,10 @@ namespace AdoptPet.API.Controllers
 
             if (donor == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Donor not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Donor not found"], Data = null });
             }
             await genericRepository.SoftDelete(donor);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
     }
 }

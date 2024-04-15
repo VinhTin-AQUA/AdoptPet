@@ -23,7 +23,7 @@ namespace AdoptPet.API.Controllers
         {
             var r = await genericRepository.GetByIdAsync(id);
 
-            return Ok(new Success<Location> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Location> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetAllLocation()
         {
             var locations = await genericRepository.GetAllAsync();
-            return Ok(new Success<List<Location>> { Status = true, Messages = [], Data = locations.ToList() });
+            return Ok(new Success<List<Location>> { Status = true, Title = "", Messages = [], Data = locations.ToList() });
         }
 
         [HttpPost]
@@ -47,7 +47,7 @@ namespace AdoptPet.API.Controllers
             };
 
             var r = await genericRepository.AddAsync(newLocation);
-            return Ok(new Success<Location> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Location> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpPut]
@@ -58,7 +58,7 @@ namespace AdoptPet.API.Controllers
 
             if (oldLoction == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Location not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Location not found"], Data = null });
             }
             oldLoction.Street = model.Street;
             oldLoction.Wards = model.Wards;
@@ -69,7 +69,7 @@ namespace AdoptPet.API.Controllers
 
             await genericRepository.UpdateAsync(oldLoction);
 
-            return Ok(new Success<LocationDto> { Status = true, Messages = ["Update successfully"], Data = model });
+            return Ok(new Success<LocationDto> { Status = true, Title = "", Messages = ["Update successfully"], Data = model });
         }
 
         [HttpDelete]
@@ -83,7 +83,7 @@ namespace AdoptPet.API.Controllers
                 return BadRequest(new Success<object> { Status = false, Messages = ["Location not found"], Data = null });
             }
             await genericRepository.DeletePermanentlyAsync(location);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
 
         [HttpPut]
@@ -94,10 +94,10 @@ namespace AdoptPet.API.Controllers
 
             if (location == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Location not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Location not found"], Data = null });
             }
             await genericRepository.SoftDelete(location);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
     }
 }

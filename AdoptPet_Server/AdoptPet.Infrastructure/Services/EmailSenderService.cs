@@ -77,7 +77,7 @@ namespace AdoptPet.Infrastructure.Services
                 $"{configuration["EmailConfiguration:ConfirmationEmailPath"]}" +
                 $"?token={token}&email={user.Email}";
 
-            Message message = new Message(new string[] { user.Email! },
+            Message message = new([user.Email!],
                 "Confirm Email",
                 $"<p>We really happy when you using my app. Click <a href='{url}'>here</a> to verify email</p>"!);
             return await SendEmail(message);

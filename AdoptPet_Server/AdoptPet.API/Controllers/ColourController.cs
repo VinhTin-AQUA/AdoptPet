@@ -23,7 +23,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetColourById(int id)
         {
             var r = await colourService.GetByIdAsync(id);
-            return Ok(new Success<Colour> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Colour> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetAllColours()
         {
             var colours = await colourService.GetAllAsync();
-            return Ok(new Success<List<Colour>> { Status = true, Messages = [], Data = colours.ToList() });
+            return Ok(new Success<List<Colour>> { Status = true, Title = "", Messages = [], Data = colours.ToList() });
         }
 
         [HttpPost]
@@ -39,7 +39,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> AddColour(ColourDto model)
         {
             var r = await colourService.AddAsync(model);
-            return Ok(new Success<Colour> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Colour> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpPut]
@@ -47,7 +47,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> UpdateColour(int id, ColourDto model)
         {
             var oldColour = await colourService.UpdateAsync(id, model);
-            return Ok(new Success<Colour> { Status = true, Messages = ["Update successfully"], Data = oldColour });
+            return Ok(new Success<Colour> { Status = true, Title = "", Messages = ["Update successfully"], Data = oldColour });
         }
 
         [HttpDelete]
@@ -55,7 +55,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> DeletePermanentlyColour(int id)
         {
             await colourService.DeletePermanentlyAsync(id);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
 
         [HttpPut]
@@ -63,7 +63,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> DeleteColour(int id)
         {
             await colourService.SoftDelete(id);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
     }
 }

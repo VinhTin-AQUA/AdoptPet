@@ -26,7 +26,7 @@ namespace AdoptPet.API.Controllers
             var checkRoleExists = await roleRepository.RoleExits(roleName);
             if(checkRoleExists == true)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = [$"{roleName} đã tồn tại"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = [$"{roleName} đã tồn tại"], Data = null });
             }
 
             var newRole = new IdentityRole(roleName);
@@ -35,10 +35,10 @@ namespace AdoptPet.API.Controllers
             var r = await roleRepository.CreateRoleAsync(newRole);
             if (r.Succeeded == false)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = r.Errors.Select(e => e.Description).ToList() });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = r.Errors.Select(e => e.Description).ToList() });
             }
 
-            return Ok(new Success<object> { Status = true, Messages = [$"Create {roleName} role successfully"], Data = new { Id = newRole.Id, RoleName = newRole.Name } });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = [$"Create {roleName} role successfully"], Data = new { Id = newRole.Id, RoleName = newRole.Name } });
         }
 
 
@@ -49,10 +49,10 @@ namespace AdoptPet.API.Controllers
             var r = await roleRepository.DeleteRoleAsync(id);
             if (r.Succeeded == false)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = r.Errors.Select(e => e.Description).ToList() });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = r.Errors.Select(e => e.Description).ToList() });
             }
 
-            return Ok(new Success<object> { Status = true, Messages = [$"Delete role successfully"] });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = [$"Delete role successfully"] });
         }
 
         [HttpGet]
@@ -65,7 +65,7 @@ namespace AdoptPet.API.Controllers
                 Id = r.Id,
                 RoleName = r.Name
             }).ToList();
-            return Ok(new Success<object> { Status = true, Messages = [], Data = _roles });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = [], Data = _roles });
         }
     }
 }

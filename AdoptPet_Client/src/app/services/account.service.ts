@@ -15,7 +15,13 @@ export class AccountService {
     return this.http.post(`${this.baseApUrl}/sign-up`,model);
   }
 
+  confirmEmail(email: string, token: string) {
+    return this.http.put(`${this.baseApUrl}/confirm-email`,{email: email, token: token});
+  }
+
   signin() {
 
   }
+
+
 }

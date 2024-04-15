@@ -22,7 +22,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetVolunteerRoles()
         {
             var roles = await _volunteerRoleService.GetAllVolunteerRolesAsync();
-            return Ok(new Success<List<VolunteerRole>>{ Status = true, Messages = [], Data = roles });
+            return Ok(new Success<List<VolunteerRole>>{ Status = true, Title = "", Messages = [], Data = roles });
         }
 
         [HttpGet]
@@ -32,9 +32,9 @@ namespace AdoptPet.API.Controllers
             var role = await _volunteerRoleService.GetVolunteerRoleByIdAsync(id);
             if (role == null)
             {
-                return NotFound(new Success<object> { Status = true, Messages = ["vai trò không tìm thấy"], Data = null });
+                return NotFound(new Success<object> { Status = true, Title = "", Messages = ["vai trò không tìm thấy"], Data = null });
             }
-            return Ok(new Success<VolunteerRole> { Status = true, Messages = [], Data = role });
+            return Ok(new Success<VolunteerRole> { Status = true, Title = "", Messages = [], Data = role });
         }
 
         [HttpPost]
@@ -42,7 +42,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> AddVolunteerRole(VolunteerRole role)
         {
             var newRole = await _volunteerRoleService.AddVolunteerRoleAsync(role);
-            return Ok(new Success<VolunteerRole> { Status = true, Messages = [], Data = newRole });
+            return Ok(new Success<VolunteerRole> { Status = true, Title = "", Messages = [], Data = newRole });
         }
 
         [HttpPut]
@@ -52,9 +52,9 @@ namespace AdoptPet.API.Controllers
             var updated = await _volunteerRoleService.UpdateVolunteerRoleAsync(role);
             if (!updated)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Có lỗi trong quá trình cập nhật. Xin vui lòng thử lại"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Có lỗi trong quá trình cập nhật. Xin vui lòng thử lại"], Data = null });
             }
-            return Ok(new Success<VolunteerRole> { Status = true, Messages = ["Cập nhật thành công"], Data = role });
+            return Ok(new Success<VolunteerRole> { Status = true, Title = "", Messages = ["Cập nhật thành công"], Data = role });
         }
 
         [HttpDelete]
@@ -64,9 +64,9 @@ namespace AdoptPet.API.Controllers
             var deleted = await _volunteerRoleService.DeleteVolunteerRoleAsync(id);
             if (!deleted)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Có lỗi trong quá trình xóa. Xin vui lòng thử lại"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Có lỗi trong quá trình xóa. Xin vui lòng thử lại"], Data = null });
             }
-            return Ok(new Success<int> { Status = true, Messages = ["Xóa thành công"], Data = id });
+            return Ok(new Success<int> { Status = true, Title = "", Messages = ["Xóa thành công"], Data = id });
         }
 
         [HttpPut]
@@ -76,9 +76,9 @@ namespace AdoptPet.API.Controllers
             var deleted = await _volunteerRoleService.SoftDeleteVolunteerRoleAsync(id);
             if (!deleted)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Có lỗi trong quá trình xóa. Xin vui lòng thử lại"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Có lỗi trong quá trình xóa. Xin vui lòng thử lại"], Data = null });
             }
-            return Ok(new Success<int> { Status = true, Messages = ["Xóa thành công"], Data = id });
+            return Ok(new Success<int> { Status = true, Title = "", Messages = ["Xóa thành công"], Data = id });
         }
     }
 }

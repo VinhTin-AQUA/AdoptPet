@@ -48,8 +48,9 @@ namespace AdoptPet.API.Controllers
             {
                 Success<object> error = new()
                 {
+                    Title = "Email đã được đăng ký",
                     Status = false,
-                    Messages = ["Email already taken. Please choose another email"]
+                    Messages = ["Email này đã được đăng ký. Vui lòng chọn một email khác."]
                 };
                 return BadRequest(error);
             }
@@ -66,6 +67,7 @@ namespace AdoptPet.API.Controllers
             {
                 Success<object> error = new()
                 {
+                    Title = "Có lỗi trong quá trình đăng ký",
                     Status = false,
                     Messages = r.Errors.Select(e => e.Description).ToList()
                 };
@@ -82,7 +84,7 @@ namespace AdoptPet.API.Controllers
                 return Ok(new JsonResult(new { title = "Verify Your Email", message = "Please check your email to confirm email to verify your account." }));
             }
 
-            return Ok(new Success<object> { Status = true, Messages = ["SignIn successfully"] });
+            return BadRequest(new Success<object> { Status = true, Title = "Có lỗi trong quá trình đăng ký", Messages = ["Vui lòng đăng ký lại"] });
         }
 
         [HttpPost]
@@ -98,19 +100,19 @@ namespace AdoptPet.API.Controllers
 
             if (user == null)
             {
-                return NotFound(new Success<object> { Status = false, Messages = ["Incorrect email or password"] });
+                return NotFound(new Success<object> { Status = false, Title = "Email hoặc mật khẩu không chính xác.", Messages = ["Vui lòng đăng nhập lại"] });
             }
 
             var r = await accountRepository.SignInAsync(user, model.Password);
 
             if (r.IsLockedOut == true)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = [$"You has been locked. Login after {user.LockoutEnd}"] });
+                return BadRequest(new Success<object> { Status = false, Title = "Tài khoản đã bị khóa", Messages = [$"Đăng nhập sau {user.LockoutEnd}"] });
             }
 
             if (r.Succeeded == false)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Incorrect email or password"] });
+                return BadRequest(new Success<object> { Status = false, Title = "Email hoặc mật khẩu không chính xác.", Messages = ["Incorrect email or password"] });
             }
             var userDto = new AccountDto
             {
@@ -119,7 +121,7 @@ namespace AdoptPet.API.Controllers
                 Token = await jwtService.CreateJWT(user)
             };
 
-            return Ok(new Success<AccountDto> { Status = true, Messages = ["Login successfully"], Data = userDto });
+            return Ok(new Success<AccountDto> { Status = true, Title = "Đăng nhập thành công", Messages = ["Đăng nhập thành công"], Data = userDto });
         }
 
         // phương thức này bấm ở client để gửi đến server
@@ -131,12 +133,12 @@ namespace AdoptPet.API.Controllers
             if (user == null)
             {
 
-                return NotFound(new Success<object> { Status = false, Messages = ["This email has not been registered."] });
+                return NotFound(new Success<object> { Status = false, Title = "Không tìm thấy tài khoản", Messages = ["Vui lòng nhập lại email"] });
             }
 
             if (user.EmailConfirmed == true)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Your email was confirm before. Please login your account"] });
+                return BadRequest(new Success<object> { Status = false, Title = "Email đã xác thực", Messages = ["Xin vui lòng đăng nhập"] });
             }
 
             try
@@ -147,13 +149,13 @@ namespace AdoptPet.API.Controllers
 
                 if (result.Succeeded == true)
                 {
-                    return Ok(new Success<object> { Status = true, Messages = ["Your email addres is comfirmed. You can login now."] });
+                    return Ok(new Success<object> { Status = true, Title = "Xác thực thành công", Messages = ["Đăng nhập ngay bây giờ."] });
                 }
-                return BadRequest(new Success<object> { Status = false, Messages = ["Invalid token. Try again."] });
+                return BadRequest(new Success<object> { Status = false, Title = "Có lỗi", Messages = ["Invalid token. Try again."] });
             }
             catch (Exception)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Invalid token. Try again."] });
+                return BadRequest(new Success<object> { Status = false, Title = "Có lỗi", Messages = ["Invalid token. Try again."] });
             }
         }
 
@@ -163,18 +165,18 @@ namespace AdoptPet.API.Controllers
         {
             if (string.IsNullOrEmpty(email) == true)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Incorrect Email or Password"] });
+                return BadRequest(new Success<object> { Status = false, Title = "Có lỗi", Messages = ["Vui lòng nhập email"] });
             }
 
             var user = await accountRepository.GetUserByEmailAsync(email);
             if (user == null)
             {
-                return NotFound(new Success<object> { Status = false, Messages = ["Incorrect Email or Password"] });
+                return NotFound(new Success<object> { Status = false, Title = "Không tìm thấy người dùng", Messages = ["Xin vui lòng nhập lại email."] });
             }
 
             if (user.EmailConfirmed == true)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Your email is conformed before. You can login now."] });
+                return BadRequest(new Success<object> { Status = false, Title = "Email đã xác thực", Messages = ["Đăng nhập ngay bây giờ."] });
             }
 
             try
@@ -182,13 +184,13 @@ namespace AdoptPet.API.Controllers
                 string token = await accountRepository.GenerateEmailConfirmationTokenAsync(user);
                 if (await emailSenderService.SendEmailConfirmAsync(user, token))
                 {
-                    return Ok(new Success<object> { Status = true, Messages = ["Please check your email to confirm email to verify your account."] });
+                    return Ok(new Success<object> { Status = true, Title = "Đã gửi email", Messages = ["Xin vui lòng kiểm tra email để xác thực"] });
                 }
-                return BadRequest(new Success<object> { Status = false, Messages = ["Fail to send email confirmation. Please try again."] });
+                return BadRequest(new Success<object> { Status = false, Title = "Có lỗi", Messages = ["Xác thực thất bại. Vui lòng thử lại."] });
             }
             catch (Exception)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Fail to send email confirmation. Please try again."] });
+                return BadRequest(new Success<object> { Status = false, Title = "Xác thực thất bại", Messages = ["Xác thực thất bại. Vui lòng thử lại."] });
             }
         }
 
@@ -199,13 +201,13 @@ namespace AdoptPet.API.Controllers
         {
             if (string.IsNullOrEmpty(email))
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Email is incorrect"] });
+                return BadRequest(new Success<object> { Status = false, Title = "Có lỗi", Messages = ["Xin vui lòng nhập email"] });
             }
 
             var user = await accountRepository.GetUserByEmailAsync(email);
             if (user == null)
             {
-                return NotFound(new Success<object> { Status = false, Messages = ["Email is incorrect"] });
+                return NotFound(new Success<object> { Status = false, Title = "Không tìm thấy tài khoản", Messages = ["Xin vui lòng nhập lại email."] });
             }
 
             try
@@ -213,13 +215,13 @@ namespace AdoptPet.API.Controllers
                 string token = await accountRepository.GeneratePasswordResetTokenAsync(user);
                 if (await emailSenderService.SendForgotPasswordEmail(user, token))
                 {
-                    return Ok(new Success<object> { Status = true, Messages = ["Forgot password email sent. Please check your email. "] });
+                    return Ok(new Success<object> { Status = true, Title = "Đã gửi email", Messages = ["Xin vui lòng kiểm tra email để lấy lại mật khẩu"] });
                 }
-                return BadRequest(new Success<object> { Status = false, Messages = ["Failed to sent email. Please contact again."] });
+                return BadRequest(new Success<object> { Status = false, Title = "Có lỗi", Messages = ["Gửi email thất bại. Xin vui lòng thử lại."] });
             }
             catch (Exception)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Failed to sent email. Please contact again."] });
+                return BadRequest(new Success<object> { Status = false, Title = "Có lỗi", Messages = ["Gửi email thất bại. Xin vui lòng thử lại."] });
             }
         }
 
@@ -235,7 +237,7 @@ namespace AdoptPet.API.Controllers
             var user = await accountRepository.GetUserByEmailAsync(model.Email);
             if (user == null)
             {
-                return NotFound(new Success<object> { Status = false, Messages = ["Email is incorrect"] });
+                return NotFound(new Success<object> { Status = false, Title = "Không tìm thấy tài khoản", Messages = ["Vui lòng nhập lại email"] });
             }
 
             try
@@ -246,13 +248,13 @@ namespace AdoptPet.API.Controllers
 
                 if (result.Succeeded == true)
                 {
-                    return Ok(new Success<object> { Status = true, Messages = ["Password has been reseted. Your password is reseted. You can login now."] });
+                    return Ok(new Success<object> { Status = true, Title = "Đổi mật khẩu thành công", Messages = ["Mật khẩu của bạn đã được thay đổi. Bạn có thể đăng nhập ngay bây giờ."] });
                 }
-                return BadRequest(new Success<object> { Status = false, Messages = ["Invalid token. Try again."] });
+                return BadRequest(new Success<object> { Status = false, Title = "Có lỗi", Messages = ["Token không hợp lệ."] });
             }
             catch (Exception)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Invalid token. Try again."] });
+                return BadRequest(new Success<object> { Status = false, Title = "Có lỗi", Messages = ["Token không hợp lệ."] });
             }
         }
 
@@ -273,15 +275,15 @@ namespace AdoptPet.API.Controllers
             var user = await accountRepository.GetUserByEmailAsync(model.Email);
             if (user == null)
             {
-                return NotFound(new Success<object> { Status = false, Messages = ["Incorrect email or password"] });
+                return NotFound(new Success<object> { Status = false, Title = "Không tìm thấy tài khoản", Messages = ["Vui lòng nhập lại email."] });
             }
             var r = await accountRepository.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
             if (r.Succeeded == false)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = r.Errors.Select(e => e.Description).ToList() });
+                return BadRequest(new Success<object> { Status = false, Title = "Có lỗi", Messages = r.Errors.Select(e => e.Description).ToList() });
             }
 
-            return Ok(new Success<object> { Status = true, Messages = ["Password change successfully"] });
+            return Ok(new Success<object> { Status = true, Title = "Thay đổi mật khẩu thành công", Messages = ["Thay đổi mật khẩu thành công."] });
         }
     }
 }

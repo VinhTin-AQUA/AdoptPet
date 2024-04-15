@@ -23,7 +23,7 @@ namespace AdoptPet.API.Controllers
         {
             var r = await genericRepository.GetByIdAsync(id);
 
-            return Ok(new Success<Owner> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Owner> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetAllOwners()
         {
             var owners = await genericRepository.GetAllAsync();
-            return Ok(new Success<List<Owner>> { Status = true, Messages = [], Data = owners.ToList() });
+            return Ok(new Success<List<Owner>> { Status = true, Title = "", Messages = [], Data = owners.ToList() });
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace AdoptPet.API.Controllers
             };
 
             var r = await genericRepository.AddAsync(newOwner);
-            return Ok(new Success<Owner> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Owner> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpPut]
@@ -55,14 +55,14 @@ namespace AdoptPet.API.Controllers
 
             if (oldOwner == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Owner not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Owner not found"], Data = null });
             }
 
             /* cap nhat anhr */
 
             await genericRepository.UpdateAsync(oldOwner);
 
-            return Ok(new Success<OwnerDto> { Status = true, Messages = ["Update successfully"], Data = model });
+            return Ok(new Success<OwnerDto> { Status = true, Title = "", Messages = ["Update successfully"], Data = model });
         }
 
         [HttpDelete]
@@ -73,10 +73,10 @@ namespace AdoptPet.API.Controllers
 
             if (owner == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Owner not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Owner not found"], Data = null });
             }
             await genericRepository.DeletePermanentlyAsync(owner);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
 
         [HttpPut]
@@ -87,10 +87,10 @@ namespace AdoptPet.API.Controllers
 
             if (owner == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Owner not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Owner not found"], Data = null });
             }
             await genericRepository.SoftDelete(owner);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
     }
 }

@@ -22,14 +22,14 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetDonorPetAuditById(int id)
         {
             var r = await genericRepository.GetByIdAsync(id);
-            return Ok(new Success<DonorPetAudit> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<DonorPetAudit> { Status = true, Title = "", Messages = [], Data = r });
         }
         [HttpGet]
         [Route("get-all-donorpetaudit")]
         public async Task<IActionResult> GetAllDonorPetAudit()
         {
             var donorPetAudits = await genericRepository.GetAllAsync();
-            return Ok(new Success<List<DonorPetAudit>> { Status = true, Messages = [], Data = donorPetAudits.ToList() });
+            return Ok(new Success<List<DonorPetAudit>> { Status = true, Title = "", Messages = [], Data = donorPetAudits.ToList() });
         }
 
         [HttpPost]
@@ -45,7 +45,7 @@ namespace AdoptPet.API.Controllers
             };
 
             var r = await genericRepository.AddAsync(newDonorPetAudit);
-            return Ok(new Success<DonorPetAudit> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<DonorPetAudit> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpPut]
@@ -56,7 +56,7 @@ namespace AdoptPet.API.Controllers
 
             if (oldDonorPetAudit == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["DonorPetAudit not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["DonorPetAudit not found"], Data = null });
             }
             oldDonorPetAudit.LastDonation = model.LastDonation;
             oldDonorPetAudit.Version = model.Version;
@@ -67,7 +67,7 @@ namespace AdoptPet.API.Controllers
 
             await genericRepository.UpdateAsync(oldDonorPetAudit);
 
-            return Ok(new Success<DonorPetAuditDto> { Status = true, Messages = ["Update successfully"], Data = model });
+            return Ok(new Success<DonorPetAuditDto> { Status = true, Title = "", Messages = ["Update successfully"], Data = model });
         }
 
         [HttpDelete]
@@ -78,10 +78,10 @@ namespace AdoptPet.API.Controllers
 
             if (donorPetAudit == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["DonorPetAudit not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["DonorPetAudit not found"], Data = null });
             }
             await genericRepository.DeletePermanentlyAsync(donorPetAudit);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
 
         [HttpPut]
@@ -92,10 +92,10 @@ namespace AdoptPet.API.Controllers
 
             if (donorPetAudit == null)
             {
-                return BadRequest(new Success<object> { Status = false, Messages = ["DonorPetAudit not found"], Data = null });
+                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["DonorPetAudit not found"], Data = null });
             }
             await genericRepository.SoftDelete(donorPetAudit);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
     }
 }
