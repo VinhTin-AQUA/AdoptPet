@@ -1,8 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+using AdoptPet.Application.DTOs;
+using AdoptPet.Application.DTOs.Location;
+using AdoptPet.Application.DTOs.Pet;
 using AdoptPet.Application.Interfaces;
+using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 

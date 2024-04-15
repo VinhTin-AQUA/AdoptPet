@@ -5,6 +5,7 @@ using AdoptPet.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AdoptPet.Application.DTOs.Owner;
+using AdoptPet.Infrastructure.Services;
 
 namespace AdoptPet.API.Controllers
 {
@@ -12,16 +13,16 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class OwnerController : ControllerBase
     {
-        private readonly IGenericRepository<Owner> genericRepository;
-        public OwnerController(IGenericRepository<Owner> genericRepository)
+        private readonly OwnerService ownerService;
+        public OwnerController(OwnerService ownerService)
         {
-            this.genericRepository = genericRepository;
+            this.ownerService = ownerService;
         }
         [HttpGet]
         [Route("get-owner-by-id/{id}")]
         public async Task<IActionResult> GetOwnerById(int id)
         {
-            var r = await genericRepository.GetByIdAsync(id);
+            var r = await ownerService.GetByIdAsync(id);
 
             return Ok(new Success<Owner> { Status = true, Title = "", Messages = [], Data = r });
         }
@@ -30,67 +31,40 @@ namespace AdoptPet.API.Controllers
         [Route("get-all-owner")]
         public async Task<IActionResult> GetAllOwners()
         {
-            var owners = await genericRepository.GetAllAsync();
-            return Ok(new Success<List<Owner>> { Status = true, Title = "", Messages = [], Data = owners.ToList() });
+            var owners = await ownerService.GetAllAsync();
+            return Ok(new Success<List<Owner>> { Status = true, Messages = [], Data = owners.ToList() });
         }
 
         [HttpPost]
         [Route("add-owner")]
         public async Task<IActionResult> AddOwner(OwnerDto model)
         {
-            Owner newOwner = new Owner()
-            {
-       
-            };
-
-            var r = await genericRepository.AddAsync(newOwner);
-            return Ok(new Success<Owner> { Status = true, Title = "", Messages = [], Data = r });
+            var r = await ownerService.AddAsync(model);
+            return Ok(new Success<Owner> { Status = true, Messages = [], Data = r });
         }
 
         [HttpPut]
         [Route("update-owner/{id}")]
         public async Task<IActionResult> UpdateOwner(int id, OwnerDto model)
         {
-            var oldOwner = await genericRepository.GetByIdAsync(id);
-
-            if (oldOwner == null)
-            {
-                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Owner not found"], Data = null });
-            }
-
-            /* cap nhat anhr */
-
-            await genericRepository.UpdateAsync(oldOwner);
-
-            return Ok(new Success<OwnerDto> { Status = true, Title = "", Messages = ["Update successfully"], Data = model });
+            var oldOwner = await ownerService.UpdateAsync(id, model);
+            return Ok(new Success<Owner> { Status = true, Messages = ["Update successfully"], Data = oldOwner });
         }
 
         [HttpDelete]
         [Route("delete-permanently-owner/{id}")]
         public async Task<IActionResult> DeletePermanentlyOwner(int id)
         {
-            var owner = await genericRepository.GetByIdAsync(id);
-
-            if (owner == null)
-            {
-                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Owner not found"], Data = null });
-            }
-            await genericRepository.DeletePermanentlyAsync(owner);
-            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
+            await ownerService.DeletePermanentlyAsync(id);
+            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
         }
 
         [HttpPut]
         [Route("soft-delete-owner/{id}")]
         public async Task<IActionResult> DeleteOwner(int id)
         {
-            var owner = await genericRepository.GetByIdAsync(id);
-
-            if (owner == null)
-            {
-                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Owner not found"], Data = null });
-            }
-            await genericRepository.SoftDelete(owner);
-            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
+            await ownerService.SoftDelete(id);
+            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
         }
     }
 }

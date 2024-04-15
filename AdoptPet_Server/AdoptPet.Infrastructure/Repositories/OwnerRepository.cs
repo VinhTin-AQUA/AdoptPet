@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdoptPet.Infrastructure.Repositories
 {
-    internal class OwnerRepository : IGenericRepository<Owner>
+    public class OwnerRepository : IGenericRepository<Owner>
     {
         private readonly AdoptPetDbContext context;
 
