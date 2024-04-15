@@ -1,4 +1,7 @@
+
+
 using AdoptPet.Domain.Entities;
+using _PET = AdoptPet.Domain.Entities.Pet;
 
 namespace AdoptPet.Application.DTOs.PetDto
 {
@@ -21,7 +24,7 @@ namespace AdoptPet.Application.DTOs.PetDto
 
         // You need to add converters for the byte properties from Pet entity to bool properties here if necessary
         // For example:
-        public PetDto(Pet pet, Breed breed)
+        public PetDto(_PET pet, Breed breed)
         {
             Id = pet.Id;
             PetName = pet.PetName;

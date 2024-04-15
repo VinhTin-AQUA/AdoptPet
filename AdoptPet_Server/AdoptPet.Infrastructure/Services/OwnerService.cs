@@ -27,7 +27,7 @@ namespace AdoptPet.Infrastructure.Services
             }
             Owner newOwner = new Owner()
             {
-                Name = model.Name
+                
             };
 
             var r = await genericRepository.AddAsync(newOwner);
@@ -76,7 +76,6 @@ namespace AdoptPet.Infrastructure.Services
             {
                 return null;
             }
-            oldOwner.Name = model.Name;
 
             await genericRepository.UpdateAsync(oldOwner);
             return oldOwner;
