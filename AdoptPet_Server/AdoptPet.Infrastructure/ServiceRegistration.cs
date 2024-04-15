@@ -37,6 +37,13 @@ namespace AdoptPet.Infrastructure
             services.AddSingleton(emailConfig!);
             services.AddScoped<IEmailSenderService, EmailSenderService>();
 
+            //service
+            services.AddTransient<DonorService>();
+            services.AddTransient<DonorPetService>();
+            services.AddTransient<DonorPetAuditService>();
+            services.AddTransient<OwnerService>();
+            services.AddTransient<LocationService>();
+
             // repositories
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
@@ -44,8 +51,8 @@ namespace AdoptPet.Infrastructure
             services.AddTransient<IGenericRepository<Breed>, BreedRepository>();
             services.AddTransient<IGenericRepository<Colour>, ColourRepository>();
             services.AddTransient<IGenericRepository<Donor>, DonorRepository>();
-            services.AddTransient<IGenericRepository<DonorPet>, DonorPetRepositories>();
-            services.AddTransient<IGenericRepository<DonorPetAudit>, DonorPetAuditRepositories>();
+            services.AddTransient<IGenericRepository<DonorPet>, DonorPetRepository>();
+            services.AddTransient<IGenericRepository<DonorPetAudit>, DonorPetAuditRepository>();
             services.AddTransient<IGenericRepository<Location>, LocationRepository>();
             services.AddTransient<IGenericRepository<Owner>, OwnerRepository>();
             services.AddTransient<IGenericRepository<Pet>, PetRepositories>();

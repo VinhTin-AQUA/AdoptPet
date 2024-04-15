@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdoptPet.Infrastructure.Repositories
 {
-    public class DonorPetRepositories : IGenericRepository<DonorPet>
+    public class DonorPetRepository : IGenericRepository<DonorPet>
     {
         private readonly AdoptPetDbContext context;
-        public DonorPetRepositories(AdoptPetDbContext context)
+        public DonorPetRepository(AdoptPetDbContext context)
         {
             this.context = context;
         }
