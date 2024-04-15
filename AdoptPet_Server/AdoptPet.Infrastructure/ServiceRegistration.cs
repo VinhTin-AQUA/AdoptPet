@@ -38,7 +38,11 @@ namespace AdoptPet.Infrastructure
                     .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig!);
             services.AddScoped<IEmailSenderService, EmailSenderService>();
+
+            // service
             services.AddTransient<VolunteerRoleService>();
+            services.AddTransient<ColourService>();
+
 
             // repositories
             services.AddTransient<IAccountRepository, AccountRepository>();

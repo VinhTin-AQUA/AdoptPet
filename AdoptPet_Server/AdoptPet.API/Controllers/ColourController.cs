@@ -2,6 +2,7 @@
 using AdoptPet.Application.DTOs.Colour;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdoptPet.API.Controllers
@@ -10,17 +11,18 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class ColourController : ControllerBase
     {
-        private readonly IGenericRepository<Colour> genericRepository;
-        public ColourController(IGenericRepository<Colour> genericRepository)
+        private readonly ColourService colourService;
+
+        public ColourController(ColourService colourService)
         {
-            this.genericRepository = genericRepository;
+            this.colourService = colourService;
         }
 
         [HttpGet]
         [Route("get-colour-by-id/{id}")]
         public async Task<IActionResult> GetColourById(int id)
         {
-            var r = await genericRepository.GetByIdAsync(id);
+            var r = await colourService.GetByIdAsync(id);
             return Ok(new Success<Colour> { Status = true, Messages = [], Data = r });
         }
 
@@ -28,7 +30,7 @@ namespace AdoptPet.API.Controllers
         [Route("get-all-colour")]
         public async Task<IActionResult> GetAllColours()
         {
-            var colours = await genericRepository.GetAllAsync();
+            var colours = await colourService.GetAllAsync();
             return Ok(new Success<List<Colour>> { Status = true, Messages = [], Data = colours.ToList() });
         }
 
@@ -36,12 +38,7 @@ namespace AdoptPet.API.Controllers
         [Route("add-colour")]
         public async Task<IActionResult> AddColour(ColourDto model)
         {
-            Colour newColour = new Colour()
-            {
-                ColourName = model.ColourName
-            };
-
-            var r = await genericRepository.AddAsync(newColour);
+            var r = await colourService.AddAsync(model);
             return Ok(new Success<Colour> { Status = true, Messages = [], Data = r });
         }
 
@@ -49,32 +46,15 @@ namespace AdoptPet.API.Controllers
         [Route("update-colour/{id}")]
         public async Task<IActionResult> UpdateColour(int id, ColourDto model)
         {
-            var oldColour = await genericRepository.GetByIdAsync(id);
-
-            if (oldColour == null)
-            {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Colour not found"], Data = null });
-            }
-            oldColour.ColourName = model.ColourName;
-
-            /* cap nhat anhr */
-
-            await genericRepository.UpdateAsync(oldColour);
-
-            return Ok(new Success<ColourDto> { Status = true, Messages = ["Update successfully"], Data = model });
+            var oldColour = await colourService.UpdateAsync(id, model);
+            return Ok(new Success<Colour> { Status = true, Messages = ["Update successfully"], Data = oldColour });
         }
 
         [HttpDelete]
         [Route("delete-permanently-colour/{id}")] 
         public async Task<IActionResult> DeletePermanentlyColour(int id)
         {
-            var colour = await genericRepository.GetByIdAsync(id);
-
-            if (colour == null)
-            {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Colour not found"], Data = null });
-            }
-            await genericRepository.DeletePermanentlyAsync(colour);
+            await colourService.DeletePermanentlyAsync(id);
             return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
         }
 
@@ -82,13 +62,7 @@ namespace AdoptPet.API.Controllers
         [Route("soft-delete-colour/{id}")] 
         public async Task<IActionResult> DeleteColour(int id)
         {
-            var colour = await genericRepository.GetByIdAsync(id);
-
-            if (colour == null)
-            {
-                return BadRequest(new Success<object> { Status = false, Messages = ["Colour not found"], Data = null });
-            }
-            await genericRepository.SoftDelete(colour);
+            await colourService.SoftDelete(id);
             return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
         }
     }

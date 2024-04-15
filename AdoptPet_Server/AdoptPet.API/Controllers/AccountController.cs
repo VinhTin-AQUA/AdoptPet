@@ -93,6 +93,7 @@ namespace AdoptPet.API.Controllers
             {
                 return BadRequest();
             }
+
             var user = await accountRepository.GetUserByEmailAsync(model.Email);
 
             if (user == null)
@@ -160,7 +161,7 @@ namespace AdoptPet.API.Controllers
         [Route("resend-confirmation-email/{email}")]
         public async Task<IActionResult> ResendConfirmationEmail(string email)
         {
-            if (string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(email) == true)
             {
                 return BadRequest(new Success<object> { Status = false, Messages = ["Incorrect Email or Password"] });
             }

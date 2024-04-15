@@ -13,6 +13,7 @@ namespace AdoptPet.Infrastructure.Repositories
         {
             this.context = context;
         }
+
         public async Task<Colour?> AddAsync(Colour model)
         {
             context.Colours.Add(model);
