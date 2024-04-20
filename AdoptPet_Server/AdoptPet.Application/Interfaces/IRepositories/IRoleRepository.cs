@@ -10,6 +10,6 @@ namespace AdoptPet.Application.Interfaces.IRepositories
         Task<IdentityResult> AddRoleRoUserAsync(AppUser user, string roleName);
         Task<ICollection<IdentityRole>> GetAllRoles();
         Task<bool> RoleExits(string roleName);
-
+        Task<List<string>> GetRoleOfUser(AppUser user);
     }
 }

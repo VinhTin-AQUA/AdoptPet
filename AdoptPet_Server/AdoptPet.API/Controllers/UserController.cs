@@ -9,10 +9,12 @@ namespace AdoptPet.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository userRepository;
+        private readonly IRoleRepository roleRepository;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, IRoleRepository roleRepository)
         {
             this.userRepository = userRepository;
+            this.roleRepository = roleRepository;
         }
 
         [HttpGet]
@@ -20,18 +22,25 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await userRepository.GetAllUsers();
-
-            var r = users.Select(u => new UserDto
+            var r = users.Select(u =>
             {
-                Email = u.Email!,
-                PhoneNumber = u.PhoneNumber!,
-                EmailConfirmed = u.EmailConfirmed,
-                PhoneNumberConfirmed = u.PhoneNumberConfirmed,
-                LockoutEnd = u.LockoutEnd,
-                LockoutEnabled = u.LockoutEnabled
-
+                return new UserDto
+                {
+                    Email = u.Email!,
+                    PhoneNumber = u.PhoneNumber!,
+                    EmailConfirmed = u.EmailConfirmed,
+                    PhoneNumberConfirmed = u.PhoneNumberConfirmed,
+                    LockoutEnd = u.LockoutEnd,
+                    LastName = u.LastName,
+                    FirstName = u.FirstName,
+                };
             }).ToList();
 
+            for (int i = 0; i < r.Count(); i++)
+            {
+                var roles = await roleRepository.GetRoleOfUser(users[i]);
+                r[i].Roles = roles;
+            }
             return Ok(r);
         }
 
@@ -47,8 +56,6 @@ namespace AdoptPet.API.Controllers
                 EmailConfirmed = u.EmailConfirmed,
                 PhoneNumberConfirmed = u.PhoneNumberConfirmed,
                 LockoutEnd = u.LockoutEnd,
-                LockoutEnabled = u.LockoutEnabled
-
             }).ToList();
             return Ok(r);
         }

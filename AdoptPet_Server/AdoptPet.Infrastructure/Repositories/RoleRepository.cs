@@ -56,5 +56,11 @@ namespace AdoptPet.Infrastructure.Repositories
             }
             return true;
         }
+
+        public async Task<List<string>> GetRoleOfUser(AppUser user)
+        {
+            var r = await userManager.GetRolesAsync(user);
+            return r.ToList();
+        }
     }
 }

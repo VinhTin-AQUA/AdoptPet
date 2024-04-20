@@ -21,8 +21,8 @@ namespace AdoptPet.API.Controllers
             _petService = petService;
         }
 
-        [HttpGet]
-        [Route("search-pet-by-breed/{breedId}")]
+        //[HttpGet]
+        //[Route("search-pet-by-breed/{breedId}")]
         //public async Task<ActionResult<List<Pet>>> GetPetsByBreed(int breedId)
         //{
         //    var pets = await _petService.GetPetsByBreedAsync(breedId);

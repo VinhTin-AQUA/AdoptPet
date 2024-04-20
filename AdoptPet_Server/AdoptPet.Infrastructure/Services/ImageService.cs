@@ -12,7 +12,7 @@ namespace AdoptPet.Infrastructure.Services
     public class ImageService : IImageService
     {
         private readonly IWebHostEnvironment webHost;
-        private readonly string FileUpload = "FileUploads";
+        //private readonly string FileUpload = "FileUploads";
 
         public ImageService(IWebHostEnvironment webHost)
         {
