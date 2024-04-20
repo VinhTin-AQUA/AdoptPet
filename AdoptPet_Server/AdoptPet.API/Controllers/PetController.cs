@@ -5,6 +5,7 @@ using AdoptPet.Application.DTOs.Pet;
 using AdoptPet.Application.Interfaces;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdoptPet.API.Controllers
@@ -13,23 +14,23 @@ namespace AdoptPet.API.Controllers
     [Route("api/[controller]")]
     public class PetController : ControllerBase
     {
-        private readonly IPetSearchService _petService;
+        private readonly PetService _petService;
 
-        public PetController(IPetSearchService petService)
+        public PetController(PetService petService)
         {
             _petService = petService;
         }
 
         [HttpGet]
         [Route("search-pet-by-breed/{breedId}")]
-        public async Task<ActionResult<List<Pet>>> GetPetsByBreed(int breedId)
-        {
-            var pets = await _petService.GetPetsByBreedAsync(breedId);
-            if (pets == null || pets.Count == 0)
-            {
-                return NotFound("No pets found for the specified breed.");
-            }
-            return Ok(pets);
-        }
+        //public async Task<ActionResult<List<Pet>>> GetPetsByBreed(int breedId)
+        //{
+        //    var pets = await _petService.GetPetsByBreedAsync(breedId);
+        //    if (pets == null || pets.Count == 0)
+        //    {
+        //        return NotFound("No pets found for the specified breed.");
+        //    }
+        //    return Ok(pets);
+        //}
     }
 }

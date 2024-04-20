@@ -17,9 +17,15 @@ namespace AdoptPet.Infrastructure.Repositories
         {
             _context = context;
         }
-        public Task<Pet?> AddAsync(Pet model)
+        public async Task<Pet?> AddAsync(Pet model)
         {
-            throw new NotImplementedException();
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+            await _context.Pets.AddAsync(model);
+            var r = await _context.SaveChangesAsync();
+            return model;
         }
 
         public Task DeletePermanentlyAsync(Pet model)
@@ -27,14 +33,16 @@ namespace AdoptPet.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<Pet>> GetAllAsync()
+        public async Task<ICollection<Pet>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<Pet> pets = await _context.Pets.ToListAsync();
+            return pets;
         }
 
-        public Task<Pet?> GetByIdAsync(int id)
+        public async Task<Pet?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            Pet? pet = await _context.Pets.Where(p => p.Id == id).FirstOrDefaultAsync();
+            return pet;
         }
 
         public async Task<List<Pet>> GetPetsByBreedAsync(int breedId)
@@ -51,12 +59,15 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public Task SoftDelete(Pet model)
         {
-            throw new NotImplementedException();
+            model.IsDeleted = true;
+            _context.Pets.Update(model);
+            return _context.SaveChangesAsync();
         }
 
         public Task UpdateAsync(Pet model)
         {
-            throw new NotImplementedException();
+            _context.Pets.Update(model);
+            return _context.SaveChangesAsync();
         }
     }
 }
