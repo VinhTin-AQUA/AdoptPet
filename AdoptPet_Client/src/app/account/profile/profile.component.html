@@ -1,4 +1,4 @@
-<!-- <app-header></app-header> -->
+<app-header></app-header>
 
 <div class="bg-gray-100 wrapper">
 	<div class="container mx-auto py-8">
@@ -12,7 +12,7 @@
 			</div>
 
 			<div>
-				<form>
+				<form [formGroup]="userForm">
 					<div class="grid gap-6 mb-6 md:grid-cols-2">
 						<div>
 							<label
@@ -26,6 +26,7 @@
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
 								placeholder="John"
 								required
+								formControlName="lastName"
 							/>
 						</div>
 						<div>
@@ -40,6 +41,7 @@
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
 								placeholder="Doe"
 								required
+								formControlName="firstName"
 							/>
 						</div>
 						<div>
@@ -52,8 +54,8 @@
 								type="text"
 								id="company"
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-								placeholder="Flowbite"
 								required
+								formControlName="phone"
 							/>
 						</div>
 						<div>
@@ -62,12 +64,11 @@
 							>
 							<input
                                 readonly
-								type="tel"
+								type="email"
 								id="phone"
 								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-								placeholder="123-45-678"
-								pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
 								required
+								formControlName="email"
 							/>
 						</div>
 						<!-- <div>
@@ -152,7 +153,17 @@
 					>
 						Đổi mật khẩu
 					</a>
+					
 				</form>
+
+				<div class="py-2">
+					<button
+						(click)="signOut()"
+						class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+					>
+						Đăng xuất
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -50,7 +50,17 @@ namespace AdoptPet.Infrastructure.Data
              .Property(d => d.PetWeight)
              .HasColumnType("decimal(10,2)");
 
+            modelBuilder.Entity<PetColour>()
+               .HasIndex(pc => new { pc.PetId, pc.ColourId })
+               .IsUnique();
 
+            modelBuilder.Entity<PetBreed>()
+               .HasIndex(pc => new { pc.BreedId, pc.PetId })
+               .IsUnique();
+
+            modelBuilder.Entity<DonorPet>()
+              .HasIndex(pc => new { pc.PetId, pc.DonorId })
+              .IsUnique();
         }
 
         public DbSet<Breed> Breeds { get; set; }

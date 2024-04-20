@@ -7,8 +7,9 @@ namespace AdoptPet.Domain.Entities
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
 
+        public string UserId { get; set; } = string.Empty;
+
         // khoa ngoai
-        public int PetId { get; set; }
         public int LocationId { get; set; }
     }
 }

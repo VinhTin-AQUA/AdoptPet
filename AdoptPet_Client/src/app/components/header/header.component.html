@@ -1,6 +1,7 @@
 <nav class="backdrop-filter backdrop-blur-xl border-b border-slate-900/5 z-10 relative mb-2">
 	<div class="px-2 mx-auto max-w-screen-2xl sm:px-4 lg:px-8">
 		<div class="flex justify-between h-16 md:h-18">
+
 			<div class="flex px-2 lg:px-0">
 
 				<div class="flex items-center flex-shrink-0">
@@ -11,6 +12,7 @@
 
 				</div>
 
+				<!-- nav -->
 				<div class="hidden lg:ml-6 xl:ml-8 lg:flex lg:space-x-8" data-turbo="false">
 					<!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
 					<a
@@ -57,125 +59,28 @@
 				</div>
 			</div>
 
-			<div class="flex items-center justify-end flex-1 px-2 sm:justify-center lg:ml-6 lg:justify-end">
-				
-				<!-- profile -->
-				<a routerLink="/profile" class="pt-5 flex justify-center items-center mb-6 text-md font-semibold text-lime-500">
-					<img class="w-7 h-7 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="/assets/logo.png" alt="Bordered avatar">
-					<span class="ml-2"> Hồ Vĩnh Tín</span>
-				</a>
+			
 
-			</div>
+			@if(userStore.loggedIn() === true) {
+				<!-- profile button -->
+				<div class="flex items-center justify-end flex-1 px-2 sm:justify-center lg:ml-6 lg:justify-end">
+								
+					<!-- profile -->
+					<a routerLink="/profile" class="pt-5 flex justify-center items-center mb-6 text-md font-semibold text-lime-500">
+						<img class="w-7 h-7 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="/assets/logo.png" alt="Bordered avatar">
+						<span class="ml-2"> Hồ Vĩnh Tín</span>
+					</a>
 
-			<div class="flex items-center">
-				<!-- Mobile menu button -->
-				<button
-					type="button"
-					class="inline-flex items-center justify-center p-2 ml-3 bg-lime-500 text-white rounded-full lg:hidden duration-100 hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cool-indigo-500"
-					aria-controls="mobile-menu"
-					aria-expanded="false"
-					data-controller="toggle"
-					data-toggle-remote="#mobile-menu"
-					data-action="click->toggle#toggleRemote"
-				>
-					<span class="sr-only">Open main menu</span>
-					<svg
-						class="block w-6 h-6"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						aria-hidden="true"
-						data-toggle-target="toggleable"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M4 6h16M4 12h16M4 18h16"
-						></path>
-					</svg>
-					<svg
-						class="w-6 h-6 hidden"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						aria-hidden="true"
-						data-toggle-target="toggleable"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"
-						></path>
-					</svg>
-				</button>
-			</div>
+				</div>
+			} @else { 
+				<div class="flex items-center justify-end flex-1 px-2 sm:justify-center lg:ml-6 lg:justify-end">
+					<a routerLink="/sign-in" class="pt-5 flex justify-center items-center mb-6 text-md font-semibold text-lime-500">
+						<i class="fa-solid fa-right-to-bracket text-xl"></i>
+						<span class="ml-2">Đăng nhập</span>
+					</a>
+
+				</div>
+			}
 		</div>
-	</div>
-	<!-- Mobile menu, show/hide based on menu state. -->
-	<div
-		class="lg:hidden bg-white/90 backdrop-filter backdrop-blur-xl hidden"
-		id="mobile-menu"
-		data-controller="toggle"
-		data-toggle-target="toggleable"
-	>
-		<div class="px-2 pt-2 pb-3">
-			<a
-				class="block px-3 py-2 rounded-2lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-				routerLink="/"
-				>Trang chủ</a
-			>
-			<a
-				class="block px-3 py-2 rounded-2lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-				routerLink="/"
-				>Nhận nuôi</a
-			>
-			<a
-				class="block px-3 py-2 rounded-2lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-				routerLink="/"
-				>Ủng hộ</a
-			>
-			<a
-				class="block px-3 py-2 rounded-2lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-				routerLink="/"
-				>Tin tức</a
-			>
-			<a
-				class="block px-3 py-2 rounded-2lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-				routerLink="/"
-				>Tình nguyện viên</a
-			>
-			<a
-				class="block px-3 py-2 rounded-2lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-				routerLink="/"
-				>Liên hệ</a
-			>
-		</div>
-		<a
-			class="inline-flex justify-center items-center w-full px-5 py-3 text-center font-medium text-cool-indigo-600 bg-gray-50 hover:bg-gray-100"
-			routerLink="https://twitter.com/intent/tweet?text=Check+out+Tailwind+Awesome&amp;url=https%3A%2F%2Fwww.tailwindawesome.com%2F&amp;via=tailwindawesome"
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="w-5 h-5 mr-2 -ml-1 opacity-80"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				stroke-width="2"
-				stroke="currentColor"
-				fill="none"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-			>
-				<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-				<path
-					d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z"
-				></path>
-			</svg>
-			Tweet me
-		</a>
 	</div>
 </nav>

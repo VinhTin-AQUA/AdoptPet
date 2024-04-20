@@ -60,6 +60,8 @@ namespace AdoptPet.API.Controllers
                 Email = model.Email,
                 UserName = model.Email,
                 PhoneNumber = model.PhoneNumber,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
             };
 
             var r = await accountRepository.SignUpAsync(newUser, model.Password);
@@ -95,16 +97,13 @@ namespace AdoptPet.API.Controllers
             {
                 return BadRequest();
             }
-
             var user = await accountRepository.GetUserByEmailAsync(model.Email);
-
             if (user == null)
             {
                 return NotFound(new Success<object> { Status = false, Title = "Email hoặc mật khẩu không chính xác.", Messages = ["Vui lòng đăng nhập lại"] });
             }
 
             var r = await accountRepository.SignInAsync(user, model.Password);
-
             if (r.IsLockedOut == true)
             {
                 return BadRequest(new Success<object> { Status = false, Title = "Tài khoản đã bị khóa", Messages = [$"Đăng nhập sau {user.LockoutEnd}"] });
@@ -114,14 +113,9 @@ namespace AdoptPet.API.Controllers
             {
                 return BadRequest(new Success<object> { Status = false, Title = "Email hoặc mật khẩu không chính xác.", Messages = ["Incorrect email or password"] });
             }
-            var userDto = new AccountDto
-            {
-                Email = user.Email!,
-                PhoneNumber = user.PhoneNumber!,
-                Token = await jwtService.CreateJWT(user)
-            };
+            string token = await jwtService.CreateJWT(user);
 
-            return Ok(new Success<AccountDto> { Status = true, Title = "Đăng nhập thành công", Messages = ["Đăng nhập thành công"], Data = userDto });
+            return Ok(new Success<string> { Status = true, Title = "Đăng nhập thành công", Messages = ["Đăng nhập thành công"], Data = token });
         }
 
         // phương thức này bấm ở client để gửi đến server
@@ -132,7 +126,6 @@ namespace AdoptPet.API.Controllers
             var user = await accountRepository.GetUserByEmailAsync(confirm.Email);
             if (user == null)
             {
-
                 return NotFound(new Success<object> { Status = false, Title = "Không tìm thấy tài khoản", Messages = ["Vui lòng nhập lại email"] });
             }
 

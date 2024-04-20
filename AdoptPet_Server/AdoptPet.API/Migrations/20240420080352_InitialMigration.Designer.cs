@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdoptPet.API.Migrations
 {
     [DbContext(typeof(AdoptPetDbContext))]
-    [Migration("20240411070633_UpdatePetGenderMigration")]
-    partial class UpdatePetGenderMigration
+    [Migration("20240420080352_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -200,6 +200,9 @@ namespace AdoptPet.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PetId", "DonorId")
+                        .IsUnique();
+
                     b.ToTable("DonorPets");
                 });
 
@@ -283,8 +286,9 @@ namespace AdoptPet.API.Migrations
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PetId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -408,8 +412,9 @@ namespace AdoptPet.API.Migrations
                     b.Property<byte>("PetWormed")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("UserChangeId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserChangeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Version")
                         .HasColumnType("int");
@@ -441,6 +446,9 @@ namespace AdoptPet.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BreedId", "PetId")
+                        .IsUnique();
+
                     b.ToTable("PetBreeds");
                 });
 
@@ -462,6 +470,9 @@ namespace AdoptPet.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PetId", "ColourId")
+                        .IsUnique();
 
                     b.ToTable("PetColours");
                 });
@@ -535,8 +546,9 @@ namespace AdoptPet.API.Migrations
                     b.Property<byte>("OldStatus")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("UserChangeId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserChangeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()

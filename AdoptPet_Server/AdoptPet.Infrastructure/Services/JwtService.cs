@@ -29,12 +29,12 @@ namespace AdoptPet.Infrastructure.Services
             var userClaims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Email, user.Email!),
                 new Claim(JwtRegisteredClaimNames.Sub,user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName!),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // id của token
+                new Claim(ClaimTypes.Email, user.Email!),
+                new Claim("firstName", user.FirstName),
+                new Claim("lastName", user.LastName),
+                new Claim("phoneNumber", user.PhoneNumber!),
             };
 
             var userRoles = await userManager.GetRolesAsync(user);

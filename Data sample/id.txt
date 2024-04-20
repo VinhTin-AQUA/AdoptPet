@@ -14,8 +14,35 @@
 - Phú yên 16 - 20
 
 
-* roles
-
 * volunteer
+1-3
 
 * owner
+1 - 4
+
+* donor
+1-5
+
+* pet
+1-20
+
+* pet image
+1-20
+
+* pet audit
+1 - 10
+
+* pet colour
+1-50
+
+* pet breed
+1-90
+
+* DonorPets
+1-44
+
+* Volunteer ROle
+1 -4
+
+
+

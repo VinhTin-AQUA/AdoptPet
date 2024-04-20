@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLinkActive, RouterLink } from '@angular/router';
+import { UserStore } from '../../shared/stores/UserStore';
 
 @Component({
   selector: 'app-header',
@@ -9,5 +10,5 @@ import { RouterLinkActive, RouterLink } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-
+  userStore = inject(UserStore);
 }
