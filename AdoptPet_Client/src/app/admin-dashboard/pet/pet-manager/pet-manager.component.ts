@@ -9,5 +9,9 @@ import { RouterLink } from '@angular/router';
   styleUrl: './pet-manager.component.scss'
 })
 export class PetManagerComponent {
+  constructor() {}
 
+  ngOnInit() {
+    
+  }
 }

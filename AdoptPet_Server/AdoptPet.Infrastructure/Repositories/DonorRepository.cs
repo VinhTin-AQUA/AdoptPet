@@ -35,7 +35,9 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<ICollection<Donor>> GetAllAsync()
         {
-            var r = await context.Donors.Where(c => c.IsDeleted == false).ToListAsync();
+            var r = await context.Donors
+                .Include(d => d.Location)
+                .Where(c => c.IsDeleted == false).ToListAsync();
             return r;
         }
 

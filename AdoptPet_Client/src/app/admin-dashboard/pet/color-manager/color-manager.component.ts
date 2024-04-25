@@ -25,7 +25,6 @@ export class ColorManagerComponent {
   }
 
   onAddColor(inputColor: HTMLInputElement) {
-
     if(inputColor.value === '') {
       return;
     }

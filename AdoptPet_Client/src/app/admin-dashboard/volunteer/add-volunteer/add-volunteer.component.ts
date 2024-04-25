@@ -15,7 +15,7 @@ export class AddVolunteerComponent {
 	districts: any = [];
 	wards: any = [];
 	volunteerForm!: FormGroup;
-  submitted: boolean = false;
+	submitted: boolean = false;
 
 	constructor(private formBuilder: FormBuilder, private locationService: LocationService) {}
 
@@ -28,7 +28,7 @@ export class AddVolunteerComponent {
 			province: ['', [Validators.required]],
 			district: ['', [Validators.required]],
 			ward: ['', [Validators.required]],
-      street: [''],
+			street: [''],
 			password: ['', [Validators.required]],
 			confirmPassword: ['', [Validators.required]],
 		});
@@ -42,8 +42,6 @@ export class AddVolunteerComponent {
 			},
 		});
 	}
-
-
 
 	private getDistricts(provinceId: string) {
 		this.locationService.getDistricts(provinceId).subscribe({
@@ -73,15 +71,14 @@ export class AddVolunteerComponent {
 		this.getWards(this.volunteerForm.controls['district'].value);
 	}
 
-	
-
 	onSubmit() {
-    this.submitted = true;
+		this.submitted = true;
 
-    if(this.volunteerForm.valid === false) {
-      return;
-    }
+		if (this.volunteerForm.valid === false) {
+			return;
+		}
 
+		
 
 		console.log(this.volunteerForm.value);
 	}
