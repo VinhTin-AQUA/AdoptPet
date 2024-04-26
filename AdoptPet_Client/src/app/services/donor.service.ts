@@ -14,4 +14,7 @@ export class DonorService {
     return this.http.get(this.baseApi + '/get-all-donor');
   }
 
+  softDeleteDonor(donorId: number) {
+    return this.http.put(this.baseApi + '/soft-delete-donor/' + donorId, null);
+  }
 }

@@ -37,21 +37,21 @@ namespace AdoptPet.Infrastructure.Repositories
         {
             var r = await context.Donors
                 .Include(d => d.Location)
-                .Where(c => c.IsDeleted == false).ToListAsync();
+                .ToListAsync();
             return r;
         }
 
         public async Task<Donor?> GetByIdAsync(int id)
         {
             var r = await context.Donors
-                .Where(b => b.Id == id && b.IsDeleted == false)
+                .Where(b => b.Id == id)
                 .FirstOrDefaultAsync();
             return r;
         }
 
         public async Task SoftDelete(Donor model)
         {
-            model.IsDeleted = true; 
+            model.IsDeleted = !model.IsDeleted; 
             context.Donors.Update(model);
             await context.SaveChangesAsync();
         }
