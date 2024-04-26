@@ -18,7 +18,7 @@ export class AddVolunteerRoleComponent {
 	constructor(
 		private formBuilder: FormBuilder,
 		private volunteerRolerService: VolunteerRoleService,
-    private router: Router
+		private router: Router
 	) {}
 
 	ngOnInit() {
@@ -44,7 +44,7 @@ export class AddVolunteerRoleComponent {
 		this.volunteerRolerService.addVolunteerRole(role).subscribe({
 			next: (res: any) => {
 				// console.log(res);
-        this.router.navigateByUrl('/admin/volunteer-role');
+				this.router.navigateByUrl('/admin/volunteer-role');
 			},
 			error: err => {
 				console.log(err);

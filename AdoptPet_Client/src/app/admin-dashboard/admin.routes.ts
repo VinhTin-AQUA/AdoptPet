@@ -17,6 +17,7 @@ import { DonorPetAuditComponent } from './donor/donor-pet-audit/donor-pet-audit.
 import { PetAuditComponent } from './pet/pet-audit/pet-audit.component';
 import { PetAuditDetailComponent } from './pet/pet-audit-detail/pet-audit-detail.component';
 import { AddVolunteerRoleComponent } from './volunteer/add-volunteer-role/add-volunteer-role.component';
+import { BreedDetailComponent } from './pet/breed-detail/breed-detail.component';
 
 export const adminRoutes: Routes = [
 	{
@@ -36,6 +37,7 @@ export const adminRoutes: Routes = [
 			{ path: 'pet-audit', component: PetAuditComponent, title: 'Pet audit' },
 			{ path: 'pet-audit-detail', component: PetAuditDetailComponent, title: 'Pet audit detail' },
 			{ path: 'breed-manager', component: BreedManagerComponent, title: 'Breed manager' },
+			{ path: 'breed-detail/:id', component: BreedDetailComponent, title: 'Breed detail' },
 			{ path: 'add-breed', component: AddBreedComponent, title: 'Add breed' },
 			{ path: 'color-manager', component: ColorManagerComponent, title: 'Color manager' },
 			{ path: 'donor-manager', component: DonorManagerComponent, title: 'Donor manager' },

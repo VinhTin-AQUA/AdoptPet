@@ -9,5 +9,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './volunteer-manager.component.scss'
 })
 export class VolunteerManagerComponent {
-
+  
 }

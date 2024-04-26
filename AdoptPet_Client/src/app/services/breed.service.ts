@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BreedService {
   private readonly baseUrl = environment.baseUrl + '/breed';
+
   constructor(private http: HttpClient) { }
 
   addBreed(form: FormData) {
@@ -15,6 +16,10 @@ export class BreedService {
 
   getAllBreed() {
     return this.http.get(`${this.baseUrl}/get-all-breed`);
+  }
+
+  getBreedById(id: number) {
+    return this.http.get(this.baseUrl + '/get-breed-by-id/' + id);
   }
   
 }

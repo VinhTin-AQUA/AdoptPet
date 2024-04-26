@@ -1,0 +1,51 @@
+<!-- <app-header></app-header> -->
+
+<div class="wrapper">
+	<div class="container mx-auto py-2">
+		<div class="">
+			<h1 class="text-3xl">Chi tiết giống</h1>
+
+			<!-- thêm ảnh -->
+			<div class="img-input">
+				<div>
+					<label for="first_name" class="block mb-2 text-sm font-medium text-gray-900"
+						>Hình ảnh giống</label
+					>
+
+					<img src="https://cdn-icons-png.flaticon.com/512/3460/3460473.png" alt="" />
+				</div>
+
+				<!-- danh sách hình ảnh đã chọn -->
+				<div class="w-full max-h-[500px]"></div>
+			</div>
+
+			<form >
+				<div class="mb-6">
+					<label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+						>Tên giống</label
+					>
+
+					<span
+						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+					>
+						{{ breed?.breedName }}
+					</span>
+				</div>
+
+				<div class="mb-6">
+					<label
+						for="confirm_password"
+						class="block mb-2 text-sm font-medium text-gray-900"
+						>Mô tả</label
+					>
+
+					<p
+						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+					>
+						{{ breed?.description }}
+					</p>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

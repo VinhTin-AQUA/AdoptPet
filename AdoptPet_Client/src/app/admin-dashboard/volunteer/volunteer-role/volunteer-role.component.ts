@@ -23,7 +23,7 @@ export class VolunteerRoleComponent {
 		this.volunteerRoleService.getAllVolunteerRoles().subscribe({
 			next: (res: any) => {
 				this.roles = res.data;
-				console.log(this.roles);
+				// console.log(this.roles);
 			},
 			error: err => {
 				console.log(err);
@@ -45,6 +45,8 @@ export class VolunteerRoleComponent {
 				}
 				this.isShowRoleDelete = false;
 				this.roleDelete = null;
+
+				
 			},
 			error: (err) => {
 				var _messages = err.error.messages.join('\n');
