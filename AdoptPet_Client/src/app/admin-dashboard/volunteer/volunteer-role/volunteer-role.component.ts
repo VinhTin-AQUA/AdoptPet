@@ -43,8 +43,6 @@ export class VolunteerRoleComponent {
 				}
 				this.isShowRoleDelete = false;
 				this.roleDelete = null;
-
-				
 			},
 			error: err => {
 				var _messages = err.error.messages.join('\n');
