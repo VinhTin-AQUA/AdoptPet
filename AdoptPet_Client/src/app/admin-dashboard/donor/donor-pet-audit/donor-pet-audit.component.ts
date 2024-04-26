@@ -12,6 +12,9 @@ import { DatePipe } from '@angular/common';
 })
 export class DonorPetAuditComponent {
 	donorPetAudits: DonorPetAudit[] = [];
+	isShowDelete: boolean = false;
+	donorPetAuditDelete: any;
+
 	constructor(private donorPetAuditServiceService: DonorPetAuditServiceService) {}
 
 	ngOnInit() {
@@ -30,5 +33,31 @@ export class DonorPetAuditComponent {
 		});
 	}
 
-	
+	onShowRoleDelete(donorAudit: any) {
+		this.isShowDelete = !this.isShowDelete;
+		this.donorPetAuditDelete = donorAudit;
+	}
+
+	onDeleteRole() {
+		if (this.donorPetAuditDelete === null) {
+			this.donorPetAuditDelete = null;
+				this.isShowDelete = false;
+			return;
+		}
+
+		this.donorPetAuditServiceService.softDelete(this.donorPetAuditDelete.id).subscribe({
+			next: (res: any) => {
+				console.log(res);
+				this.donorPetAuditDelete.isDeleted = !this.donorPetAuditDelete.isDeleted;
+				this.donorPetAuditDelete = null;
+				this.isShowDelete = false;
+			},
+			error: err => {
+				console.log(err.error);
+
+				this.donorPetAuditDelete = null;
+				this.isShowDelete = false;
+			},
+		});
+	}
 }

@@ -13,4 +13,8 @@ export class DonorPetAuditServiceService {
 	getAllDonorPetAudits() {
 		return this.http.get(this.baseApi + '/get-all-donorpetaudit');
 	}
+
+	softDelete(donorPetId: number) {
+		return this.http.put(this.baseApi + '/soft-delete-donorpetaudit/' + donorPetId, null);
+	}
 }

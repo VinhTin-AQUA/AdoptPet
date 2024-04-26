@@ -12,7 +12,7 @@ import { patchState } from '@ngrx/signals';
 	styleUrl: './volunteer-role.component.scss',
 })
 export class VolunteerRoleComponent {
-	dialog = inject(DialogStore)
+	dialog = inject(DialogStore);
 	roles: any = [];
 	isShowRoleDelete: boolean = false;
 	roleDelete: any;
@@ -36,23 +36,19 @@ export class VolunteerRoleComponent {
 			next: (res: any) => {
 				const id = res.data;
 
-				const index = this.roles.findIndex(
-					(x:any) => x.id === id
-				);
+				const index = this.roles.findIndex((x: any) => x.id === id);
 
 				if (index !== -1) {
 					this.roles[index].isDeleted = !this.roles[index].isDeleted;
 				}
 				this.isShowRoleDelete = false;
 				this.roleDelete = null;
-
-				
 			},
-			error: (err) => {
+			error: err => {
 				var _messages = err.error.messages.join('\n');
-				patchState(this.dialog, { isShowed: true, title: 'Lỗi', message: _messages })
-			}
-		})
+				patchState(this.dialog, { isShowed: true, title: 'Lỗi', message: _messages });
+			},
+		});
 	}
 
 	onShowRoleDelete(role: any) {
