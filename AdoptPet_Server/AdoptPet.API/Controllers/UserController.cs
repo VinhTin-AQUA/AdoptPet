@@ -1,4 +1,5 @@
-﻿using AdoptPet.Application.DTOs.User;
+﻿using AdoptPet.Application.DTOs;
+using AdoptPet.Application.DTOs.User;
 using AdoptPet.Application.Interfaces.IRepositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +10,16 @@ namespace AdoptPet.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository userRepository;
+        private readonly IAccountRepository accountRepository;
         private readonly IRoleRepository roleRepository;
 
-        public UserController(IUserRepository userRepository, IRoleRepository roleRepository)
+        public UserController(
+            IUserRepository userRepository, 
+            IAccountRepository accountRepository,
+            IRoleRepository roleRepository)
         {
             this.userRepository = userRepository;
+            this.accountRepository = accountRepository;
             this.roleRepository = roleRepository;
         }
 
@@ -26,6 +32,7 @@ namespace AdoptPet.API.Controllers
             {
                 return new UserDto
                 {
+                    Id = u.Id,
                     Email = u.Email!,
                     PhoneNumber = u.PhoneNumber!,
                     EmailConfirmed = u.EmailConfirmed,
@@ -58,6 +65,59 @@ namespace AdoptPet.API.Controllers
                 LockoutEnd = u.LockoutEnd,
             }).ToList();
             return Ok(r);
+        }
+
+        [HttpPut]
+        [Route("lock-user/{userId}")]
+        public async Task<IActionResult> LockUser(string userId)
+        {
+            if (string.IsNullOrEmpty(userId) == true)
+            {
+                return BadRequest();
+            }
+
+            var userExists = await accountRepository.GetUserByIdAsync(userId);
+
+            if(userExists== null)
+            {
+                return BadRequest(new Success<object> { Title = "User not found", Messages = [], Data = null, Status = false });
+            }
+            var r = await userRepository.LockUser(userExists);
+
+            if(r.Succeeded == false)
+            {
+                List<string> errors = r.Errors
+                    .Select(r => r.Description)
+                    .ToList();
+                return BadRequest(new Success<object> { Title = "Somethong error", Messages = [], Data = errors, Status = false });
+            }
+
+            return Ok(new Success<object> { Title = "Lock successfully", Messages = [], Data = userExists.LockoutEnd, Status = true });
+        }
+
+        [HttpPut]
+        [Route("unlock-user/{userId}")]
+        public async Task<IActionResult> UnLockUser(string userId)
+        {
+            if (string.IsNullOrEmpty(userId) == true)
+            {
+                return BadRequest();
+            }
+
+            var userExists = await accountRepository.GetUserByIdAsync(userId);
+
+            if (userExists == null)
+            {
+                return BadRequest(new Success<object> { Title = "User not found", Messages = [], Data = null, Status = false });
+            }
+            var r = await userRepository.UnLockUser(userExists);
+
+            if (r.Succeeded == false)
+            {
+                return BadRequest(new Success<object> { Title = "Somethong error", Messages = [], Data = null, Status = false });
+            }
+
+            return Ok(new Success<object> { Title = "Unlock successfully", Messages = [], Data = null, Status = true });
         }
     }
 }

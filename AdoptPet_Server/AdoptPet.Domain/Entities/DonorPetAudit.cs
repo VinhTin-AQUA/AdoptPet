@@ -13,6 +13,8 @@ namespace AdoptPet.Domain.Entities
 
         // khoa ngoai
         public int DonorId { get; set; }
+        public Donor? Donor { get; set; }
         public int PetId { get; set; }
+        public Pet? Pet { get; set; }
     }
 }

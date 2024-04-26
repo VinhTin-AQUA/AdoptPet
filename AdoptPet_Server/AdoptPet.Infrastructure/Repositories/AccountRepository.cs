@@ -33,6 +33,12 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
+        public async Task<AppUser?> GetUserByIdAsync(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+            return user;
+        }
+
         public async Task<string> GenerateEmailConfirmationTokenAsync(AppUser user)
         {
             return await userManager.GenerateEmailConfirmationTokenAsync(user);

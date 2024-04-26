@@ -8,6 +8,7 @@ namespace AdoptPet.Application.Interfaces.IRepositories
         Task<IdentityResult> SignUpAsync(AppUser user, string password);
         Task<SignInResult> SignInAsync(AppUser user, string password);
         Task<AppUser?> GetUserByEmailAsync(string email);
+        Task<AppUser?> GetUserByIdAsync(string userId);
 
         Task<string> GenerateEmailConfirmationTokenAsync(AppUser user);
 

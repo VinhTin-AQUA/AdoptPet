@@ -25,9 +25,17 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-        public Task LockUser(AppUser user)
+        public async Task<IdentityResult> LockUser(AppUser user)
         {
-            throw new NotImplementedException();
+            DateTimeOffset lockDateTime = new DateTimeOffset(DateTime.Now.AddMinutes(30));
+            var r = await userManager.SetLockoutEndDateAsync(user, lockDateTime);
+            return r;
+        }
+
+        public async Task<IdentityResult> UnLockUser(AppUser user)
+        {
+            var r = await userManager.SetLockoutEndDateAsync(user, null);
+            return r;
         }
 
         public Task RemoveUser(AppUser user)

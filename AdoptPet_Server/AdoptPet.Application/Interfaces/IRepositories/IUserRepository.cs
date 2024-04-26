@@ -1,4 +1,5 @@
 ﻿using AdoptPet.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace AdoptPet.Application.Interfaces.IRepositories
 {
@@ -6,7 +7,8 @@ namespace AdoptPet.Application.Interfaces.IRepositories
     {
         Task<List<AppUser>> GetAllUsers();
         Task<List<AppUser>> SearchUserByName(string name);
-        Task LockUser(AppUser user);
+        Task<IdentityResult> LockUser(AppUser user);
+        Task<IdentityResult> UnLockUser(AppUser user);
         Task AddUser();
         Task RemoveUser(AppUser user);
     }

@@ -217,10 +217,10 @@ INSERT into Roles(Id, [Name], NormalizedName, ConcurrencyStamp) VALUES ('13b9d4c
 INSERT into Roles(Id, [Name], NormalizedName, ConcurrencyStamp) VALUES ('49f8f876-6577-44e7-8e8c-de704b93cd96', 'User','USER',2);
 
 /* users */
-insert into Users (Id, FirstName, LastName, IsDeleted, UserName, Email, NormalizedUserName, NormalizedEmail, EmailCOnfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount) values ('7abf45ff-e629-4205-a147-4f68605cea33', 'Bobette', 'Almon', 1, 'balmon0@npr.org', 'balmon0@sina.com.cn', 'BALMON0@SINA.COM.CN', 'BALMON0@SINA.COM.CN', 1, '$2a$04$hxLLTsXtwFcMTgDTksDZG..ycpwI/08ZntXdoRmQ/HOkSqvJOoSS2', '$2a$04$zwckCylv5veANvtFzswwT.1oiHMYaWw4FNBFzT70sq3xTlhGizXFO', '$2a$04$395ShxuOWSn1b8lRLBYMku.LO.h7NNe4i6xdrZA01GP5PARWxrtIC', '836 760 4450', 1, 0, '2023-09-24', 0, 0);
-insert into Users (Id, FirstName, LastName, IsDeleted, UserName, Email, NormalizedUserName, NormalizedEmail, EmailCOnfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount) values ('b553ce16-7c6c-462f-a9da-970041488ade', 'Rania', 'Giottini', 0, 'rgiottini1@shop-pro.jp', 'rgiottini1@elpais.com', 'RGIOTTINI1@ELPAIS.COM', 'RGIOTTINI1@ELPAIS.COM', 1, '$2a$04$XuE8eykLoY4hshzy7hoBb.mIf2vGNh0T7Yphmy99rs4OZY9THhm0a', '$2a$04$JAZjGuLqtUY6ejMbDQXHjusT1r9FQf5zMUxg4jUWL4g8QMm9m/FMe', '$2a$04$5OQarJCsFI/bu3i71dbMs.5RLx0cLv7rB3Q9gwkgIcs65yg0XKEBO', '101 255 7722', 0, 1, '2024-02-18', 1, 0);
-insert into Users (Id, FirstName, LastName, IsDeleted, UserName, Email, NormalizedUserName, NormalizedEmail, EmailCOnfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount) values ('b5566616-7c6c-462f-a9da-970041488ade', 'Rania', 'Giottini', 0, 'rgiottini1@shop-pro.jp', 'rgiottini1@elpais.com', 'RGIOTTINI2@ELPAIS.COM', 'RGIOTTINI2@ELPAIS.COM', 1, '$2a$04$XuE8eykLoY4hshzy7hoBb.mIf2vGNh0T7Yphmy99rs4OZY9THhm0a', '$2a$04$JAZjGuLqtUY6ejMbDQXHjusT1r9FQf5zMUxg4jUWL4g8QMm9m/FMe', '$2a$04$5OQarJCsFI/bu3i71dbMs.5RLx0cLv7rB3Q9gwkgIcs65yg0XKEBO', '101 255 7722', 0, 1, '2024-02-18', 1, 0);
-insert into Users (Id, FirstName, LastName, IsDeleted, UserName, Email, NormalizedUserName, NormalizedEmail, EmailCOnfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount) values ('b553ce16-7c6c-462f-a9da-97fgh1488ade', 'Rania', 'Giottini', 0, 'rgiottini1@shop-pro.jp', 'rgiottini1@elpais.com', 'RGIOTTINI3@ELPAIS.COM', 'RGIOTTINI3@ELPAIS.COM', 1, '$2a$04$XuE8eykLoY4hshzy7hoBb.mIf2vGNh0T7Yphmy99rs4OZY9THhm0a', '$2a$04$JAZjGuLqtUY6ejMbDQXHjusT1r9FQf5zMUxg4jUWL4g8QMm9m/FMe', '$2a$04$5OQarJCsFI/bu3i71dbMs.5RLx0cLv7rB3Q9gwkgIcs65yg0XKEBO', '101 255 7722', 0, 1, '2024-02-18', 1, 0);
+insert into Users (Id, FirstName, LastName, IsDeleted, UserName, Email, NormalizedUserName, NormalizedEmail, EmailCOnfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount) values ('7abf45ff-e629-4205-a147-4f68605cea33', 'Bobette', 'Almon', 1, 'balmon0@npr.org', 'balmon0@sina.com.cn', 'BALMON0@SINA.COM.CN', 'BALMON0@SINA.COM.CN', 1, '$2a$04$hxLLTsXtwFcMTgDTksDZG..ycpwI/08ZntXdoRmQ/HOkSqvJOoSS2', '$2a$04$zwckCylv5veANvtFzswwT.1oiHMYaWw4FNBFzT70sq3xTlhGizXFO', '$2a$04$395ShxuOWSn1b8lRLBYMku.LO.h7NNe4i6xdrZA01GP5PARWxrtIC', '836 760 4450', 1, 0, null, 0, 0);
+insert into Users (Id, FirstName, LastName, IsDeleted, UserName, Email, NormalizedUserName, NormalizedEmail, EmailCOnfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount) values ('b553ce16-7c6c-462f-a9da-970041488ade', 'Rania', 'Giottini', 0, 'rgiottini1@elpais.com', 'rgiottini1@elpais.com', 'RGIOTTINI1@ELPAIS.COM', 'RGIOTTINI1@ELPAIS.COM', 1, '$2a$04$XuE8eykLoY4hshzy7hoBb.mIf2vGNh0T7Yphmy99rs4OZY9THhm0a', '$2a$04$JAZjGuLqtUY6ejMbDQXHjusT1r9FQf5zMUxg4jUWL4g8QMm9m/FMe', '$2a$04$5OQarJCsFI/bu3i71dbMs.5RLx0cLv7rB3Q9gwkgIcs65yg0XKEBO', '101 255 7722', 0, 1, null, 1, 0);
+insert into Users (Id, FirstName, LastName, IsDeleted, UserName, Email, NormalizedUserName, NormalizedEmail, EmailCOnfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount) values ('b5566616-7c6c-462f-a9da-970041488ade', 'Rania', 'Giottini', 0, 'rgiottini2@elpais.com', 'rgiottini2@elpais.com', 'RGIOTTINI2@ELPAIS.COM', 'RGIOTTINI2@ELPAIS.COM', 1, '$2a$04$XuE8eykLoY4hshzy7hoBb.mIf2vGNh0T7Yphmy99rs4OZY9THhm0a', '$2a$04$JAZjGuLqtUY6ejMbDQXHjusT1r9FQf5zMUxg4jUWL4g8QMm9m/FMe', '$2a$04$5OQarJCsFI/bu3i71dbMs.5RLx0cLv7rB3Q9gwkgIcs65yg0XKEBO', '101 255 7722', 0, 1, null, 1, 0);
+insert into Users (Id, FirstName, LastName, IsDeleted, UserName, Email, NormalizedUserName, NormalizedEmail, EmailCOnfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount) values ('b553ce16-7c6c-462f-a9da-97fgh1488ade', 'Rania', 'Giottini', 0, 'rgiottini3@elpais.com', 'rgiottini3@elpais.com', 'RGIOTTINI3@ELPAIS.COM', 'RGIOTTINI3@ELPAIS.COM', 1, '$2a$04$XuE8eykLoY4hshzy7hoBb.mIf2vGNh0T7Yphmy99rs4OZY9THhm0a', '$2a$04$JAZjGuLqtUY6ejMbDQXHjusT1r9FQf5zMUxg4jUWL4g8QMm9m/FMe', '$2a$04$5OQarJCsFI/bu3i71dbMs.5RLx0cLv7rB3Q9gwkgIcs65yg0XKEBO', '101 255 7722', 0, 1, null, 1, 0);
 
 
 /* userRoles */
@@ -796,6 +796,36 @@ insert into DonorPets (LastDonation, TotalDonation, IsDeleted, PetId, DonorId) v
 go
 insert into DonorPets (LastDonation, TotalDonation, IsDeleted, PetId, DonorId) values ('2010-12-01', 627.17, 0, 1, 1)
 go
+
+/* donor pet audit */
+--select * from DonorPetAudits
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2008-06-30', 1, 556.62, 624.01, 0, 2, 19);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2020-11-09', 1, 658.56, 853.21, 0, 4, 5);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2017-03-18', 1, 500.95, 538.67, 0, 2, 1);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2022-11-05', 1, 744.11, 744.07, 0, 4, 7);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2011-01-17', 1, 714.18, 789.86, 0, 4, 4);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2006-10-01', 1, 773.39, 590.6, 0, 5, 13);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2008-03-20', 1, 556.78, 543.41, 0, 1, 16);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2015-09-06', 1, 944.84, 526.62, 0, 2, 14);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2013-10-16', 1, 612.61, 696.04, 0, 2, 4);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2017-01-28', 1, 761.93, 857.36, 0, 4, 1);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2011-01-25', 1, 870.57, 870.72, 0, 5, 10);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2006-03-21', 1, 569.61, 942.41, 0, 2, 10);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2006-08-24', 1, 614.64, 908.04, 0, 3, 12);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2020-04-23', 1, 895.8, 865.5, 0, 4, 15);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2009-07-12', 1, 874.62, 894.1, 0, 4, 11);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2003-08-25', 1, 656.84, 674.1, 0, 1, 7);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2023-12-16', 1, 966.74, 581.26, 0, 2, 8);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2005-01-03', 1, 575.4, 696.98, 0, 2, 6);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2007-11-07', 1, 891.83, 524.97, 0, 1, 14);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2003-10-24', 1, 828.59, 510.31, 0, 5, 19);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2018-09-29', 1, 835.21, 527.36, 0, 3, 7);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2017-01-08', 1, 868.63, 669.56, 0, 5, 15);
+insert into DonorPetAudits (LastDonation, [Version], NewTotalDonation, OldTotalDonation, IsDeleted, DonorId, PetId) values ('2008-10-30', 1, 501.08, 837.88, 0, 1, 11);
+
+
+
+
 
 /* volunteer audit */
 insert into VolunteerAudits (OldStatus, NewStatus, LastChange, VolunteerId, UserId, UserChangeId, IsDeleted) values (1, 0, '2016-04-01', 2, '7abf45ff-e629-4205-a147-4f68605cea33', 'b553ce16-7c6c-462f-a9da-970041488ade', 0)

@@ -9,66 +9,44 @@
 	<div class="body">
 		<div class="flex flex-col">
 			<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-				<div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+				<div class=" min-w-full py-2 sm:px-6 lg:px-8 grid grid-cols-1">
 					<div class="overflow-hidden">
 						<table class="min-w-full text-left text-sm font-light text-surface">
 							<thead class="border-b border-neutral-200 font-medium">
 								<tr>
 									<th scope="col" class="px-6 py-4">#</th>
+									<th scope="col" class="px-6 py-4">Phiên bản</th>
+									<th scope="col" class="px-6 py-4">Ngày mới nhất</th>
+									<th scope="col" class="px-6 py-4">Hỗ trợ lần cuối</th>
+									<th scope="col" class="px-6 py-4">Tổng hỗ trợ</th>
 									<th scope="col" class="px-6 py-4">Người tài trợ</th>
 									<th scope="col" class="px-6 py-4">Tên thú cưng</th>
-									<th scope="col" class="px-6 py-4">Ngày tài trợ</th>
-									<th scope="col" class="px-6 py-4">Version</th>
-									<th scope="col" class="px-6 py-4">Tài trợ lần cuối</th>
-									<th scope="col" class="px-6 py-4">Tổng tài trợ</th>
 									<th scope="col" class="px-6 py-4">
 									</th>
 								</tr>
 							</thead>
 
 							<tbody>
-								<tr class="border-b border-neutral-200">
-									<td class="whitespace-nowrap px-6 py-4 font-medium">1</td>
-									<td class="whitespace-nowrap px-6 py-4">Mark</td>
-									<td class="whitespace-nowrap px-6 py-4">Otto</td>
-									<td class="whitespace-nowrap px-6 py-4">mdo</td>
-									<td class="whitespace-nowrap px-6 py-4">Chưa</td>
-									<td class="whitespace-nowrap px-6 py-4">Người dùng</td>
-									<td class="whitespace-nowrap px-6 py-4">Người dùng</td>
-									<!-- <td class="whitespace-nowrap px-6 py-4">
-										<button>
-											<i class="fa-solid fa-lock text-yellow-500"></i>
-										</button>
-									</td> -->
-								</tr>
-								<tr class="border-b border-neutral-200">
-									<td class="whitespace-nowrap px-6 py-4 font-medium">2</td>
-									<td class="whitespace-nowrap px-6 py-4">Jacob</td>
-									<td class="whitespace-nowrap px-6 py-4">Thornton</td>
-									<td class="whitespace-nowrap px-6 py-4">fat</td>
-									<td class="whitespace-nowrap px-6 py-4">Chưa</td>
-									<td class="whitespace-nowrap px-6 py-4">Người dùng</td>
-									<td class="whitespace-nowrap px-6 py-4">Admin</td>
-									<!-- <td class="whitespace-nowrap px-6 py-4">
-										<button>
-											<i class="fa-solid fa-lock text-yellow-500"></i>
-										</button>
-									</td> -->
-								</tr>
-								<tr class="border-b border-neutral-200">
-									<td class="whitespace-nowrap px-6 py-4 font-medium">3</td>
-									<td class="whitespace-nowrap px-6 py-4">Larry</td>
-									<td class="whitespace-nowrap px-6 py-4">Wild</td>
-									<td class="whitespace-nowrap px-6 py-4">twitter</td>
-									<td class="whitespace-nowrap px-6 py-4">Chưa</td>
-									<td class="whitespace-nowrap px-6 py-4">Người dùng</td>
-									<td class="whitespace-nowrap px-6 py-4">Người dùng</td>
-									<!-- <td class="whitespace-nowrap px-6 py-4">
-										<button>
-											<i class="fa-solid fa-lock text-yellow-500"></i>
-										</button>
-									</td> -->
-								</tr>
+
+								@for (donorPetAudit of donorPetAudits; track $index) {
+									<tr class="border-b border-neutral-200">
+										<td class="whitespace-nowrap px-6 py-4 font-medium">{{$index}}</td>
+										<td class="whitespace-nowrap px-6 py-4">{{donorPetAudit.version}}</td>
+										<td class="whitespace-nowrap px-6 py-4">{{donorPetAudit.lastDonation | date:'dd/MM/yyyy' }}</td>
+										<td class="whitespace-nowrap px-6 py-4">{{donorPetAudit.newTotalDonation}}</td>
+										<td class="whitespace-nowrap px-6 py-4">{{donorPetAudit.oldTotalDonation}}</td>
+										<td class="whitespace-nowrap px-6 py-4">{{donorPetAudit.donor.name}}</td>
+										<td class="whitespace-nowrap px-6 py-4">{{donorPetAudit.pet.petName}}</td>
+										<td class="whitespace-nowrap px-6 py-4">
+											<button>
+												<i class="fa-solid fa-lock text-yellow-500"></i>
+											</button>
+										</td>
+									</tr>
+								}
+
+								
+								
 							</tbody>
 						</table>
 

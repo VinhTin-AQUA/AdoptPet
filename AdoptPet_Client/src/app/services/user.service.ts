@@ -12,4 +12,12 @@ export class UserService {
   getAllUsers() {
     return this.http.get(`${this.baseUrl}/get-all-users`);
   }
+
+  lockUser(userId: string) {
+    return this.http.put(this.baseUrl + '/lock-user/' + userId, null)
+  }
+
+  unLockUser(userId: string) {
+    return this.http.put(this.baseUrl + '/unlock-user/' + userId, null)
+  }
 }
