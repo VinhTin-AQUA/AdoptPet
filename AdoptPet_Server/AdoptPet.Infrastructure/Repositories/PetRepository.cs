@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace AdoptPet.Infrastructure.Repositories
 {
@@ -33,10 +36,20 @@ namespace AdoptPet.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<ICollection<Pet>> GetAllAsync()
+        public async Task<PaginatedResult<Pet>> GetAllAsync(int pageNumber, int pageSize)
         {
-            List<Pet> pets = await _context.Pets.ToListAsync();
-            return pets;
+            var petList = _context.Pets
+                        .Skip((pageNumber - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToListAsync();
+            var totalItems = _context.Pets.Count();
+            return new PaginatedResult<Pet>
+            {
+                Items = await petList,
+                TotalItems = totalItems,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
         }
 
         public async Task<Pet?> GetByIdAsync(int id)
@@ -45,17 +58,26 @@ namespace AdoptPet.Infrastructure.Repositories
             return pet;
         }
 
-        public async Task<List<Pet>> GetPetsByBreedAsync(int breedId)
+        public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(string breed, int pageNumber, int pageSize)
         {
-            var petsByBreed = from pet in _context.Pets
-                            join petBreed in _context.PetBreeds on pet.Id equals petBreed.PetId
-                            join breed in _context.Breeds on petBreed.BreedId equals breed.Id
-                            where breed.Id == breedId
-                            select pet;
-            
-            return await petsByBreed.ToListAsync();
+            var listPets = from pet in _context.Pets
+                        join petBreed in _context.PetBreeds
+                        on pet.Id equals petBreed.PetId
+                        join Breed in _context.Breeds
+                        on petBreed.BreedId equals Breed.Id
+                        where Breed.BreedName.Equals(breed, StringComparison.OrdinalIgnoreCase)
+                        && pet.IsDeleted == false // Assuming you have a flag for soft deletes
+                        select pet;
+            var totalItems = listPets.Count();
+            var paginatedQuery = listPets.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            return new PaginatedResult<Pet>
+            {
+                Items = paginatedQuery,
+                TotalItems = totalItems,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
         }
-
 
         public Task SoftDelete(Pet model)
         {
