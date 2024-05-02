@@ -20,7 +20,7 @@ namespace AdoptPet.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<Pet?> AddAsync(Pet model)
+        public async Task<int> AddAsync(Pet model)
         {
             if (model == null)
             {
@@ -28,7 +28,7 @@ namespace AdoptPet.Infrastructure.Repositories
             }
             await _context.Pets.AddAsync(model);
             var r = await _context.SaveChangesAsync();
-            return model;
+            return r;
         }
 
         public Task DeletePermanentlyAsync(Pet model)
@@ -79,11 +79,16 @@ namespace AdoptPet.Infrastructure.Repositories
             };
         }
 
-        public Task SoftDelete(Pet model)
+        public Task SoftDelete(int Id)
         {
-            model.IsDeleted = true;
-            _context.Pets.Update(model);
-            return _context.SaveChangesAsync();
+            var pet = _context.Pets.Find(Id);
+            if (pet != null)
+            {
+                pet.IsDeleted = true;
+                _context.Pets.Update(pet);
+                return _context.SaveChangesAsync();
+            }
+            return null;
         }
 
         public Task UpdateAsync(Pet model)

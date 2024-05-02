@@ -1,6 +1,7 @@
 ﻿using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -14,15 +15,11 @@ namespace AdoptPet.Infrastructure.Repositories
             this.context = context;
         }
 
-        public async Task<Colour?> AddAsync(Colour model)
+        public async Task<int> AddAsync(Colour model)
         {
             context.Colours.Add(model);
             var r = await context.SaveChangesAsync();
-            if (r > 0)
-            {
-                return model;
-            }
-            return null;
+            return r;
         }
 
         public async Task DeletePermanentlyAsync(Colour model)
@@ -31,10 +28,21 @@ namespace AdoptPet.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Colour>> GetAllAsync()
+
+        public async Task<PaginatedResult<Colour>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var r = await context.Colours.ToListAsync();
-            return r;
+            var colourList = context.Colours
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+            var totalItems = context.Colours.Count();
+            return new PaginatedResult<Colour>
+            {
+                Items = await colourList,
+                TotalItems = totalItems,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
         }
 
         public async Task<Colour?> GetByIdAsync(int id)
@@ -45,11 +53,17 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-        public async Task SoftDelete(Colour model)
+
+        public Task SoftDelete(int Id)
         {
-            model.IsDeleted = !model.IsDeleted; 
-            context.Colours.Update(model);
-            await context.SaveChangesAsync();
+            var colour = context.Colours.Find(Id);
+            if (colour != null)
+            {
+                colour.IsDeleted = true;
+                context.Colours.Update(colour);
+                return context.SaveChangesAsync();
+            }
+            return null;
         }
 
         public async Task UpdateAsync(Colour model)

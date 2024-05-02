@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
-    <PackageReference Include="PagedList" Version="1.17.0" />
   </ItemGroup>
 
 </Project>

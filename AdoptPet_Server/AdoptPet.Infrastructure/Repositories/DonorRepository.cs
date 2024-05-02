@@ -3,6 +3,7 @@
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdoptPet.Infrastructure.Repositories
@@ -16,15 +17,11 @@ namespace AdoptPet.Infrastructure.Repositories
             this.context = context;
         }
 
-        public async Task<Donor?> AddAsync(Donor model)
+        public async Task<int?> AddAsync(Donor model)
         {
             context.Donors.Add(model);
             var r = await context.SaveChangesAsync();
-            if (r > 0)
-            {
-                return model;
-            }
-            return null;
+            return r;
         }
 
         public async Task DeletePermanentlyAsync(Donor model)
@@ -33,12 +30,21 @@ namespace AdoptPet.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Donor>> GetAllAsync()
+        public async Task<PaginatedResult<Donor>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var r = await context.Donors
-                .Include(d => d.Location)
+            var donorsList = context.Donors
+                .Where(c => c.IsDeleted == false)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
-            return r;
+            var totalItems = context.Donors.Count();
+            return new PaginatedResult<Donor>
+            {
+                Items = await donorsList,
+                TotalItems = totalItems,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
         }
 
         public async Task<Donor?> GetByIdAsync(int id)
@@ -56,10 +62,20 @@ namespace AdoptPet.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
+        public Task SoftDelete(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task UpdateAsync(Donor model)
         {
             context.Donors.Update(model);
             await context.SaveChangesAsync();
+        }
+
+        Task<int> IGenericRepository<Donor>.AddAsync(Donor model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

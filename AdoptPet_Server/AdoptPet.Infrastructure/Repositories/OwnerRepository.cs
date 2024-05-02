@@ -3,6 +3,7 @@
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdoptPet.Infrastructure.Repositories
@@ -15,15 +16,11 @@ namespace AdoptPet.Infrastructure.Repositories
         {
             this.context = context;
         }
-        public async Task<Owner?> AddAsync(Owner model)
+        public async Task<int?> AddAsync(Owner model)
         {
             context.Owners.Add(model);
             var r = await context.SaveChangesAsync();
-            if (r > 0)
-            {
-                return model;
-            }
-            return null;
+            return r;
         }
 
         public async Task DeletePermanentlyAsync(Owner model)
@@ -32,10 +29,20 @@ namespace AdoptPet.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Owner>> GetAllAsync()
+        public async Task<PaginatedResult<Owner>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var r = await context.Owners.Where(c => c.IsDeleted == false).ToListAsync();
-            return r;
+            var ownerList = context.Owners.Where(c => c.IsDeleted == false)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+            var totalItems = context.Owners.Count();
+            return new PaginatedResult<Owner>
+            {
+                Items = await ownerList,
+                TotalItems = totalItems,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
         }
 
         public async Task<Owner?> GetByIdAsync(int id)
@@ -51,10 +58,27 @@ namespace AdoptPet.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
+        public Task SoftDelete(int Id)
+        {
+            var owner = context.Owners.Find(Id);
+            if (owner != null)
+            {
+                owner.IsDeleted = true;
+                context.Owners.Update(owner);
+                return context.SaveChangesAsync();
+            }
+            return null;
+        }
+
         public async Task UpdateAsync(Owner model)
         {
             context.Owners.Update(model);
             await context.SaveChangesAsync();
+        }
+
+        Task<int> IGenericRepository<Owner>.AddAsync(Owner model)
+        {
+            throw new NotImplementedException();
         }
     }
 }

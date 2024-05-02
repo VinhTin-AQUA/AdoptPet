@@ -15,15 +15,11 @@ namespace AdoptPet.Infrastructure.Repositories
             this._context = context;
         }
 
-        public async Task<Breed?> AddAsync(Breed model)
+        public async Task<int> AddAsync(Breed model)
         {
             _context.Breeds.Add(model);
             var r = await _context.SaveChangesAsync();
-            if (r > 0)
-            {
-                return model;
-            }
-            return null;
+            return r;
         }
 
         public async Task DeletePermanentlyAsync(Breed model)
@@ -62,16 +58,17 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-        public async Task SoftDelete(Breed model)
-        {
-            model.IsDeleted = true; // xóa mềm
-            _context.Breeds.Update(model);
-            await _context.SaveChangesAsync();
-        }
 
         public Task SoftDelete(int Id)
         {
-            throw new NotImplementedException();
+            var breed = _context.Breeds.Find(Id);
+            if(breed != null)
+            {
+                breed.IsDeleted = true;
+                _context.Breeds.Update(breed);
+                return _context.SaveChangesAsync();
+            }
+            return null;
         }
 
         public async Task UpdateAsync(Breed model)

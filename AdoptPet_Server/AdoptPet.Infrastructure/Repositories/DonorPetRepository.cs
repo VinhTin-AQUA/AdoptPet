@@ -3,6 +3,7 @@
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdoptPet.Infrastructure.Repositories
@@ -15,15 +16,11 @@ namespace AdoptPet.Infrastructure.Repositories
             this.context = context;
         }
 
-        public async Task<DonorPet?> AddAsync(DonorPet model)
+        public async Task<int> AddAsync(DonorPet model)
         {
             context.DonorPets.Add(model);
             var r = await context.SaveChangesAsync();
-            if (r > 0)
-            {
-                return model;
-            }
-            return null;
+            return r;
         }
 
         public async Task DeletePermanentlyAsync(DonorPet model)
@@ -32,11 +29,23 @@ namespace AdoptPet.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<DonorPet>> GetAllAsync()
+        public async Task<PaginatedResult<DonorPet>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var r = await context.DonorPets.Where(c => c.IsDeleted == false).ToListAsync();
-            return r;
+            var donorPetList = context.DonorPets
+                .Where(c => c.IsDeleted == false)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+            var totalItems = context.DonorPets.Count();
+            return new PaginatedResult<DonorPet>
+            {
+                Items = await donorPetList,
+                TotalItems = totalItems,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
         }
+
         public async Task<DonorPet?> GetByIdAsync(int id)
         {
             var r = await context.DonorPets
@@ -44,11 +53,17 @@ namespace AdoptPet.Infrastructure.Repositories
                 .FirstOrDefaultAsync();
             return r;
         }
-        public async Task SoftDelete(DonorPet model)
+
+        public Task SoftDelete(int Id)
         {
-            model.IsDeleted = true;
-            context.DonorPets.Update(model);
-            await context.SaveChangesAsync();
+            var model = context.DonorPets.Find(Id);
+            if (model != null)
+            {
+                model.IsDeleted = true;
+                context.DonorPets.Update(model);
+                context.SaveChanges();
+            }
+            return Task.CompletedTask;
         }
 
         public async Task UpdateAsync(DonorPet model)

@@ -1,12 +1,15 @@
 ﻿
 
 using AdoptPet.Domain.Common.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdoptPet.Domain.Entities
 {
     public class Pet : IEntity<int>
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "PetName is required")]
         public string PetName { get; set; } = string.Empty;
         public string PetDescription { get; set; } = string.Empty;
         public decimal PetWeight { get; set; }

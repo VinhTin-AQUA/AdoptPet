@@ -1,6 +1,7 @@
 ﻿using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdoptPet.Infrastructure.Repositories
@@ -13,15 +14,11 @@ namespace AdoptPet.Infrastructure.Repositories
             this.context = context;
         }
 
-        public async Task<DonorPetAudit?> AddAsync (DonorPetAudit model)
+        public async Task<int> AddAsync (DonorPetAudit model)
         {
             context.DonorPetAudits.Add(model);
             var r = await context.SaveChangesAsync();
-            if (r > 0)
-            {
-                return model;
-            }
-            return null;
+            return r;
         }
 
         public async Task DeletePermanentlyAsync (DonorPetAudit model)
@@ -30,13 +27,21 @@ namespace AdoptPet.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<DonorPetAudit>> GetAllAsync()
+        public async Task<PaginatedResult<DonorPetAudit>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var r = await context.DonorPetAudits
-                .Include(dpa => dpa.Pet)
-                .Include(dpa => dpa.Donor)
+            var donorPetAudit = await context.DonorPetAudits
+                .Where(c => c.IsDeleted == false)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
-            return r;
+            var totalItems = context.DonorPetAudits.Count();
+            return new PaginatedResult<DonorPetAudit>
+            {
+                Items = donorPetAudit,
+                TotalItems = totalItems,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
         }
 
         public async Task<DonorPetAudit?> GetByIdAsync(int id)
@@ -44,11 +49,17 @@ namespace AdoptPet.Infrastructure.Repositories
             var r = await context.DonorPetAudits.Where(b => b.Id == id).FirstOrDefaultAsync();
             return r;
         }
-        public async Task SoftDelete (DonorPetAudit model)
+
+        public Task SoftDelete(int Id)
         {
-            model.IsDeleted = !model.IsDeleted;
-            context.DonorPetAudits.Update(model);
-            await context.SaveChangesAsync();
+            var donorPetAudit = context.DonorPetAudits.Find(Id);
+            if (donorPetAudit != null)
+            {
+                donorPetAudit.IsDeleted = true;
+                context.DonorPetAudits.Update(donorPetAudit);
+                return context.SaveChangesAsync();
+            }
+            return null;
         }
 
         public async Task UpdateAsync (DonorPetAudit model)

@@ -19,11 +19,15 @@ namespace VolunteerRoles.Infrastructure.Repositories
         {
             _context = dbContext;
         }
-        public async Task<VolunteerRole?> AddAsync(VolunteerRole model)
+        public async Task<int?> AddAsync(VolunteerRole model)
         {
-            await _context.VolunteerRoles.AddAsync(model);
-            await _context.SaveChangesAsync();
-            return model;
+            if(model != null)
+            {
+                await _context.VolunteerRoles.AddAsync(model);
+            }
+            
+           var r = await _context.SaveChangesAsync();
+            return r;
         }
 
         public async Task DeletePermanentlyAsync(VolunteerRole model)
@@ -32,10 +36,6 @@ namespace VolunteerRoles.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<VolunteerRole>> GetAllAsync()
-        {
-            return await _context.VolunteerRoles.ToListAsync();
-        }
 
         public async Task<PaginatedResult<VolunteerRole>> GetAllAsync(int pageNumber, int pageSize)
         {
@@ -67,7 +67,14 @@ namespace VolunteerRoles.Infrastructure.Repositories
 
         public Task SoftDelete(int Id)
         {
-            throw new NotImplementedException();
+            var model = _context.VolunteerRoles.Find(Id);
+            if (model != null)
+            {
+                model.IsDeleted = true; // Assuming Status field indicates soft delete
+                _context.Entry(model).State = EntityState.Modified;
+                return _context.SaveChangesAsync();
+            }
+            return Task.CompletedTask;
         }
 
         public async Task UpdateAsync(VolunteerRole model)
@@ -76,6 +83,9 @@ namespace VolunteerRoles.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-
+        Task<int> IGenericRepository<VolunteerRole>.AddAsync(VolunteerRole model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
