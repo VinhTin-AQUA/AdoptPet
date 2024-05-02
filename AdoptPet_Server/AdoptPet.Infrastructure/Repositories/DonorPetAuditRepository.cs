@@ -3,6 +3,7 @@ using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
 namespace AdoptPet.Infrastructure.Repositories
 {
@@ -59,7 +60,7 @@ namespace AdoptPet.Infrastructure.Repositories
                 context.DonorPetAudits.Update(donorPetAudit);
                 return context.SaveChangesAsync();
             }
-            return null;
+            return Task.CompletedTask;
         }
 
         public async Task UpdateAsync (DonorPetAudit model)

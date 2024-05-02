@@ -19,10 +19,10 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-volunteerrole")]
-        public async Task<IActionResult> GetVolunteerRoles()
+        public async Task<IActionResult> GetVolunteerRoles(int pageNumber, int pageSize)
         {
-            var roles = await _volunteerRoleService.GetAllVolunteerRolesAsync();
-            return Ok(new Success<List<VolunteerRole>>{ Status = true, Title = "", Messages = [], Data = roles });
+            var roles = await _volunteerRoleService.GetAllVolunteerRolesAsync(pageNumber, pageSize);
+            return Ok(new Success<List<VolunteerRole>>{ Status = true, Title = "", Messages = [], Data = roles.Items.ToList() });
         }
 
         [HttpGet]
@@ -42,7 +42,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> AddVolunteerRole(VolunteerRole role)
         {
             var newRole = await _volunteerRoleService.AddVolunteerRoleAsync(role);
-            return Ok(new Success<VolunteerRole> { Status = true, Title = "", Messages = [], Data = newRole });
+            return Ok(new Success<VolunteerRole> { Status = true, Title = "", Messages = [], Data = null });
         }
 
         [HttpPut]

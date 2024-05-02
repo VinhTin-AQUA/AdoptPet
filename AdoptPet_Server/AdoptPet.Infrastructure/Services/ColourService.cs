@@ -14,7 +14,7 @@ namespace AdoptPet.Infrastructure.Services
             this.genericRepository = genericRepository;
         }
 
-        public async Task<Colour?> AddAsync(ColourDto model)
+        public async Task<int?> AddAsync(ColourDto model)
         {
             // kiểm tra model null
             if(model == null)
@@ -49,7 +49,7 @@ namespace AdoptPet.Infrastructure.Services
             await genericRepository.DeletePermanentlyAsync(colour);
         }
 
-        public async Task<ICollection<Colour>> GetAllAsync(int pageNumber, int pageSize)
+        public async Task<PaginatedResult<Colour>> GetAllAsync(int pageNumber, int pageSize)
         {
             var r = await genericRepository.GetAllAsync(pageNumber, pageSize);
             return r;

@@ -8,7 +8,7 @@ namespace AdoptPet.Application.Interfaces.IRepositories
 {
     public interface IPetRepository:IGenericRepository<Pet>
     {
-        Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(string breed, int pageNumber, int pageSize);
+        Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(int breedId, int pageNumber, int pageSize);
         
     }
 }

@@ -32,10 +32,10 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-breed")]
-        public async Task<IActionResult> GetAllBreeds()
+        public async Task<IActionResult> GetAllBreeds(int pageNumber, int pageSize)
         {
-            var breeds = await genericRepository.GetAllAsync();
-            return Ok(new Success<List<Breed>> { Status = true, Title = "", Messages = [], Data = breeds.ToList() });
+            var breeds = await genericRepository.GetAllAsync(pageNumber,pageSize);
+            return Ok(new Success<List<Breed>> { Status = true, Title = "", Messages = [], Data = breeds.Items.ToList() });
         }
 
         [HttpPost]
@@ -56,7 +56,7 @@ namespace AdoptPet.API.Controllers
                 newBreed.ThumbPath = file.FileName;
             }
 
-            return Ok(new Success<Breed> { Status = true, Title = "", Messages = [], Data = r });
+            return Ok(new Success<Breed> { Status = true, Title = "", Messages = [] });
         }
 
         [HttpPut]
@@ -103,7 +103,7 @@ namespace AdoptPet.API.Controllers
             {
                 return BadRequest(new Success<object> { Status = false, Title = "Không tìm thấy giống", Messages = ["Xin vui lòng thử lại"], Data = null });
             }
-            await genericRepository.SoftDelete(breed);
+            await genericRepository.SoftDelete(id);
             return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
         }
     }

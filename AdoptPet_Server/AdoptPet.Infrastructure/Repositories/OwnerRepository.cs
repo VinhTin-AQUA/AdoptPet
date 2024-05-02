@@ -67,7 +67,7 @@ namespace AdoptPet.Infrastructure.Repositories
                 context.Owners.Update(owner);
                 return context.SaveChangesAsync();
             }
-            return null;
+            return Task.CompletedTask;
         }
 
         public async Task UpdateAsync(Owner model)

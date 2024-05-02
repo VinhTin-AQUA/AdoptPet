@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
+using AdoptPet.Infrastructure.Services;
 
 public class VolunteerRoleService
 {
@@ -24,12 +25,12 @@ public class VolunteerRoleService
         return role;
     }
 
-    public async Task<List<VolunteerRole>> GetAllVolunteerRolesAsync()
+    public async Task<PaginatedResult<VolunteerRole>> GetAllVolunteerRolesAsync(int pageNumber, int pageSize)
     {
-        return (List<VolunteerRole>)await _repository.GetAllAsync();
+        return await _repository.GetAllAsync(pageNumber,pageSize);
     }
 
-    public async Task<VolunteerRole> AddVolunteerRoleAsync(VolunteerRole role)
+    public async Task<int> AddVolunteerRoleAsync(VolunteerRole role)
     {
         if (role == null)
         {
@@ -75,7 +76,7 @@ public class VolunteerRoleService
             throw new InvalidOperationException($"VolunteerRole with id {id} not found.");
         }
 
-        await _repository.SoftDelete(existingRole);
+        await _repository.SoftDelete(id);
         return true;
     }
 }

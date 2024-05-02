@@ -29,10 +29,10 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-owner")]
-        public async Task<IActionResult> GetAllOwners()
+        public async Task<IActionResult> GetAllOwners(int pageNumber, int pageSize)
         {
-            var owners = await ownerService.GetAllAsync();
-            return Ok(new Success<List<Owner>> { Status = true, Messages = [], Data = owners.ToList() });
+            var owners = await ownerService.GetAllAsync(pageNumber,pageSize);
+            return Ok(new Success<List<Owner>> { Status = true, Messages = [], Data = owners.Items.ToList() });
         }
 
         [HttpPost]
@@ -40,7 +40,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> AddOwner(OwnerDto model)
         {
             var r = await ownerService.AddAsync(model);
-            return Ok(new Success<Owner> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Owner> { Status = true, Messages = []});
         }
 
         [HttpPut]

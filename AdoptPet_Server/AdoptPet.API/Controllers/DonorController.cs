@@ -27,10 +27,10 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-donor")]
-        public async Task<IActionResult> GetAllDonor()
+        public async Task<IActionResult> GetAllDonor(int pageNumber, int pageSize)
         {
-            var donors = await donorService.GetAllAsync();
-            return Ok(new Success<List<Donor>> { Status = true, Messages = [], Data = donors.ToList() });
+            var donors = await donorService.GetAllAsync(pageNumber,pageSize);
+            return Ok(new Success<List<Donor>> { Status = true, Messages = [], Data = donors.Items.ToList() });
         }
 
         [HttpPost]
@@ -38,7 +38,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> AddDonor(DonorDto model)
         {
             var r = await donorService.AddAsync(model);
-            return Ok(new Success<Donor> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Donor> { Status = true, Messages = []});
         }
 
         [HttpPut]

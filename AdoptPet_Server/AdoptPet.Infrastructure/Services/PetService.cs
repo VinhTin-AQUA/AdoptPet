@@ -1,7 +1,6 @@
 ﻿using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Repositories;
-using PagedList;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,34 +21,26 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<PaginatedResult<Pet>> GetAllAsync(int pageNumber, int pageSize)
         {
-            if (pageNumber <= 0 || pageSize <= 0)
-            {
-                throw new ArgumentException("Page number and page size must be greater than 0.");
-            }
-
             return await _repository.GetAllAsync(pageNumber, pageSize);
         }
 
-        public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(string breed, int pageNumber, int pageSize)
+        public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(int breedId, int pageNumber, int pageSize)
         {
-            if (pageNumber <= 0 || pageSize <= 0)
-            {
-                throw new ArgumentException("Page number and page size must be greater than 0.");
-            }
-
-            return await _repository.SearchPetsByBreedAsync(breed, pageNumber, pageSize);
+            return await _repository.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
         }
 
         public async Task<Pet> GetByIdAsync(int id)
         {
-            return await _repository.GetByIdAsync(id);
+            var pet = await _repository.GetByIdAsync(id);
+
+            return pet;
         }
 
-        public async Task<Pet> AddAsync(Pet pet)
+        public async Task<int> AddAsync(Pet pet)
         {
             if(!ValidatePet(pet))
             {
-                return null;
+                return 0;
             }
             return await _repository.AddAsync(pet);
         }

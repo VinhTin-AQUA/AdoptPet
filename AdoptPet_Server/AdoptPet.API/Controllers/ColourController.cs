@@ -28,10 +28,10 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-colour")]
-        public async Task<IActionResult> GetAllColours()
+        public async Task<IActionResult> GetAllColours(int pageNumber, int pageSize)
         {
-            var colours = await colourService.GetAllAsync();
-            return Ok(new Success<List<Colour>> { Status = true, Title = "", Messages = [], Data = colours.ToList() });
+            var colours = await colourService.GetAllAsync(pageNumber,pageSize);
+            return Ok();
         }
 
         [HttpPost]
@@ -39,7 +39,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> AddColour(ColourDto model)
         {
             var r = await colourService.AddAsync(model);
-            return Ok(new Success<Colour> { Status = true, Title = "", Messages = [], Data = r });
+            return Ok();
         }
 
         [HttpPut]

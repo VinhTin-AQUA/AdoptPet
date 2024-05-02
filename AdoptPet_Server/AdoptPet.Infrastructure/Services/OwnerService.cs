@@ -15,7 +15,7 @@ namespace AdoptPet.Infrastructure.Services
         {
             this.genericRepository = genericRepository;
         }
-        public async Task<Owner?> AddAsync(OwnerDto model)
+        public async Task<int?> AddAsync(OwnerDto model)
         {
             if(model == null)
             {
@@ -45,9 +45,9 @@ namespace AdoptPet.Infrastructure.Services
             await genericRepository.DeletePermanentlyAsync(owner);
         }
 
-        public async Task<ICollection<Owner>> GetAllAsync()
+        public async Task<PaginatedResult<Owner>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var owners = await genericRepository.GetAllAsync();
+            var owners = await genericRepository.GetAllAsync(pageNumber, pageSize);
             return owners;
         }
 
@@ -65,7 +65,7 @@ namespace AdoptPet.Infrastructure.Services
             {
                 return ;
             }
-            await genericRepository.SoftDelete(owner);
+            await genericRepository.SoftDelete(id);
         }
 
         public async Task<Owner?> UpdateAsync(int id, OwnerDto model)

@@ -27,10 +27,10 @@ namespace AdoptPet.API.Controllers
         }
         [HttpGet]
         [Route("get-all-donorpetaudit")]
-        public async Task<IActionResult> GetAllDonorPetAudit()
+        public async Task<IActionResult> GetAllDonorPetAudit(int pageNumber, int pageSize)
         {
-            var donorPetAudits = await donorPetAuditService.GetAllAsync();
-            return Ok(new Success<List<DonorPetAudit>> { Status = true, Messages = [], Data = donorPetAudits.ToList() });
+            var donorPetAudits = await donorPetAuditService.GetAllAsync(pageNumber, pageSize);
+            return Ok(new Success<List<DonorPetAudit>> { Status = true, Messages = [], Data = donorPetAudits.Items.ToList() });
         }
 
         [HttpPost]
@@ -38,7 +38,11 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> AddDonorPetAudit(DonorPetAuditDto model)
         {
             var r = await donorPetAuditService.AddAsync(model);
-            return Ok(new Success<DonorPetAudit> { Status = true, Messages = [], Data = r });
+            if(r == null)
+            {
+                return BadRequest("Adding donor pet audit record fail!");
+            }
+            return Ok(new Success<DonorPetAudit> { Status = true, Messages = []});
         }
 
         [HttpPut]

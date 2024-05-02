@@ -7,7 +7,6 @@ using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
-using PagedList;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace AdoptPet.Infrastructure.Repositories
@@ -58,21 +57,21 @@ namespace AdoptPet.Infrastructure.Repositories
             return pet;
         }
 
-        public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(string breed, int pageNumber, int pageSize)
+        public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(int breedId, int pageNumber, int pageSize)
         {
             var listPets = from pet in _context.Pets
                         join petBreed in _context.PetBreeds
                         on pet.Id equals petBreed.PetId
                         join Breed in _context.Breeds
                         on petBreed.BreedId equals Breed.Id
-                        where Breed.BreedName.Equals(breed, StringComparison.OrdinalIgnoreCase)
+                        where Breed.Id == breedId
                         && pet.IsDeleted == false // Assuming you have a flag for soft deletes
                         select pet;
             var totalItems = listPets.Count();
             var paginatedQuery = listPets.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
             return new PaginatedResult<Pet>
             {
-                Items = paginatedQuery,
+                Items =  paginatedQuery,
                 TotalItems = totalItems,
                 PageNumber = pageNumber,
                 PageSize = pageSize

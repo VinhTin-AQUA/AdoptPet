@@ -61,7 +61,7 @@ namespace AdoptPet.Infrastructure.Repositories
                 context.Locations.Update(location);
                 return context.SaveChangesAsync();
             }
-            return null;
+            return Task.CompletedTask;
         }
 
         public async Task UpdateAsync(Location model)

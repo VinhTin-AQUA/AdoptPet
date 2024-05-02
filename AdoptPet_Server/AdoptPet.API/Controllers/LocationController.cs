@@ -29,10 +29,10 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-location")]
-        public async Task<IActionResult> GetAllLocation()
+        public async Task<IActionResult> GetAllLocation(int pageNumber, int pageSize)
         {
-            var locations = await locationService.GetAllAsync();
-            return Ok(new Success<List<Location>> { Status = true, Messages = [], Data = locations.ToList() });
+            var locations = await locationService.GetAllAsync(pageNumber, pageSize);
+            return Ok(new Success<List<Location>> { Status = true, Messages = [], Data = locations.Items.ToList() });
         }
 
         [HttpPost]
@@ -40,7 +40,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> AddLocation(LocationDto model)
         {
             var r = await locationService.AddAsync(model);
-            return Ok(new Success<Location> { Status = true, Messages = [], Data = r });
+            return Ok(new Success<Location> { Status = true, Messages = []});
         }
 
         [HttpPut]

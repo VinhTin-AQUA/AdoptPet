@@ -13,5 +13,9 @@ namespace AdoptPet.Domain.Entities
         public int PetId { get; set; }
         public int DonorId { get; set; }
 
+        public static implicit operator DonorPet(int? v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -63,7 +63,7 @@ namespace AdoptPet.Infrastructure.Repositories
                 context.Colours.Update(colour);
                 return context.SaveChangesAsync();
             }
-            return null;
+            return Task.CompletedTask;
         }
 
         public async Task UpdateAsync(Colour model)
