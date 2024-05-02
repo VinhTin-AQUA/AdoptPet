@@ -98,12 +98,12 @@
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
                                 >Tỉnh thành phố <span class="text-red-600">*</span></label
                             >
-                            <select (change)="onProviceChanged()"
+                            <select (change)="onProviceChanged($event)"
                                 formControlName="province"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
                                
                                 @for (p of provinces; track $index) {
-                                    <option value="{{p.province_id}}">{{p.province_name}}</option>
+                                    <option data-id="{{p.province_id}}" value="{{p.province_name}}">{{p.province_name}}</option>
                                 }
                             </select>
                         </div>
@@ -123,12 +123,12 @@
                                 (change)="onDistrictChanged()"
                             /> -->
 
-                            <select (change)="onDistrictChanged()"
+                            <select (change)="onDistrictChanged($event)"
                                 formControlName="district"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
                             
                                 @for (d of districts; track $index) {
-                                    <option value="{{d.district_id}}">{{d.district_name}}</option>
+                                    <option data-id="{{d.district_id}}" value="{{d.district_name}}">{{d.district_name}}</option>
                                 }
                             </select>
                         </div>
@@ -147,12 +147,12 @@
                                 (change)="onWardsChanged()"
                             /> -->
 
-                            <select (change)="onWardsChanged()"
+                            <select (change)="onWardsChanged($event)"
                             formControlName="ward"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
                         
                             @for (w of wards; track $index) {
-                                <option value="{{w.ward_id}}">{{w.ward_name}}</option>
+                                <option value="{{w.ward_name}}">{{w.ward_name}}</option>
                             }
                         </select>
                         </div>
@@ -343,6 +343,7 @@
                 </div>
 
                 <button
+                    (click)="onSubmit()"
                     type="submit"
                     class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800"
                 >

@@ -30,7 +30,7 @@ export class AddPetComponent {
 			petName: ['', [Validators.required]],
 			email: ['', [Validators.email, Validators.required]],
 			age: ['', [Validators.required]],
-			province: ['', [Validators.required]],
+			province: ['Thành phố Hà Nội', [Validators.required]],
 			district: ['', [Validators.required]],
 			ward: ['', [Validators.required]],
 			street: ['', [Validators.required]],
@@ -47,8 +47,8 @@ export class AddPetComponent {
 			next: (res: any) => {
 				this.provinces = res.results;
 				// console.log(this.provinces);
-				this.petForm.controls['province'].setValue('01');
-				this.getDistricts(this.petForm.controls['province'].value);
+				// this.petForm.controls['province'].setValue('01');
+				this.getDistricts('01');
 			},
 		});
 	}
@@ -58,7 +58,7 @@ export class AddPetComponent {
 			next: (res: any) => {
 				this.districts = res.results;
 				// console.log(this.provinces);
-				this.petForm.controls['district'].setValue(this.districts[0].district_id);
+				this.petForm.controls['district'].setValue(this.districts[0].district_name);
 				this.getWards(this.districts[0].district_id);
 			},
 		});
@@ -68,21 +68,27 @@ export class AddPetComponent {
 		this.locationService.getWards(districtId).subscribe({
 			next: (res: any) => {
 				this.wards = res.results;
-				this.petForm.controls['ward'].setValue(this.wards[0].ward_id);
+				this.petForm.controls['ward'].setValue(this.wards[0].ward_name);
 			},
 		});
 	}
 
-	onProviceChanged() {
-		this.getDistricts(this.petForm.controls['province'].value);
+	onProviceChanged(event: any) {
+		const selectedOption = event.target.selectedOptions[0];
+		// console.log(selectedOption.getAttribute('id'));
+		this.getDistricts(selectedOption.getAttribute('id'));
+		
 	}
 
-	onDistrictChanged() {
-		this.getWards(this.petForm.controls['district'].value);
+	onDistrictChanged(event: any) {
+		const selectedOption = event.target.selectedOptions[0];
+		this.getWards(selectedOption.getAttribute('id'));
 	}
 
-	onWardsChanged() {
+	onWardsChanged(event: any) {
+		// const selectedOption = event.target.selectedOptions[0];
 		console.log('Wards');
+		// this.getWards(selectedOption.getAttribute('id'))
 	}
 
 	onSubmit() {
