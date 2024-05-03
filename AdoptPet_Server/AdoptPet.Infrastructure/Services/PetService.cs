@@ -1,4 +1,5 @@
-﻿using AdoptPet.Application.Interfaces.IRepositories;
+﻿using AdoptPet.Application.DTOs;
+using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Repositories;
 using System;
@@ -27,6 +28,11 @@ namespace AdoptPet.Infrastructure.Services
         public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(int breedId, int pageNumber, int pageSize)
         {
             return await _repository.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
+        }
+
+        public async Task<PaginatedResult<Pet>> SearchPetsByCriteria(SearchCriteria searchCriteria, int pageNumber, int pageSize)
+        {
+            return await _repository.SearchPetByCriteria(searchCriteria, pageNumber, pageSize);
         }
 
         public async Task<Pet> GetByIdAsync(int id)
@@ -75,6 +81,7 @@ namespace AdoptPet.Infrastructure.Services
             }
             return true;
         }
+
 
     }
 }

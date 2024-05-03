@@ -46,6 +46,24 @@ namespace AdoptPet.API.Controllers
             var results = await _petService.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
             return Ok(results);
         }
+        [HttpGet]
+        [Route("api/pets/search")]
+        public async Task<IActionResult> SearchByCriteria([FromQuery] SearchCriteria searchCriteria, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        {
+            if (pageNumber <= 0 || pageSize <= 0)
+            {
+                return BadRequest("Page number and page size must be greater than 0.");
+            }
+
+            if(searchCriteria == null)
+            {
+               var results = await _petService.GetAllAsync(pageNumber, pageSize);
+                return Ok(results);
+            }
+
+            var result = await _petService.SearchPetsByCriteria(searchCriteria, pageNumber, pageSize);
+            return Ok(result);
+        }
 
         [HttpGet]
         [Route("api/pets/{id}")]
