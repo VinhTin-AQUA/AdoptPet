@@ -24,6 +24,7 @@ namespace AdoptPet.API.Controllers
         {
             this.volunteerService = volunteerService;
             this.locationService = locationService;
+            this.volunteerRoleXVolunteerRepository = volunteerRoleXVolunteerRepository;
             this.accountRepository = accountRepository;
         }
 

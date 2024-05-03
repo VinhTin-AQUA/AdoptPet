@@ -558,7 +558,7 @@ namespace AdoptPet.API.Migrations
                     b.HasIndex("UserId");
 
 =======
->>>>>>> 4bc9bf2 (update: search feauture)
+>>>>>>> fb84803 (update: search feauture)
                     b.ToTable("Volunteers");
                 });
 
@@ -819,7 +819,7 @@ namespace AdoptPet.API.Migrations
                 });
 
 =======
->>>>>>> 4bc9bf2 (update: search feauture)
+>>>>>>> fb84803 (update: search feauture)
             modelBuilder.Entity("AdoptPet.Domain.Entities.DonorPetAudit", b =>
                 {
                     b.HasOne("AdoptPet.Domain.Entities.Donor", "Donor")
@@ -969,7 +969,7 @@ namespace AdoptPet.API.Migrations
                 });
 
 =======
->>>>>>> 4bc9bf2 (update: search feauture)
+>>>>>>> fb84803 (update: search feauture)
             modelBuilder.Entity("AdoptPet.Domain.Entities.Volunteer", b =>
                 {
                     b.HasOne("AdoptPet.Domain.Entities.Location", "Location")
@@ -1017,7 +1017,7 @@ namespace AdoptPet.API.Migrations
                     b.Navigation("Volunteer");
 =======
                     b.Navigation("Location");
->>>>>>> 4bc9bf2 (update: search feauture)
+>>>>>>> fb84803 (update: search feauture)
                 });
 
             modelBuilder.Entity("AdoptPet.Domain.Entities.VolunteerRoleXVolunteer", b =>
@@ -1101,7 +1101,7 @@ namespace AdoptPet.API.Migrations
                 });
 
 =======
->>>>>>> 4bc9bf2 (update: search feauture)
+>>>>>>> fb84803 (update: search feauture)
             modelBuilder.Entity("AdoptPet.Domain.Entities.Volunteer", b =>
                 {
                     b.Navigation("VolunteerRoleXVolunteer");
