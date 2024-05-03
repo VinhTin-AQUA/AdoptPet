@@ -30,14 +30,15 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<PaginatedResult<Volunteer>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var r = _context.Volunteers
+            var r = await _context.Volunteers
+                        .Include(v => v.Location)
                         .Skip((pageNumber - 1) * pageSize)
                         .Take(pageSize)
                         .ToListAsync();
             var totalItems = _context.Pets.Count();
             return new PaginatedResult<Volunteer>
             {
-                Items = await r,
+                Items = r,
                 TotalItems = totalItems,
                 PageNumber = pageNumber,
                 PageSize = pageSize
@@ -58,16 +59,15 @@ namespace AdoptPet.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task SoftDelete(int Id)
+        public async Task SoftDelete(int Id)
         {
             var existsVolunteer = _context.Volunteers.Find(Id);
             if (existsVolunteer != null)
             {
                 existsVolunteer.IsDeleted = true;
                 _context.Volunteers.Update(existsVolunteer);
-                _context.SaveChangesAsync();
+               await _context.SaveChangesAsync();
             }
-            return null;
         }
 
         public async Task UpdateAsync(Volunteer model)

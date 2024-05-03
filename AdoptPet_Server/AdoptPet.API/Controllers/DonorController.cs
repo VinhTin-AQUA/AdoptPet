@@ -30,7 +30,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetAllDonor(int pageNumber, int pageSize)
         {
             var donors = await donorService.GetAllAsync(pageNumber,pageSize);
-            return Ok(new Success<List<Donor>> { Status = true, Messages = [], Data = donors.Items.ToList() });
+            return Ok(new Success<List<Donor>> { Status = true, Messages = [], Data = donors.Items!.ToList() });
         }
 
         [HttpPost]

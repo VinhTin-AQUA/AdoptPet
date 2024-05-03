@@ -35,7 +35,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetAllBreeds(int pageNumber, int pageSize)
         {
             var breeds = await genericRepository.GetAllAsync(pageNumber,pageSize);
-            return Ok(new Success<List<Breed>> { Status = true, Title = "", Messages = [], Data = breeds.Items.ToList() });
+            return Ok(new Success<List<Breed>> { Status = true, Title = "", Messages = [], Data = breeds.Items!.ToList() });
         }
 
         [HttpPost]

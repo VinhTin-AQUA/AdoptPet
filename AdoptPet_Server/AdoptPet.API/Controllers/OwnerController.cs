@@ -32,7 +32,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetAllOwners(int pageNumber, int pageSize)
         {
             var owners = await ownerService.GetAllAsync(pageNumber,pageSize);
-            return Ok(new Success<List<Owner>> { Status = true, Messages = [], Data = owners.Items.ToList() });
+            return Ok(new Success<List<Owner>> { Status = true, Messages = [], Data = owners.Items!.ToList() });
         }
 
         [HttpPost]

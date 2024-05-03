@@ -29,7 +29,7 @@ namespace AdoptPet.Infrastructure.Services
             return await _repository.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
         }
 
-        public async Task<Pet> GetByIdAsync(int id)
+        public async Task<Pet?> GetByIdAsync(int id)
         {
             var pet = await _repository.GetByIdAsync(id);
 

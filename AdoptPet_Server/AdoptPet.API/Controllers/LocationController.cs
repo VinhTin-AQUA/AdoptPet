@@ -32,7 +32,7 @@ namespace AdoptPet.API.Controllers
         public async Task<IActionResult> GetAllLocation(int pageNumber, int pageSize)
         {
             var locations = await locationService.GetAllAsync(pageNumber, pageSize);
-            return Ok(new Success<List<Location>> { Status = true, Messages = [], Data = locations.Items.ToList() });
+            return Ok(new Success<List<Location>> { Status = true, Messages = [], Data = locations.Items!.ToList() });
         }
 
         [HttpPost]

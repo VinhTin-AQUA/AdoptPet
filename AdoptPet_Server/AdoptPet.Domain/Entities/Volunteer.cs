@@ -11,6 +11,10 @@ namespace AdoptPet.Domain.Entities
 
         // khoa ngoai
         public int LocationId { get; set; }
+        public Location Location { get; set; } = null!;
+
         public string UserId { get; set; } = string.Empty;
+
+        public ICollection<VolunteerRoleXVolunteer> VolunteerRoleXVolunteer { get; set; } = [];
     }
 }

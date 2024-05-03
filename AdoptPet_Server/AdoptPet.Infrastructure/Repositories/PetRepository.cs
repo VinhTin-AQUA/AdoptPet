@@ -59,15 +59,15 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(int breedId, int pageNumber, int pageSize)
         {
-            var listPets = from pet in _context.Pets
-                        join petBreed in _context.PetBreeds
-                        on pet.Id equals petBreed.PetId
-                        join Breed in _context.Breeds
-                        on petBreed.BreedId equals Breed.Id
-                        where Breed.Id == breedId
-                        && pet.IsDeleted == false // Assuming you have a flag for soft deletes
-                        select pet;
-            var totalItems = listPets.Count();
+            var listPets = await (from pet in _context.Pets
+                                  join petBreed in _context.PetBreeds
+                                  on pet.Id equals petBreed.PetId
+                                  join Breed in _context.Breeds
+                                  on petBreed.BreedId equals Breed.Id
+                                  where Breed.Id == breedId
+                                  && pet.IsDeleted == false // Assuming you have a flag for soft deletes
+                                  select pet).ToListAsync();
+            var totalItems = listPets.Count;
             var paginatedQuery = listPets.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
             return new PaginatedResult<Pet>
             {
@@ -78,16 +78,15 @@ namespace AdoptPet.Infrastructure.Repositories
             };
         }
 
-        public Task SoftDelete(int Id)
+        public async Task SoftDelete(int Id)
         {
             var pet = _context.Pets.Find(Id);
             if (pet != null)
             {
-                pet.IsDeleted = true;
+                pet.IsDeleted = !pet.IsDeleted;
                 _context.Pets.Update(pet);
-                return _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
-            return null;
         }
 
         public Task UpdateAsync(Pet model)

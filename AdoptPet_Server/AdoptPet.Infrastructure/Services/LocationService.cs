@@ -27,9 +27,8 @@ namespace AdoptPet.Infrastructure.Services
                 DistrictCity = model.DistrictCity,
                 ProvinceCity = model.ProvinceCity
             };
-
             var r = await genericRepository.AddAsync(newLocation);
-            return r;
+            return r > 0 ? newLocation.Id : r;
         }
 
         public async Task DeletePermanentlyAsync(int id)

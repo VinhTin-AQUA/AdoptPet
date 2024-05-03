@@ -58,17 +58,15 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-
-        public Task SoftDelete(int Id)
+        public async Task SoftDelete(int Id)
         {
             var breed = _context.Breeds.Find(Id);
             if(breed != null)
             {
-                breed.IsDeleted = true;
+                breed.IsDeleted = !breed.IsDeleted;
                 _context.Breeds.Update(breed);
-                return _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
-            return null;
         }
 
         public async Task UpdateAsync(Breed model)
@@ -76,6 +74,5 @@ namespace AdoptPet.Infrastructure.Repositories
             _context.Breeds.Update(model);
             await _context.SaveChangesAsync();
         }
-
     }
 }

@@ -17,7 +17,7 @@ public class VolunteerRoleService
     public async Task<VolunteerRole> GetVolunteerRoleByIdAsync(int id)
     {
         // Implement logic to get volunteer role by id from the repository
-        VolunteerRole role = await _repository.GetByIdAsync(id);
+        VolunteerRole? role = await _repository.GetByIdAsync(id);
         if(role == null)
         {
             throw new InvalidOperationException($"VolunteerRole with id {id} not found.");
