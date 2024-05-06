@@ -39,14 +39,14 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<PaginatedResult<Pet>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var petList = _context.Pets
+            var petList = await _context.Pets
                         .Skip((pageNumber - 1) * pageSize)
                         .Take(pageSize)
                         .ToListAsync();
             var totalItems = _context.Pets.Count();
             return new PaginatedResult<Pet>
             {
-                Items = await petList,
+                Items = petList,
                 TotalItems = totalItems,
                 PageNumber = pageNumber,
                 PageSize = pageSize

@@ -25,11 +25,11 @@ namespace AdoptPet.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-all-volunteer")]
-        public async Task<IActionResult> GetAllVolunteers()
+        [Route("get-all-volunteer/pageNumber/{pageNumber}/pageSize/{pageSize}")]
+        public async Task<IActionResult> GetAllVolunteers(int pageNumber, int pageSize)
         {
-            var r = await volunteerService.GetAllAsync();
-            return Ok(new Success<List<Volunteer>> { Status = true, Data = r.ToList() });
+            var r = await volunteerService.GetAllAsync(pageNumber, pageSize);
+            return Ok(new Success<List<Volunteer>> { Status = true, Data = r.Items.ToList() });
         }
 
         [HttpGet]
@@ -66,7 +66,7 @@ namespace AdoptPet.API.Controllers
             {
                 DateStart = DateTime.Now,
                 IsDeleted = false,
-                LocationId = newLocation.Id,
+                LocationId = (int)newLocation,
                 UserId = user.Id,
             };
 
