@@ -12,6 +12,7 @@
     @apply pt-3;
 
     .pet-list {
-        @apply grid grid-cols-4 gap-2 ;
+        @apply grid grid-cols-4 gap-2 overflow-y-scroll;
+        max-height: 500px;
     }
 }
