@@ -31,8 +31,8 @@ namespace AdoptPet.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-all-volunteer")]
-        public async Task<IActionResult> GetAllVolunteers(int pageNumber = 1, int pageSize = 20)
+        [Route("get-all-volunteer/pageNumber/{pageNumber}/pageSize/{pageSize}")]
+        public async Task<IActionResult> GetAllVolunteers(int pageNumber, int pageSize)
         {
             var r = await volunteerService.GetAllAsync(pageNumber, pageSize);
 
@@ -55,7 +55,7 @@ namespace AdoptPet.API.Controllers
                 data.Add(d);
             }
 
-            return Ok(new Success<List<object>> { Status = true, Data = [.. data] });
+            return Ok(new Success<List<Volunteer>> { Status = true, Data = r.Items.ToList() });
         }
 
         [HttpGet]

@@ -1,4 +1,5 @@
-﻿using AdoptPet.Application.Interfaces.IRepositories;
+﻿using AdoptPet.Application.DTOs;
+using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Repositories;
 using System;
@@ -29,7 +30,41 @@ namespace AdoptPet.Infrastructure.Services
             return await _repository.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
         }
 
-        public async Task<Pet?> GetByIdAsync(int id)
+// <<<<<<< HEAD
+//         public async Task<Pet?> GetByIdAsync(int id)
+// =======
+//         public async Task<PaginatedResult<Pet>> SearchPetsByCriteria(SearchCriteria searchCriteria, int pageNumber, int pageSize)
+//         {
+//             if(searchCriteria == null)
+//             {
+//                 return await _repository.GetAllAsync(pageNumber, pageSize);
+//             }
+//             return await _repository.SearchPetByCriteria(searchCriteria, pageNumber, pageSize);
+//         }
+
+//         public async Task<Pet> GetByIdAsync(int id)
+// >>>>>>> 5301649906a4cfdf71e82b861361376d70da3e02
+//         {
+//             var pet = await _repository.GetByIdAsync(id);
+
+//             return pet;
+//         }
+
+        public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(int breedId, int pageNumber, int pageSize)
+        {
+            return await _repository.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
+        }
+
+        public async Task<PaginatedResult<Pet>> SearchPetsByCriteria(SearchCriteria searchCriteria, int pageNumber, int pageSize)
+        {
+            if(searchCriteria == null)
+            {
+                return await _repository.GetAllAsync(pageNumber, pageSize);
+            }
+            return await _repository.SearchPetByCriteria(searchCriteria, pageNumber, pageSize);
+        }
+
+        public async Task<Pet> GetByIdAsync(int id)
         {
             var pet = await _repository.GetByIdAsync(id);
 
@@ -75,6 +110,5 @@ namespace AdoptPet.Infrastructure.Services
             }
             return true;
         }
-
     }
 }

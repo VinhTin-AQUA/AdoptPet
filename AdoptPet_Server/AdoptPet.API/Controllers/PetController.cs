@@ -22,8 +22,8 @@ namespace AdoptPet.API.Controllers
         }
 
         [HttpGet]
-        [Route("api/pets")]
-        public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        [Route("get-all-pets")]
+        public async Task<IActionResult> GetAll([FromQuery] int pageNumber, [FromQuery] int pageSize)
         {
             if (pageNumber <= 0 || pageSize <= 0)
             {
@@ -31,11 +31,11 @@ namespace AdoptPet.API.Controllers
             }
 
             var results = await _petService.GetAllAsync(pageNumber, pageSize);
-            return Ok(results);
+            return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = results.Items.ToList() });
         }
 
         [HttpGet]
-        [Route("api/pets/search/{breed}")]
+        [Route("search-by-breed/{breed}")]
         public async Task<IActionResult> SearchByBreed(int breedId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
             if (pageNumber <= 0 || pageSize <= 0)
@@ -46,9 +46,21 @@ namespace AdoptPet.API.Controllers
             var results = await _petService.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
             return Ok(results);
         }
+        [HttpGet]
+        [Route("search-by-criteria")]
+        public async Task<IActionResult> SearchByCriteria([FromQuery] SearchCriteria searchCriteria, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        {
+            if (pageNumber <= 0 || pageSize <= 0)
+            {
+                return BadRequest("Page number and page size must be greater than 0.");
+            }
+
+            var result = await _petService.SearchPetsByCriteria(searchCriteria, pageNumber, pageSize);
+            return Ok(result);
+        }
 
         [HttpGet]
-        [Route("api/pets/{id}")]
+        [Route("get-pet-by-id/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var pet = await _petService.GetByIdAsync(id);
@@ -60,7 +72,7 @@ namespace AdoptPet.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/pets")]
+        [Route("add-pet")]
         public async Task<IActionResult> Add([FromBody] Pet pet)
         {
             if (!ModelState.IsValid)
@@ -77,7 +89,7 @@ namespace AdoptPet.API.Controllers
         }
 
         [HttpPut]
-        [Route("api/pets/{id}")]
+        [Route("update-pet/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Pet pet)
         {
             if (id != pet.Id)
@@ -103,7 +115,7 @@ namespace AdoptPet.API.Controllers
         }
 
         [HttpDelete]
-        [Route("api/pets/{id}")]
+        [Route("soft-delete-pet/{id}")]
         public async Task<IActionResult> SoftDelete(int id)
         {
             await _petService.SoftDelete(id);

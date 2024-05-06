@@ -33,10 +33,11 @@ namespace AdoptPet.Infrastructure.Services
             await genericRepository.DeletePermanentlyAsync(model);
         }
 
-        public async Task<ICollection<Volunteer>> GetAllAsync(int pageNumber, int pageSize)
+
+        public async Task<PaginatedResult<Volunteer>> GetAllAsync(int pageNumber, int pageSize)
         {
             var r = await genericRepository.GetAllAsync(pageNumber, pageSize);
-            return r.Items!;
+            return r;
         }
 
         public async Task<Volunteer?> GetByIdAsync(int id)
@@ -45,9 +46,9 @@ namespace AdoptPet.Infrastructure.Services
             return r;
         }
 
-        public async Task SoftDelete(int volunteerId)
+        public async Task SoftDelete(int Id)
         {
-            await genericRepository.SoftDelete(volunteerId);
+            await genericRepository.SoftDelete(Id);
         }
 
         public async Task UpdateAsync(Volunteer model)
