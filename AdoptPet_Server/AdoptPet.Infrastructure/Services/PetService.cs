@@ -50,11 +50,6 @@ namespace AdoptPet.Infrastructure.Services
 //             return pet;
 //         }
 
-        public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(int breedId, int pageNumber, int pageSize)
-        {
-            return await _repository.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
-        }
-
         public async Task<PaginatedResult<Pet>> SearchPetsByCriteria(SearchCriteria searchCriteria, int pageNumber, int pageSize)
         {
             if(searchCriteria == null)
@@ -64,7 +59,7 @@ namespace AdoptPet.Infrastructure.Services
             return await _repository.SearchPetByCriteria(searchCriteria, pageNumber, pageSize);
         }
 
-        public async Task<Pet> GetByIdAsync(int id)
+        public async Task<Pet?> GetByIdAsync(int id)
         {
             var pet = await _repository.GetByIdAsync(id);
 

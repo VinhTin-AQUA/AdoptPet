@@ -1,19 +1,35 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PetService } from '../../../services/pet.service';
+import { PetDto } from '../../../shared/models/pet/PetDto';
 
 @Component({
-  selector: 'app-pet-manager',
-  standalone: true,
-  imports: [RouterLink],
-  templateUrl: './pet-manager.component.html',
-  styleUrl: './pet-manager.component.scss'
+	selector: 'app-pet-manager',
+	standalone: true,
+	imports: [RouterLink],
+	templateUrl: './pet-manager.component.html',
+	styleUrl: './pet-manager.component.scss',
 })
 export class PetManagerComponent {
-  constructor() {}
+	pageSize: number = 20;
+	pageNumber: number = 1;
+  pets: PetDto[] = []
 
-  ngOnInit() {
-    
-  }
+	constructor(private petService: PetService) {}
 
-  
+	ngOnInit() {
+		this.getPets();
+	}
+
+	private getPets() {
+		this.petService.getAllPets(this.pageNumber, this.pageSize).subscribe({
+			next: (res: any) => {
+				// console.log(res.data);
+        this.pets = res.data;
+			},
+			error: err => {
+				console.log(err.error);
+			},
+		});
+	}
 }

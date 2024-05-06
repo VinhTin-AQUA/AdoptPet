@@ -13,7 +13,7 @@ export class VolunteerService {
 
 	getVolunteers(pageNumber: number = 1, pageSize: number = 20) {
 		return this.http.get(
-			`${this.baseApi}/get-all-volunteer?pageNumber=${pageNumber}&pageSize=${pageSize}`
+			`${this.baseApi}/get-all-volunteer/pageNumber/${pageNumber}/pageSize/${pageSize}`
 		);
 	}
 

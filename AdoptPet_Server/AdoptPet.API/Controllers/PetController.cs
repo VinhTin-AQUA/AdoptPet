@@ -31,7 +31,7 @@ namespace AdoptPet.API.Controllers
             }
 
             var results = await _petService.GetAllAsync(pageNumber, pageSize);
-            return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = results.Items.ToList() });
+            return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = results.Items!.ToList() });
         }
 
         [HttpGet]

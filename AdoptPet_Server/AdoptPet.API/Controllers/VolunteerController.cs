@@ -38,7 +38,7 @@ namespace AdoptPet.API.Controllers
 
             var data = new List<object>();
 
-            foreach(var v in r)
+            foreach(var v in r.Items!)
             {
                 var volunteerRoles = await volunteerRoleXVolunteerRepository.GetVolunteerRolesByVolunteerId(v.Id);
 
@@ -55,7 +55,7 @@ namespace AdoptPet.API.Controllers
                 data.Add(d);
             }
 
-            return Ok(new Success<List<Volunteer>> { Status = true, Data = r.Items.ToList() });
+            return Ok(new Success<List<object>> { Status = true, Data = data });
         }
 
         [HttpGet]

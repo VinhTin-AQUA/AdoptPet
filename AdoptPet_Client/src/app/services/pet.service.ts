@@ -8,11 +8,11 @@ import { environment } from '../../environments/environment.development';
 })
 export class PetService {
 
-  private readonly baseApi = environment.baseUrl + '/pet';
+  private readonly baseApi = environment.baseUrl + '/pets';
 
   constructor(private http: HttpClient) {}
 
-  getAllPets() {
-    return this.http.get(this.baseApi + '/')
+  getAllPets(pageNumber: number, pageSize: number) {
+    return this.http.get(this.baseApi + `/get-all-pets?pageNumber=${pageNumber}&pageSize=${pageSize}`)
   }
 }
