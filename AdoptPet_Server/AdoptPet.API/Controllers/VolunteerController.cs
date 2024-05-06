@@ -78,12 +78,17 @@ namespace AdoptPet.API.Controllers
             var user = await accountRepository.GetUserByEmailAsync(model.UserEmail);
             if (user == null)
             {
-                return BadRequest(new Success<Volunteer> { Status = false, Title = "Email không hợp lệ" });
+                return BadRequest(new Success<Volunteer> 
+                { 
+                    Status = false, 
+                    Title = "Email chưa đăng ký người dùng", 
+                    Messages = ["Vui lòng nhập Email đã được đăng ký"] 
+                });
             }
 
             var newLocation = await locationService.AddAsync(model.Location);
 
-            if (newLocation == null)
+            if (newLocation == 0)
             {
                 return BadRequest(new Success<Volunteer> { Status = false, Title = "Có lỗi xảy ra. Vui lòng thử lại" });
             }
@@ -120,14 +125,12 @@ namespace AdoptPet.API.Controllers
             return Ok();
         }
 
-        //[HttpDelete]
-        //[Route("soft-delete/{id}")]
-        //public async Task<IActionResult> SoftDelete(int id)
-        //{
-
-        //}
-
-
-
+        [HttpDelete]
+        [Route("soft-delete/{id}")]
+        public async Task<IActionResult> SoftDelete(int id)
+        {
+            await volunteerService.SoftDelete(id);
+            return NoContent();
+        }
     }
 }

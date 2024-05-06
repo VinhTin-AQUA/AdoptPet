@@ -53,18 +53,12 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-        public async Task SoftDelete(Volunteer model)
-        {
-            model.IsDeleted = !model.IsDeleted;
-            await _context.SaveChangesAsync();
-        }
-
         public async Task SoftDelete(int Id)
         {
             var existsVolunteer = _context.Volunteers.Find(Id);
             if (existsVolunteer != null)
             {
-                existsVolunteer.IsDeleted = true;
+                existsVolunteer.IsDeleted = !existsVolunteer.IsDeleted;
                 _context.Volunteers.Update(existsVolunteer);
                await _context.SaveChangesAsync();
             }

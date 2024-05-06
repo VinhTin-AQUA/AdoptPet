@@ -3,275 +3,158 @@
 <div class="wrapper">
 	<div class="container mx-auto py-2">
 		<div class="">
-            <h1 class="text-3xl ">Thêm thú cưng</h1>
+			<h1 class="text-3xl">Thêm tình nguyện viên</h1>
 
-            <form [formGroup]="volunteerForm">
+			<form [formGroup]="volunteerForm">
+				<!-- thong tin -->
+				<div class="grid gap-6 mb-6 md:grid-cols-2 border rounded-md p-4">
+					<!-- email -->
+					<div>
+						<label for="first_name" class="block mb-2 text-sm font-medium text-gray-900"
+							>Email <span class="text-red-600">*</span></label
+						>
+						<input
+							type="email"
+							id="first_name"
+							class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
+							placeholder="example@gmail.com"
+							required
+							formControlName="email"
+						/>
 
-                <!-- thong tin -->
-                <div class="grid gap-6 mb-6 md:grid-cols-2 border rounded-md p-4">
-                    <!-- ho -->
-                    <div>
-                        <label
-                            for="first_name"
-                            class="block mb-2 text-sm font-medium text-gray-900"
-                            >Họ <span class="text-red-600">*</span></label
-                        >
-                        <input
-                            type="text"
-                            id="first_name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
-                            placeholder="John"
-                            required
-                            formControlName="lastName"
-                        />
+						@if (submitted === true && volunteerForm.hasError('required', 'email')) {
+						<small class="text-red-500">Email tình nguyện viên không được để trống</small>
+						} @else if (submitted === true && volunteerForm.hasError('email', 'email')) {
+							<small class="text-red-500">Email không hợp lệ</small>
+						}
+					</div>
+				</div>
 
-                        @if (submitted === true && volunteerForm.hasError('required', 'lastName')) {
-                            <small class="text-red-500">Họ không được để trống</small>
-                        }
-                    </div>
+				<!-- dia chi -->
+				<div class="p-4 border mt-4 rounded-md">
+					<h1 class="py-2">Địa điểm</h1>
+					<div class="grid gap-6 mb-6 md:grid-cols-2">
+						<!-- tinh thanh pho -->
+						<div>
+							<label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
+								>Tỉnh thành phố</label
+							>
+							<select
+								(change)="onProviceChanged($event)"
+								formControlName="province"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+							>
+								@for (p of provinces; track $index) {
+								<option data-id="{{ p.province_id }}" value="{{ p.province_name }}">
+									{{ p.province_name }}
+								</option>
+								}
+							</select>
+						</div>
 
-                    <!-- ten -->
-                    <div>
-                        <label
-                            for="last_name"
-                            class="block mb-2 text-sm font-medium text-gray-900"
-                            >Tên <span class="text-red-600">*</span></label
-                        >
-                        <input
-                            type="text"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                            placeholder="Doe"
-                            required
-                            formControlName="firstName"
-                        />
+						<!-- quan huyen -->
+						<div>
+							<label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
+								>Quận / Huyện</label
+							>
 
-                        @if (submitted === true && volunteerForm.hasError('required', 'firstName')) {
-                            <small class="text-red-500">Tên không được để trống</small>
-                        }
-                    </div>
+							<select
+								(change)="onDistrictChanged($event)"
+								formControlName="district"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+							>
+								@for (d of districts; track $index) {
+								<option data-id="{{ d.district_id }}" value="{{ d.district_name }}">
+									{{ d.district_name }}
+								</option>
+								}
+							</select>
+						</div>
 
-                    <!-- sdt -->
-                    <div>
-                        <label
-                            for="company"
-                            class="block mb-2 text-sm font-medium text-gray-900"
-                            >Số điện thoại <span class="text-red-600">*</span></label
-                        >
-                        <input
-                            type="text"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                            placeholder="0123456789"
-                            required
-                            formControlName="phone"
-                        />
-
-                        @if (submitted === true && volunteerForm.hasError('required', 'phone')) {
-                            <small class="text-red-500">Số điện thoại không được để trống</small>
-                        }
-                    </div>
-
-                    <!-- email -->
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                            >Email <span class="text-red-600">*</span></label
-                        >
-                        <input
-                            type="tel"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                            placeholder="name@gmail.com"
-                            required
-                            formControlName="email"
-                        />
-
-                        @if (submitted === true && volunteerForm.hasError('required', 'email')) {
-                            <small class="text-red-500">Email không được để trống</small>
-                        }
-                    </div>
-
-                    <!-- <div>
-                        <label
-                            for="website"
-                            class="block mb-2 text-sm font-medium text-gray-900"
-                            >Địa chỉ</label
-                        >
-                        <input
-                            type="url"
-                            id="website"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                            placeholder="flowbite.com"
-                            required
-                        />
-                    </div> -->
-                    <!-- <div>
-                        <label
-                            for="visitors"
-                            class="block mb-2 text-sm font-medium text-gray-900"
-                            >Unique visitors (per month)</label
-                        >
-                        <input
-                            type="number"
-                            id="visitors"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                            placeholder=""
-                            required
-                        />
-                    </div> -->
-                </div>
-
-
-                <!-- <div class="mb-6">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
-                        >Email address</label
-                    >
-                    <input
-                        type="email"
-                        id="email"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                        placeholder="john.doe@company.com"
-                        required
-                    />
-                </div> -->
-
-                <!-- dia chi -->
-                <div class="p-4 border mt-4 rounded-md">
-                    <h1 class="py-2">Địa điểm</h1>
-                    <div class="grid gap-6 mb-6 md:grid-cols-2">
-
-                        <!-- tinh thanh pho -->
-                        <div>
-                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Tỉnh thành phố</label
-                            >
-                            <select (change)="onProviceChanged()"
-                                formControlName="province"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
-                               
-                                @for (p of provinces; track $index) {
-                                    <option value="{{p.province_id}}">{{p.province_name}}</option>
-                                }
-                            </select>
-                        </div>
-
-
-                        <!-- quan huyen -->
-                        <div>
-                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Quận / Huyện</label
-                            >
-                            <!-- <input
-                                type="tel"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                                placeholder="Quận 1"
-                                required
-                                formControlName="district"
-                                (change)="onDistrictChanged()"
-                            /> -->
-
-                            <select (change)="onDistrictChanged()"
-                                formControlName="district"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
-                            
-                                @for (d of districts; track $index) {
-                                    <option value="{{d.district_id}}">{{d.district_name}}</option>
-                                }
-                            </select>
-                        </div>
-
-                        <!-- xa -->
-                        <div>
-                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Thị xã / Phường</label
-                            >
-                            <!-- <input
-                                type="tel"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                                placeholder="Quận 1"
-                                required
-                                formControlName="ward"
-                                (change)="onWardsChanged()"
-                            /> -->
-
-                            <select
-                            formControlName="ward"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
-                        
-                            @for (w of wards; track $index) {
-                                <option value="{{w.ward_id}}">{{w.ward_name}}</option>
-                            }
-                        </select>
-                        </div>
-
-                        <!-- so nha -->
-                        <div>
-                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Số nhà</label
-                            >
-                            <input
-                                type="tel"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                                placeholder="221"
-                                required
-                                formControlName="street"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="grid grid-cols-2 gap-2 p-4 rounded-md border my-4">
-                    <div class="mb-6">
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
-                            >Mật khẩu <span class="text-red-600">*</span></label
-                        >
-                        <input
-                            type="password"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                            placeholder="•••••••••"
-                            required
-                            formControlName="password"
-                        />
-
-                        @if (submitted === true && volunteerForm.hasError('required', 'password')) {
-                            <small class="text-red-500">Mật khẩu không được để trống</small>
-                        }
-                    </div>
-                    <div class="mb-6">
-                        <label
-                            for="confirm_password"
-                            class="block mb-2 text-sm font-medium text-gray-900"
-                            >Nhập lại mật khẩu <span class="text-red-600">*</span></label
-                        >
-                        <input
-                            type="password"
-                            id="confirm_password"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                            placeholder="•••••••••"
-                            required
-                            formControlName="confirmPassword"
-                        />
-
-                        @if (submitted === true && volunteerForm.hasError('required', 'confirmPassword')) {
-                            <small class="text-red-500">Hãy nhập lại mật khẩu</small>
-                        }
-                    </div>
-                </div>
-
-                <button
-                    (click)="onSubmit()"
-                    type="submit"
-                    class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800"
-                >
-                    Thêm
-                </button>
-
-                <a
-                    routerLink="/admin/volunteer-manager"
-                    class="ml-3 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                >
-                    Hủy
-                </a>
-            </form>
+						<!-- xa -->
+						<div>
+							<label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
+								>Thị xã / Phường</label
+							>
 			
+							<select
+								formControlName="ward"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+							>
+								@for (w of wards; track $index) {
+								<option value="{{ w.ward_name }}">{{ w.ward_name }}</option>
+								}
+							</select>
+						</div>
+
+						<!-- so nha -->
+						<div>
+							<label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
+								>Số nhà</label
+							>
+							<input
+								type="tel"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+								placeholder="221 hoặc để trống"
+								formControlName="street"
+							/>
+						</div>
+					</div>
+				</div>
+
+				<!-- vai tro -->
+				<div class="p-4 border mt-4 rounded-md">
+					<h1 class="py-2">Chọn vai trò</h1>
+					<div class="grid gap-6 mb-6 md:grid-cols-2">
+						<!-- chọn vai trò -->
+						<div>
+							<label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
+								>Danh sách vai trò</label
+							>
+							<select
+								formControlName="roleId"
+								(change)="onRoleSelectted($event)"
+								class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
+							>
+								@for (p of volunteerRoles; track $index) {
+								<option data-id="{{ p.description }}" value="{{p.id}}">
+									{{ p.name }}
+								</option>
+								}
+							</select>
+						</div>
+
+						<!-- mô tả -->
+						<div>
+							<label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
+								>Mô tả</label
+							>
+
+							<textarea 
+							readonly
+							rows="5"
+							class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+								{{roleDesciption}}
+							</textarea>
+						</div>
+					</div>
+				</div>
+
+				<button
+					(click)="onSubmit()"
+					type="submit"
+					class="text-white bg-lime-700 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800"
+				>
+					Thêm
+				</button>
+
+				<a
+					routerLink="/admin/volunteer-manager"
+					class="ml-3 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+				>
+					Hủy
+				</a>
+			</form>
 		</div>
 	</div>
 </div>

@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LocationService } from '../../../services/location.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { VolunteerService } from '../../../services/volunteer.service';
+import { VolunteerAdd } from '../../../shared/models/volunteer/volunteer-add';
+import { patchState } from '@ngrx/signals';
+import { DialogStore } from '../../../shared/stores/DialogStore';
+import { VolunteerRole } from '../../../shared/models/volunteer/volunteer-role';
+import { VolunteerRoleService } from '../../../services/volunteer-role.service';
 
 @Component({
 	selector: 'app-add-volunteer',
@@ -16,31 +22,37 @@ export class AddVolunteerComponent {
 	wards: any = [];
 	volunteerForm!: FormGroup;
 	submitted: boolean = false;
+	dialogStore = inject(DialogStore);
+	volunteerRoles: VolunteerRole[] = [];
+	roleDesciption: string = '';
 
-	constructor(private formBuilder: FormBuilder, private locationService: LocationService) {}
+	constructor(
+		private formBuilder: FormBuilder,
+		private locationService: LocationService,
+		private volunteerService: VolunteerService,
+		private volunteerRoleService: VolunteerRoleService
+	) {}
 
 	ngOnInit() {
 		this.volunteerForm = this.formBuilder.group({
-			firstName: ['', [Validators.required]],
-			lastName: ['', [Validators.required]],
-			phone: ['', [Validators.required]],
-			email: ['', [Validators.required]],
+			email: ['', [Validators.required, Validators.email]],
 			province: ['', [Validators.required]],
 			district: ['', [Validators.required]],
 			ward: ['', [Validators.required]],
 			street: [''],
-			password: ['', [Validators.required]],
-			confirmPassword: ['', [Validators.required]],
+			roleId: [1],
 		});
 
 		this.locationService.getProvices().subscribe({
 			next: (res: any) => {
 				this.provinces = res.results;
 				// console.log(this.provinces);
-				this.volunteerForm.controls['province'].setValue('01');
-				this.getDistricts(this.volunteerForm.controls['province'].value);
+				this.volunteerForm.controls['province'].setValue('Thành phố Hà Nội');
+				this.getDistricts('01');
 			},
 		});
+
+		this.getVolunteerRoles();
 	}
 
 	private getDistricts(provinceId: string) {
@@ -48,7 +60,7 @@ export class AddVolunteerComponent {
 			next: (res: any) => {
 				this.districts = res.results;
 				// console.log(this.provinces);
-				this.volunteerForm.controls['district'].setValue(this.districts[0].district_id);
+				this.volunteerForm.controls['district'].setValue(this.districts[0].district_name);
 				this.getWards(this.districts[0].district_id);
 			},
 		});
@@ -58,17 +70,40 @@ export class AddVolunteerComponent {
 		this.locationService.getWards(districtId).subscribe({
 			next: (res: any) => {
 				this.wards = res.results;
-				this.volunteerForm.controls['ward'].setValue(this.wards[0].ward_id);
+				this.volunteerForm.controls['ward'].setValue(this.wards[0].ward_name);
 			},
 		});
 	}
 
-	onProviceChanged() {
-		this.getDistricts(this.volunteerForm.controls['province'].value);
+	private getVolunteerRoles() {
+		this.volunteerRoleService.getAllVolunteerRoles().subscribe({
+			next: (res: any) => {
+				// console.log(res.data);
+				this.volunteerRoles = res.data;
+			},
+			error: err => {
+				console.log(err.error);
+			},
+		});
 	}
 
-	onDistrictChanged() {
-		this.getWards(this.volunteerForm.controls['district'].value);
+	onProviceChanged(event: any) {
+		const selectedOption = event.target.selectedOptions[0];
+		this.getDistricts(selectedOption.getAttribute('id'));
+	}
+
+	onDistrictChanged(event: any) {
+		const selectedOption = event.target.selectedOptions[0];
+		this.getWards(selectedOption.getAttribute('id'));
+	}
+
+	onWardsChanged(event: any) {
+		console.log('Wards');
+	}
+
+	onRoleSelectted(event: any) {
+		const selectedOption = event.target.selectedOptions[0];
+		this.roleDesciption = selectedOption.getAttribute('id')
 	}
 
 	onSubmit() {
@@ -78,8 +113,32 @@ export class AddVolunteerComponent {
 			return;
 		}
 
-		
+		const data: VolunteerAdd = {
+			userEmail: this.volunteerForm.controls['email'].value,
+			location: {
+				id: 0,
+				isDeleted: false,
+				street: this.volunteerForm.controls['street'].value,
+				wards: this.volunteerForm.controls['ward'].value,
+				districtCity: this.volunteerForm.controls['district'].value,
+				provinceCity: this.volunteerForm.controls['province'].value,
+			},
+			roleId: this.volunteerForm.controls['roleId'].value,
+		};
 
-		console.log(this.volunteerForm.value);
+		this.volunteerService.addVolunteer(data).subscribe({
+			next: (res: any) => {
+				console.log(res);
+			},
+			error: err => {
+				console.log(err.error);
+				patchState(this.dialogStore, {
+					isShowed: true,
+					title: err.error.title,
+					message: err.error.messages.join('\n'),
+				});
+			},
+		});
+		// console.log(data);
 	}
 }

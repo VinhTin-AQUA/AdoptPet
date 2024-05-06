@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VolunteerRoleService } from '../../../services/volunteer-role.service';
-import { VolunteerRoleDto } from '../../../shared/models/volunteer-role/VolunteerRoleDto';
 import { Router } from '@angular/router';
+import { VolunteerRoleAdd } from '../../../shared/models/volunteer/volunteer-role-add';
 
 @Component({
 	selector: 'app-add-volunteer-role',
@@ -36,7 +36,7 @@ export class AddVolunteerRoleComponent {
 		}
 
 		console.log(this.volunteerRoleForm.value);
-		const role: VolunteerRoleDto = {
+		const role: VolunteerRoleAdd = {
 			name: this.volunteerRoleForm.controls['roleName'].value,
 			description: this.volunteerRoleForm.controls['description'].value,
 		};

@@ -15,7 +15,8 @@ namespace AdoptPet.Infrastructure.Repositories
         {
             this.context = context;
         }
-        public async Task<int?> AddAsync(Location model)
+
+        public async Task<int> AddAsync(Location model)
         {
             context.Locations.Add(model);
             var r = await context.SaveChangesAsync();
@@ -68,11 +69,6 @@ namespace AdoptPet.Infrastructure.Repositories
         {
             context.Update(model);
             await context.SaveChangesAsync();
-        }
-
-        Task<int> IGenericRepository<Location>.AddAsync(Location model)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-volunteerrole")]
-        public async Task<IActionResult> GetVolunteerRoles(int pageNumber, int pageSize)
+        public async Task<IActionResult> GetVolunteerRoles(int pageNumber = 1, int pageSize = 20)
         {
             var roles = await _volunteerRoleService.GetAllVolunteerRolesAsync(pageNumber, pageSize);
             return Ok(new Success<List<VolunteerRole>>{ Status = true, Title = "", Messages = [], Data = roles.Items!.ToList() });

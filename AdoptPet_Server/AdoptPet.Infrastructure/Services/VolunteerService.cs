@@ -45,13 +45,9 @@ namespace AdoptPet.Infrastructure.Services
             return r;
         }
 
-        public async Task SoftDelete(Volunteer model)
+        public async Task SoftDelete(int volunteerId)
         {
-            if (model == null)
-            {
-                return;
-            }
-            await genericRepository.SoftDelete(model.Id);
+            await genericRepository.SoftDelete(volunteerId);
         }
 
         public async Task UpdateAsync(Volunteer model)

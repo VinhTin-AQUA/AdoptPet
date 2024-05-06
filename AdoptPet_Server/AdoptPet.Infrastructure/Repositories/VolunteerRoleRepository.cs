@@ -39,14 +39,14 @@ namespace VolunteerRoles.Infrastructure.Repositories
 
         public async Task<PaginatedResult<VolunteerRole>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var volunteerRoles = _context.VolunteerRoles
+            var volunteerRoles = await _context.VolunteerRoles
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
             var totalItems = _context.VolunteerRoles.Count();
             return new PaginatedResult<VolunteerRole>
             {
-                Items = await volunteerRoles,
+                Items =  volunteerRoles,
                 TotalItems = totalItems,
                 PageNumber = pageNumber,
                 PageSize = pageSize

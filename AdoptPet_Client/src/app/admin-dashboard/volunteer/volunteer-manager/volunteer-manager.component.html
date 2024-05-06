@@ -19,59 +19,41 @@
 							<thead class="border-b border-neutral-200 font-medium">
 								<tr>
 									<th scope="col" class="px-6 py-4">#</th>
-									<th scope="col" class="px-6 py-4">Họ tên</th>
-									<th scope="col" class="px-6 py-4">Email</th>
-									<th scope="col" class="px-6 py-4">Phone</th>
-									<th scope="col" class="px-6 py-4">Lock</th>
 									<th scope="col" class="px-6 py-4">Ngày bắt đầu</th>
+									<th scope="col" class="px-6 py-4">Địa chỉ</th>
 									<th scope="col" class="px-6 py-4">Vai trò</th>
-									<th scope="col" class="px-6 py-4"></th>
+									<th scope="col" class="px-6 py-4">Tác vụ</th>
 								</tr>
 							</thead>
 
 							<tbody>
-								<tr class="border-b border-neutral-200">
-									<td class="whitespace-nowrap px-6 py-4 font-medium">1</td>
-									<td class="whitespace-nowrap px-6 py-4">Mark</td>
-									<td class="whitespace-nowrap px-6 py-4">Otto</td>
-									<td class="whitespace-nowrap px-6 py-4">mdo</td>
-									<td class="whitespace-nowrap px-6 py-4">Chưa</td>
-									<td class="whitespace-nowrap px-6 py-4">1/1/2003</td>
-									<td class="whitespace-nowrap px-6 py-4">Nuôi dưỡng</td>
-									<td class="whitespace-nowrap px-6 py-4">
-										<button>
-											<i class="fa-solid fa-lock text-yellow-500"></i>
-										</button>
-									</td>
-								</tr>
-								<tr class="border-b border-neutral-200">
-									<td class="whitespace-nowrap px-6 py-4 font-medium">2</td>
-									<td class="whitespace-nowrap px-6 py-4">Jacob</td>
-									<td class="whitespace-nowrap px-6 py-4">Thornton</td>
-									<td class="whitespace-nowrap px-6 py-4">fat</td>
-									<td class="whitespace-nowrap px-6 py-4">Chưa</td>
-									<td class="whitespace-nowrap px-6 py-4">1/1/2003</td>
-									<td class="whitespace-nowrap px-6 py-4">Cứu hộ</td>
-									<td class="whitespace-nowrap px-6 py-4">
-										<button>
-											<i class="fa-solid fa-lock text-yellow-500"></i>
-										</button>
-									</td>
-								</tr>
-								<tr class="border-b border-neutral-200">
-									<td class="whitespace-nowrap px-6 py-4 font-medium">3</td>
-									<td class="whitespace-nowrap px-6 py-4">Larry</td>
-									<td class="whitespace-nowrap px-6 py-4">Wild</td>
-									<td class="whitespace-nowrap px-6 py-4">twitter</td>
-									<td class="whitespace-nowrap px-6 py-4">Chưa</td>
-									<td class="whitespace-nowrap px-6 py-4">1/1/2003</td>
-									<td class="whitespace-nowrap px-6 py-4">Vận chuyển</td>
-									<td class="whitespace-nowrap px-6 py-4">
-										<button>
-											<i class="fa-solid fa-lock text-yellow-500"></i>
-										</button>
-									</td>
-								</tr>
+								@for (v of volunteers; track $index) {
+									<tr class="border-b border-neutral-200">
+										<td class="whitespace-nowrap px-6 py-4 font-medium">{{$index + 1}}</td>
+										<td class="whitespace-nowrap px-6 py-4 font-medium">{{v.dateStart | date:'dd/MM/yyyy'}}</td>
+										<td class="whitespace-nowrap px-6 py-4 font-medium">
+											<p>{{v.location.street}} {{v.location.wards}} {{v.location.provinceCity}} {{v.location.districtCity}}</p>
+										</td>
+										<td class="whitespace-nowrap px-6 py-4 font-medium">
+											@for (role of v.roles; track $index) {
+												<p class="text-wrap">Vai trò: {{role.name}}</p>
+												<p class="text-wrap font-thin">Vai trò: {{role.description}}</p>
+											}
+										</td>
+
+										<td class="whitespace-nowrap px-6 py-4">
+											@if(v.isDeleted === true) {
+												<button (click)="softDelete(v)" title="xóa">
+													<i class="fa-solid fa-unlock text-green-500"></i>
+												</button>
+											} @else {
+												<button (click)="softDelete(v)" title="xóa">
+													<i class="fa-solid fa-lock text-yellow-500"></i>
+												</button>
+											}
+										</td>
+									</tr>
+								}
 							</tbody>
 						</table>
 

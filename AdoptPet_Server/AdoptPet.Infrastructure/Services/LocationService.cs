@@ -10,15 +10,17 @@ namespace AdoptPet.Infrastructure.Services
     public class LocationService
     {
         private readonly IGenericRepository<Location> genericRepository;
+
         public LocationService(IGenericRepository<Location> genericRepository)
         {
             this.genericRepository = genericRepository;
         }
-        public async Task<int?> AddAsync(LocationDto model)
+
+        public async Task<int> AddAsync(LocationDto model)
         {
             if(model == null)
             {
-                return null;
+                return 0;
             }
             Location newLocation = new Location()
             {
@@ -28,7 +30,7 @@ namespace AdoptPet.Infrastructure.Services
                 ProvinceCity = model.ProvinceCity
             };
             var r = await genericRepository.AddAsync(newLocation);
-            return r > 0 ? newLocation.Id : r;
+            return r > 0 ? newLocation.Id : 0;
         }
 
         public async Task DeletePermanentlyAsync(int id)

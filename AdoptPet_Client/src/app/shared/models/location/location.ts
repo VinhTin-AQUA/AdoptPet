@@ -4,5 +4,5 @@ export interface Location {
 	wards: string;
 	districtCity: string;
 	provinceCity: string;
-	isDeleted: string;
+	isDeleted: boolean;
 }
