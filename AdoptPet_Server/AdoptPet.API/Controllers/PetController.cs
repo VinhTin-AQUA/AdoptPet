@@ -55,12 +55,6 @@ namespace AdoptPet.API.Controllers
                 return BadRequest("Page number and page size must be greater than 0.");
             }
 
-            if(searchCriteria == null)
-            {
-               var results = await _petService.GetAllAsync(pageNumber, pageSize);
-                return Ok(results);
-            }
-
             var result = await _petService.SearchPetsByCriteria(searchCriteria, pageNumber, pageSize);
             return Ok(result);
         }

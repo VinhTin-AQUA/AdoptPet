@@ -32,6 +32,10 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<PaginatedResult<Pet>> SearchPetsByCriteria(SearchCriteria searchCriteria, int pageNumber, int pageSize)
         {
+            if(searchCriteria == null)
+            {
+                return await _repository.GetAllAsync(pageNumber, pageSize);
+            }
             return await _repository.SearchPetByCriteria(searchCriteria, pageNumber, pageSize);
         }
 
