@@ -63,7 +63,12 @@ namespace AdoptPet.Infrastructure.Repositories
             return context.Owners.CountAsync();
         }
 
-        public async Task<int> UpdateAsync(Owner model)
+        public Task<int> TotalItems()
+        {
+            return context.Owners.CountAsync();
+        }
+
+        public async Task UpdateAsync(Owner model)
         {
             context.Owners.Update(model);
             return await context.SaveChangesAsync();
