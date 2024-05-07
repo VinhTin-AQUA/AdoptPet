@@ -30,5 +30,6 @@ namespace AdoptPet.Domain.Entities
 
         public List<PetBreed> PetBreeds { get; set; } = [];
         public List<PetColour> PetColours { get; set;} = [];
+        public List<PetImage> PetImages { get; set; } = [];
     }
 }

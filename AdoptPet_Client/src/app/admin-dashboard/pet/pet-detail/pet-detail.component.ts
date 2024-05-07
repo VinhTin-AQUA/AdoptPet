@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PetService } from '../../../services/pet.service';
 import { PetDto } from '../../../shared/models/pet/PetDto';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
 	selector: 'app-pet-detail',
@@ -12,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PetDetailComponent {
 	pet: PetDto | null = null;
+	baseImg = environment.baseImgUrl;
 
 	constructor(private petService: PetService, private activatedRoute: ActivatedRoute) {}
 
@@ -27,7 +29,7 @@ export class PetDetailComponent {
 	private getPet(petId: number) {
 		this.petService.getPet(petId).subscribe({
 			next: (res: any) => {
-				console.log(res);
+				// console.log(res);
 				this.pet = res;
 			},
 		});

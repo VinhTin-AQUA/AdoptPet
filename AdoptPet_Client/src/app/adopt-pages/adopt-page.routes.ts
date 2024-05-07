@@ -16,7 +16,7 @@ export const adoptRoutes: Routes = [
 		children: [
 			{ path: '', component: HomeComponent, title: 'Trang chủ' },
 			{ path: 'adopt', component: AdoptComponent, title: 'Nhận nuôi' },
-			{ path: 'adopt-pet-detail', component: AdoptPetDetailComponent, title: 'Chi tiết nhận nuôi' },
+			{ path: 'adopt-pet-detail/:id', component: AdoptPetDetailComponent, title: 'Chi tiết nhận nuôi' },
 			{ path: 'virtual-adoption', component: VirtualAdoptionComponent, title: 'Nhận nuôi ảo' },
 			{ path: 'contact', component: ContactComponent, title: 'Liên hệ' },
 			{ path: 'donate', component: DonateComponent, title: 'Ủng hộ' },

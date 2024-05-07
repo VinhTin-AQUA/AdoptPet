@@ -21,9 +21,12 @@
 				
 				@for (pet of pets; track $index) {
 					<div class="bg-white border border-gray-200 rounded-lg shadow ">
-						<a>
-							<img class="rounded-t-lg" src="https://cdn.britannica.com/70/234870-050-D4D024BB/Orange-colored-cat-yawns-displaying-teeth.jpg" alt="" />
-						</a>
+					
+
+						<div class="relative" style="height: 0; padding-top: 100%;">
+							<img src="{{baseImg}}/{{pet.petImages[0].imgPath}}" alt="Image" class="absolute inset-0 w-full h-full object-cover" />
+						  </div>
+
 						<div class="p-5">
 							<a>
 								<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{pet.petName}}</h5>

@@ -13,160 +13,238 @@
 		</div>
 	</div>
 
-    <!-- pet info -->
-    <div class="container mx-auto p-10">
-        <div class="info-container">
+	@if (pet !== null) {
+	<!-- pet info -->
+	<div class="container mx-auto p-10">
+		<div class="info-container">
+			<div class="grid grid-cols-2 gap-3">
+				<div class="pet-image">
+					<div class="image">
+						<img src="{{ baseImg }}/{{ pet.petImages[0].imgPath }}" alt="" />
+					</div>
+				</div>
 
-            <div class="grid grid-cols-2 gap-3">
+				<div class="infor">
+					<h1 class="text-3xl">{{ pet.petName }}</h1>
 
-                <div class="pet-image">
-                    <div class="image">
-                        <img src="https://www.hanoipetadoption.com/admin/user-content/Animal/600017d4-ccbe-4c49-a4c3-3800e38afa7a.jpeg" alt="">
-                    </div>
-                </div>
+					<div class="breed">
+						<h1>
+							Giống: @for (petBreed of pet.petBreeds; track $index) {
+							<span>{{ petBreed.breed.breedName }}</span>,
+							}
+						</h1>
+					</div>
 
-                <div class="infor">
-                    <h1 class="text-3xl">Pom</h1>
+					<div class="color">
+						<h1>
+							Màu sắc: @for (petColour of pet.petColours; track $index) {
+							<span>{{ petColour.colour.colourName }}</span>,
+							}
+						</h1>
+					</div>
 
-                    <div class="breed">
-                        <h1>Giống: <span>Chó tây</span> </h1>
-                    </div>
+					<div class="age">
+						<h1>Tuổi: <span>{{pet.petAge}}</span></h1>
+					</div>
 
-                    <div class="color">
-                        <h1>Màu sắc: <span>Trắng nâu</span> </h1>
-                    </div>
+					<div class="weight">
+						<h1>Cân nặng: <span>{{pet.petWeight}}</span></h1>
+					</div>
 
-                    <div class="age">
-                        <h1>Tuổi: <span>Thanh niên</span> </h1> 
-                    </div>
+					<div class="gender">
+						<h1>Giới tính: 
+                            @if(pet.petGender === 0) {
+                                <span>Cái</span>
+                                } @else if(pet.petGender === 1) {
+                                <span>Đực</span>
+                                } @else {
+                                <span>Chưa rõ</span>
+                                }
+                        </h1>
+					</div>
 
-                    <div class="weight">
-                        <h1>Cân nặng: <span>6</span> </h1>
-                    </div>
+					<div class="gender">
+						<h1>Ngày nhận nuôi: <span>{{pet.petEntryDate | date:"dd-mm-yyyy"}}</span></h1>
+					</div>
 
-                    <div class="gender">
-                        <h1>Giới tính:  <span>Đực</span></h1>
-                    </div>
+					<div class="">
+						<h1>Nhận nuôi online bởi:</h1>
+						<div class="flex flex-wrap gap-2">
+							<div class="p-3">
+								<img
+									class="w-[70px] rounded-md"
+									src="/assets/adopt-pet-detail/phu_huy.jpg"
+									alt=""
+								/>
+								<a
+									class="font-thin text-blue-600"
+									target="_blank"
+									href="https://www.facebook.com/messages/t/100032017629974"
+									>Phú Huy</a
+								>
+							</div>
 
-                    <div class="gender">
-                        <h1>Ngày nhận nuôi:  <span>12/02/2003</span></h1>
-                    </div>
+							<div class="p-3">
+								<img
+									class="w-[70px] rounded-md"
+									src="/assets/adopt-pet-detail/tuong_vi.jpg"
+									alt=""
+								/>
+								<a
+									class="font-thin text-blue-600"
+									target="_blank"
+									href="https://www.facebook.com/messages/t/tuongvi.1106"
+									>Tường Vi</a
+								>
+							</div>
 
-                    <div class="">
-                        <h1>Nhận nuôi online bởi:</h1>
-                        <div class="flex flex-wrap gap-2">
-                            <div class="p-3">
-                                <img class="w-[70px] rounded-md" src="/assets/adopt-pet-detail/phu_huy.jpg" alt="">
-                                <a class="font-thin text-blue-600" target="_blank" href="https://www.facebook.com/messages/t/100032017629974">Phú Huy</a>
-                            </div>
+							<div class="p-3">
+								<img
+									class="w-[70px] rounded-md"
+									src="/assets/adopt-pet-detail/vinh_tin.jpg"
+									alt=""
+								/>
+								<a
+									class="font-thin text-blue-600"
+									target="_blank"
+									href="https://www.facebook.com/messages/t/vinhtin.aquarius"
+									>Vĩnh Tín</a
+								>
+							</div>
+						</div>
+					</div>
 
-                            <div class="p-3">
-                                <img class="w-[70px] rounded-md" src="/assets/adopt-pet-detail/tuong_vi.jpg" alt="">
-                                <a class="font-thin text-blue-600" target="_blank" href="https://www.facebook.com/messages/t/tuongvi.1106">Tường Vi</a>
-                            </div>
+					<div class="a">
+						<h1>Liên hệ nhận nuôi:</h1>
 
-                            <div class="p-3">
-                                <img class="w-[70px] rounded-md" src="/assets/adopt-pet-detail/vinh_tin.jpg" alt="">
-                                <a class="font-thin text-blue-600" target="_blank" href="https://www.facebook.com/messages/t/vinhtin.aquarius">Vĩnh Tín</a>
-                            </div>
-                        </div>
-                    </div>
+						<div class="flex flex-wrap">
+							<div class="p-3">
+								<img
+									class="w-[70px] rounded-md"
+									src="/assets/adopt-pet-detail/phu_huy.jpg"
+									alt=""
+								/>
+								<a
+									class="font-thin text-blue-600"
+									target="_blank"
+									href="https://www.facebook.com/messages/t/100032017629974"
+									>Phú Huy</a
+								>
+							</div>
 
-                    <div class="a">
-                        <h1>Liên hệ nhận nuôi:</h1>
+							<div class="p-3">
+								<img
+									class="w-[70px] rounded-md"
+									src="/assets/adopt-pet-detail/tuong_vi.jpg"
+									alt=""
+								/>
+								<a
+									class="font-thin text-blue-600"
+									target="_blank"
+									href="https://www.facebook.com/messages/t/tuongvi.1106"
+									>Tường Vi</a
+								>
+							</div>
 
-                        <div class="flex flex-wrap">
-                            <div class="p-3">
-                                <img class="w-[70px] rounded-md" src="/assets/adopt-pet-detail/phu_huy.jpg" alt="">
-                                <a class="font-thin text-blue-600" target="_blank" href="https://www.facebook.com/messages/t/100032017629974">Phú Huy</a>
-                            </div>
+							<div class="p-3">
+								<img
+									class="w-[70px] rounded-md"
+									src="/assets/adopt-pet-detail/vinh_tin.jpg"
+									alt=""
+								/>
+								<a
+									class="font-thin text-blue-600"
+									target="_blank"
+									href="https://www.facebook.com/messages/t/vinhtin.aquarius"
+									>Vĩnh Tín</a
+								>
+							</div>
+						</div>
+					</div>
 
-                            <div class="p-3">
-                                <img class="w-[70px] rounded-md" src="/assets/adopt-pet-detail/tuong_vi.jpg" alt="">
-                                <a class="font-thin text-blue-600" target="_blank" href="https://www.facebook.com/messages/t/tuongvi.1106">Tường Vi</a>
-                            </div>
+					<div class="text-2xl text-white flex gap-2 uppercase">
+						<a
+							routerLink="/adopt-pet/virtual-adoption"
+							class="w-full text-white bg-lime-500 font-medium rounded-full text-sm px-5 py-2.5 text-center hover:bg-lime-700 duration-100 block"
+							>Nhận nuôi ảo</a
+						>
+						<a
+							class="w-full text-white bg-blue-500 font-medium rounded-full text-sm px-5 py-2.5 text-center hover:bg-blue-700 duration-100 block"
+							routerLink="/adopt-pet/contact"
+							>Bạn có câu hỏi?</a
+						>
+					</div>
 
-                            <div class="p-3">
-                                <img class="w-[70px] rounded-md" src="/assets/adopt-pet-detail/vinh_tin.jpg" alt="">
-                                <a class="font-thin text-blue-600" target="_blank" href="https://www.facebook.com/messages/t/vinhtin.aquarius">Vĩnh Tín</a>
-                            </div>
-                        </div>
-                    </div>
+					<!-- thong tin them -->
+					<div class="p-3">
+						<h1 class="text-3xl pb-3">Thông Tin Thêm</h1>
 
-                    <div class="text-2xl text-white flex gap-2 uppercase">
-                        <a routerLink="/adopt-pet/virtual-adoption" class="w-full text-white bg-lime-500 font-medium rounded-full text-sm px-5 py-2.5 text-center hover:bg-lime-700 duration-100 block">Nhận nuôi ảo</a>
-                        <a class="w-full text-white bg-blue-500 font-medium rounded-full text-sm px-5 py-2.5 text-center hover:bg-blue-700 duration-100 block" routerLink="/adopt-pet/contact">Bạn có câu hỏi?</a>
-                    </div>
+						<div class="font-thin">
+							<h1>
+								@if (pet.petWormed === 1) {
+								<i class="status-info text-danger fas fa-times-circle"></i> Đã tẩy
+								giun } @else {
+								<i class="status-info text-danger fas fa-times-circle"></i> Chưa tẩy
+								giun }
+							</h1>
+							<h1>
+								@if (pet.petVaccined === 1) {
+								<i class="status-info text-success fas fa-check-circle"></i> Tim vắc
+								xin } @else {
+								<i class="status-info text-success fas fa-check-circle"></i> Chưa
+								tim vắc xin }
+							</h1>
+							<h1>
+								@if (pet.petMicrochipped === 1) {
+								<i class="status-info text-warning fas fa-question-circle"></i> Có
+								Microchip } @else {
+								<i class="status-info text-warning fas fa-question-circle"></i> Chưa
+								có Microchip }
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                     <!-- thong tin them -->
-                    <div class="p-3">
+			<!-- mo ta -->
+			<div>
+				<h1 class="text-3xl pb-4">Tìm Hiểu Về Thú Cưng</h1>
 
-                        <h1 class="text-3xl pb-3">Thông Tin Thêm</h1>
+				<p class="font-thin">
+					{{pet.petDescription}}
+				</p>
+			</div>
 
-                        <div class="font-thin">
-                            <h1><i class="status-info text-danger fas fa-times-circle"></i> Tẩy giun</h1>
-                            <h1><i class="status-info text-success fas fa-check-circle"></i> Tim vắc xin</h1>
-                            <h1><i class="status-info text-warning fas fa-question-circle"></i> Gắn microchip</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<!-- anh -->
+			<div class="py-4">
+				<h1 class="text-3xl pb-5">Thư Viện Ảnh</h1>
 
-            <!-- mo ta -->
-            <div>
-                <h1 class="text-3xl pb-4">Tìm Hiểu Về Thú Cưng</h1>
+				<div class="columns-1 sm:columns-3 gap-3">
+					
+					@for (img of pet.petImages; track $index) {
+						<div class="break-inside-avoid mb-2">
+							<img
+								src="{{baseImg}}/{{img.imgPath}}"
+								alt=""
+							/>
+						</div>
+					}
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	}
 
-                <p class="font-thin">Bé bị tàu cán cụt 2 chân sau. Hiện tại bé đã có thể dùng 2 chân trước của mình để nâng cơ thể lên để đi . Hai chân sau của bé đã lành và mọc kín lông.
+	<!-- ban da san san giup do -->
 
-                    POM - chú cún liệt đầy nghị lực
-                    Pom là bé đực được nhóm cứu về trong tình trạng bị tàu cán cụt hai chân sau. Phần chân sau của bé chỉ còn nguyên vẹn từ phần đầu gối trở lên vì bác sĩ đã phải cưa bỏ phần chân dưới của bé. Hiện tại thì hai chân sau của bé đã liền da và đã mọc kín lông. Khi phẫu thuật xong bác sĩ nghĩ bé sẽ trở thành một chú chó liệt nằm im một chỗ và phải sinh hoạt bằng cách bò lê. Nhưng không, bằng việc vượt qua hoàn cảnh khó khăn bé đã dùng chính hai chi trước của mình để lâng cơ thể lên và đi lại. Bé đi lại rất nhanh nhẹn, rất thích được dắt đi dạo. Bé thì có khẩu phần ăn giống như bao bạn chó khác, đôi khi còn ăn rất nhanh và sạch bát để có đầy đủ năng lượng cho cả ngày dài hoạt động. POM đã tiêm phòng và triệt sản đầy đủ. Bé rất thích chơi với các bạn chó khác và quấn người lắm nên ba mẹ yêu thương cứ yên tâm đón bé về nha !!!</p>
+	<div class="donate">
+		<h1>Bạn đã sẵn sàng giúp đỡ?</h1>
 
-            </div>
+		<a routerLink="/adopt-pet/donate">Ủng hộ ngay</a>
+	</div>
 
-            <!-- anh -->
-            <div class="py-4">
-
-                <h1 class="text-3xl pb-5">Thư Viện Ảnh</h1>
-
-                <div class="columns-1 sm:columns-3 md:columns-4 lg:columns-5 gap-3">
-                    <div class="break-inside-avoid mb-2">
-                        <img src="https://i.pinimg.com/564x/99/fb/1c/99fb1c3c12425e734213d0b4976482af.jpg" alt="">
-                    </div>
-
-                    <div class="break-inside-avoid mb-2">
-                        <img src="https://i.pinimg.com/564x/49/de/5a/49de5a9a39d3642c3bb3f5d5d193cdc0.jpg" alt="">
-                    </div>
-
-                    <div class="break-inside-avoid mb-2">
-                        <img src="https://i.pinimg.com/736x/ae/f7/c7/aef7c71d053cb932751c4489aefc5d56.jpg" alt="">
-                    </div>
-
-                    <div class="break-inside-avoid mb-2">
-                        <img src="https://i.pinimg.com/564x/aa/24/4d/aa244db7b727935fed0d7fd1b720170e.jpg" alt="">
-                    </div>
-
-                    <div class="break-inside-avoid mb-2">
-                        <img src="https://i.pinimg.com/564x/e4/71/23/e471238794780d3ae6f396edd357bcc5.jpg" alt="">
-                    </div>
-
-                    <div class="break-inside-avoid mb-2">
-                        <img src="https://i.pinimg.com/564x/ae/28/6c/ae286cf1f4748d60ca0433cdb76fff60.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- ban da san san giup do -->
-
-    <div class="donate">
-        <h1>Bạn đã sẵn sàng giúp đỡ?</h1>
-
-        <a routerLink="/adopt-pet/donate">Ủng hộ ngay</a>
-    </div>
-
-    <div class="jumbotron">
+	<div class="jumbotron">
 		<div class="grid grid-cols-6">
 			<div class="col-span-4">
 				<div class="jumbotron-adoption-process">

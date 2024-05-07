@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PetService } from '../../../services/pet.service';
 import { PetDto } from '../../../shared/models/pet/PetDto';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
 	selector: 'app-pet-manager',
@@ -15,6 +16,8 @@ export class PetManagerComponent {
 	pageNumber: number = 1;
 	pets: PetDto[] = [];
 
+	baseImg = environment.baseImgUrl;
+
 	constructor(private petService: PetService) {}
 
 	ngOnInit() {
@@ -24,7 +27,7 @@ export class PetManagerComponent {
 	private getPets() {
 		this.petService.getAllPets(this.pageNumber, this.pageSize).subscribe({
 			next: (res: any) => {
-				// console.log(res.data);
+				console.log(res.data);
 				this.pets = res.data;
 			},
 			error: err => {

@@ -104,48 +104,17 @@
 			<div class="py-4">
 				<h1 class="text-3xl pb-5">Thư Viện Ảnh</h1>
 
-				<div class="columns-1 sm:columns-3 md:columns-4 lg:columns-5 gap-3">
-					<div class="break-inside-avoid mb-2">
-						<img
-							src="https://i.pinimg.com/564x/99/fb/1c/99fb1c3c12425e734213d0b4976482af.jpg"
-							alt=""
-						/>
-					</div>
-
-					<div class="break-inside-avoid mb-2">
-						<img
-							src="https://i.pinimg.com/564x/49/de/5a/49de5a9a39d3642c3bb3f5d5d193cdc0.jpg"
-							alt=""
-						/>
-					</div>
-
-					<div class="break-inside-avoid mb-2">
-						<img
-							src="https://i.pinimg.com/736x/ae/f7/c7/aef7c71d053cb932751c4489aefc5d56.jpg"
-							alt=""
-						/>
-					</div>
-
-					<div class="break-inside-avoid mb-2">
-						<img
-							src="https://i.pinimg.com/564x/aa/24/4d/aa244db7b727935fed0d7fd1b720170e.jpg"
-							alt=""
-						/>
-					</div>
-
-					<div class="break-inside-avoid mb-2">
-						<img
-							src="https://i.pinimg.com/564x/e4/71/23/e471238794780d3ae6f396edd357bcc5.jpg"
-							alt=""
-						/>
-					</div>
-
-					<div class="break-inside-avoid mb-2">
-						<img
-							src="https://i.pinimg.com/564x/ae/28/6c/ae286cf1f4748d60ca0433cdb76fff60.jpg"
-							alt=""
-						/>
-					</div>
+				<div class="columns-1 sm:columns-3 gap-3">
+					
+					@for (img of pet.petImages; track $index) {
+						<div class="break-inside-avoid mb-2">
+							<img
+								src="{{baseImg}}/{{img.imgPath}}"
+								alt=""
+							/>
+						</div>
+					}
+					
 				</div>
 			</div>
 		</div>

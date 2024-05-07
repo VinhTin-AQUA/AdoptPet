@@ -1,5 +1,6 @@
 import { PetBreed } from "./PetBreed";
 import { PetColour } from "./PetColour";
+import { PetImage } from "./PetImage";
 
 
 export interface PetDto {
@@ -23,4 +24,6 @@ export interface PetDto {
 
 	petBreeds: PetBreed[];
 	petColours: PetColour[];
+
+	petImages: PetImage[];
 }

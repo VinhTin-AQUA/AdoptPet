@@ -107,7 +107,7 @@
 			@apply block;
 		}
 
-		select, #pet-name {
+		select, #pet-name, input {
             @apply border duration-100 border-lime-400 rounded-lg w-full p-2 outline-none;
 
             &:focus {

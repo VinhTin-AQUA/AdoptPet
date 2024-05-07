@@ -97,35 +97,22 @@
 			</div>
 
 			<div class="find-animal">
-				<div class="pet-sample">
-					<button class="pet-sample-btn">Tất cả</button>
-					<button class="pet-sample-btn">Chó</button>
-					<button class="pet-sample-btn">Mèo</button>
-					<button class="pet-sample-btn">Khác</button>
-				</div>
-
 				<div class="pet-form">
 					<!-- gioi tinh -->
 					<div class="form-group">
 						<label>Giới tính</label>
 						<select>
 							<option selected value="0">Tất cả</option>
-							<option value="male">Đực</option>
-							<option value="demale">Cái</option>
-							<option value="other">Chưa rõ</option>
+							<option value="0">Đực</option>
+							<option value="1">Cái</option>
+							<option value="2">Chưa rõ</option>
 						</select>
 					</div>
 
 					<!-- do tuoi -->
 					<div class="form-group">
 						<label>Độ tuổi</label>
-						<select>
-							<option selected value="0">Tất cả</option>
-							<option value="yound">Trẻ</option>
-							<option value="mature">Trưởng thành</option>
-							<option value="old">Già</option>
-							<option value="other">Chưa rõ</option>
-						</select>
+						<input type="number" value="1" />
 					</div>
 
 					<!-- triệt sản -->
@@ -135,7 +122,6 @@
 							<option selected value="0">Tất cả</option>
 							<option value="1">Có</option>
 							<option value="0">Không</option>
-							<option value="other">Chưa rõ</option>
 						</select>
 					</div>
 
@@ -144,56 +130,80 @@
 						<label>Màu</label>
 						<select>
 							<option selected value="0">Tất cả</option>
-							<option value="dark">Đen</option>
-							<option value="white">Trắng</option>
-							<option value="red blue">Xanh đỏ</option>
+							@for (color of colors; track $index) {
+							<option value="{{ color.id }}">{{ color.colourName }}</option>
+							}
+						</select>
+					</div>
+
+					<!-- giong -->
+					<div class="form-group">
+						<label>Giống</label>
+						<select>
+							<option selected value="0">Tất cả</option>
+
+							@for (breed of breeds; track $index) {
+							<option value="{{ breed.id }}">{{ breed.breedName }}</option>
+							}
 						</select>
 					</div>
 
 					<!-- ten -->
 					<div class="form-group">
 						<label>Tên</label>
-						<select>
-							<option selected value="0">Tất cả</option>
-							<option value="dog">Chó</option>
-							<option value="cat">Mèo</option>
-							<option value="rabbit">Thỏ</option>
-						</select>
+						<input type="text" />
 					</div>
 
 					<!-- tim kiem -->
-					<div class="form-group">
-						<label class="text-transparent">Tên</label>
+					<div class="form-group w-full">
 						<button class="btn-primary">Tìm kiếm</button>
 					</div>
 				</div>
 			</div>
 
-			<div class="pet-result ">
+			<div class="pet-result">
 				<div class="pet-list">
-					<a routerLink="/adopt-pet/adopt-pet-detail" class="pet-item">
-						<div class="pet-img">
+					@for (pet of pets; track $index) {
+					<a routerLink="/adopt-pet/adopt-pet-detail/{{ pet.id }}" class="pet-item">
+						<div class="relative" style="height: 0; padding-top: 100%">
 							<img
-								src="https://www.hanoipetadoption.com/admin/user-content/Animal/45b039e7-8224-4439-8b7e-3424969dc477.jpeg"
-								alt=""
+								src="{{ baseImg }}/{{ pet.petImages[0].imgPath }}"
+								alt="Image"
+								class="absolute inset-0 w-full h-full object-cover"
 							/>
 						</div>
-						<h3>Judy</h3>
-						<p>Giới tính: <span>Cái</span></p>
-						<p>Tuổi: <span>Trưởng thành</span></p>
-						<p>Tiêm phòng: <span>Chưa rõ</span></p>
+
+						<h3>{{ pet.petName }}</h3>
+						<p>
+							Giới tính: @if(pet.petGender === 0) {
+							<span>Cái</span>
+							} @else if(pet.petGender === 1) {
+							<span>Đực</span>
+							} @else {
+							<span>Chưa rõ</span>
+							}
+						</p>
+						<p>Tuổi: {{ pet.petAge }}</p>
+						<p>
+							Tiêm phòng: @if(pet.petVaccined === 0) {
+							<span>Chưa tiêm</span>
+							} @else if(pet.petVaccined === 1) {
+							<span>Đã tiêm</span>
+							} @else {
+							<span>Chưa rõ</span>
+							}
+						</p>
 					</a>
+					}
 				</div>
 
-                <!-- pagination -->
+				<!-- pagination -->
 				<div class="pagination py-5">
-
 					<nav aria-label="Page navigation example mx-auto">
 						<ul class="list-style-none mb-6 flex">
-
 							<li>
 								<a
-									class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100  focus:outline-none active:bg-neutral-100 "
+									class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
 									href="#!"
 									>Previous</a
 								>
@@ -229,15 +239,13 @@
 
 							<li>
 								<a
-									class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100  "
+									class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
 									href="#!"
 									>Next</a
 								>
 							</li>
-
 						</ul>
 					</nav>
-
 				</div>
 			</div>
 		</div>

@@ -60,6 +60,10 @@ namespace AdoptPet.Infrastructure.Repositories
                             {
                                 BreedId = uc.BreedId,
                                 Breed = uc.Breed
+                            }).ToList(),
+                            PetImages = u.PetImages.Select(pi => new PetImage
+                            {
+                                ImgPath = pi.ImgPath,
                             }).ToList()
                         })
                         .Skip((pageNumber - 1) * pageSize)
@@ -104,6 +108,10 @@ namespace AdoptPet.Infrastructure.Repositories
                         ColourId = pc.ColourId,
                         Colour = pc.Colour,
                         IsDeleted = pc.IsDeleted,
+                    }).ToList(),
+                    PetImages = u.PetImages.Select(pi => new PetImage
+                    {
+                        ImgPath = pi.ImgPath,
                     }).ToList()
                 })
                 .Where(p => p.Id == id).FirstOrDefaultAsync();
@@ -138,9 +146,9 @@ namespace AdoptPet.Infrastructure.Repositories
             }
 
             // Filter by Sex (if provided)
-            if (searchCriteria.Sex.HasValue)
+            if (searchCriteria.Gender.HasValue)
             {
-                query = query.Where(p => p.PetGender == searchCriteria.Sex.Value);
+                query = query.Where(p => p.PetGender == searchCriteria.Gender.Value);
             }
 
             // Filter by Desexed (if provided)
