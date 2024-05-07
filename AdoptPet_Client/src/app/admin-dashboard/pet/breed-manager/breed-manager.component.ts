@@ -15,7 +15,7 @@ export class BreedManagerComponent {
   breeds: Breed[] =[]
   baseBreedImage = environment.baseImgUrl + '/Breeds';
   pageNumber: number = 1;
-  pageSize: number = 20;
+  pageSize: number = 8;
 
   constructor(private breedService: BreedService) {}
 
