@@ -29,5 +29,6 @@ namespace AdoptPet.Domain.Entities
         public int OwnerId { get; set; }
 
         public List<PetBreed> PetBreeds { get; set; } = [];
+        public List<PetColour> PetColours { get; set;} = [];
     }
 }

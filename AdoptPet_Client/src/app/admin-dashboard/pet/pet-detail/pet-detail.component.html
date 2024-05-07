@@ -17,135 +17,42 @@
 					<h1 class="text-3xl">{{ pet.petName }}</h1>
 
 					<div class="breed">
-						<h1>Giống: <span>Chó tây</span></h1>
+						<h1>
+							Giống: @for (breedBreed of pet.petBreeds; track $index) {
+							<span class="font-thin">{{ breedBreed.breed.breedName }} </span>, }
+						</h1>
 					</div>
 
 					<div class="color">
-						<h1>Màu sắc: <span>Trắng nâu</span></h1>
+						<h1>
+							Màu sắc: @for (color of pet.petColours; track $index) {
+							<span class="font-thin">{{ color.colour.colourName }}</span
+							>, }
+						</h1>
 					</div>
 
 					<div class="age">
-						<h1>Tuổi: <span>Thanh niên</span></h1>
+						<h1>
+							Tuổi: <span class="font-thin">{{ pet.petAge }}</span>
+						</h1>
 					</div>
 
 					<div class="weight">
-						<h1>Cân nặng: <span>6</span></h1>
+						<h1>
+							Cân nặng: <span class="font-thin">{{ pet.petWeight }}</span>
+						</h1>
 					</div>
 
 					<div class="gender">
-						<h1>Giới tính: <span>Đực</span></h1>
+						<h1>
+							Giới tính: <span class="font-thin">{{ pet.petGender }}</span>
+						</h1>
 					</div>
 
 					<div class="gender">
-						<h1>Ngày nhận nuôi: <span>12/02/2003</span></h1>
-					</div>
-
-					<div class="">
-						<h1>Nhận nuôi online bởi:</h1>
-						<div class="flex flex-wrap gap-2">
-							<div class="p-3">
-								<img
-									class="w-[70px] rounded-md"
-									src="/assets/adopt-pet-detail/phu_huy.jpg"
-									alt=""
-								/>
-								<a
-									class="font-thin text-blue-600"
-									target="_blank"
-									href="https://www.facebook.com/messages/t/100032017629974"
-									>Phú Huy</a
-								>
-							</div>
-
-							<div class="p-3">
-								<img
-									class="w-[70px] rounded-md"
-									src="/assets/adopt-pet-detail/tuong_vi.jpg"
-									alt=""
-								/>
-								<a
-									class="font-thin text-blue-600"
-									target="_blank"
-									href="https://www.facebook.com/messages/t/tuongvi.1106"
-									>Tường Vi</a
-								>
-							</div>
-
-							<div class="p-3">
-								<img
-									class="w-[70px] rounded-md"
-									src="/assets/adopt-pet-detail/vinh_tin.jpg"
-									alt=""
-								/>
-								<a
-									class="font-thin text-blue-600"
-									target="_blank"
-									href="https://www.facebook.com/messages/t/vinhtin.aquarius"
-									>Vĩnh Tín</a
-								>
-							</div>
-						</div>
-					</div>
-
-					<div class="a">
-						<h1>Liên hệ nhận nuôi:</h1>
-
-						<div class="flex flex-wrap">
-							<div class="p-3">
-								<img
-									class="w-[70px] rounded-md"
-									src="/assets/adopt-pet-detail/phu_huy.jpg"
-									alt=""
-								/>
-								<a
-									class="font-thin text-blue-600"
-									target="_blank"
-									href="https://www.facebook.com/messages/t/100032017629974"
-									>Phú Huy</a
-								>
-							</div>
-
-							<div class="p-3">
-								<img
-									class="w-[70px] rounded-md"
-									src="/assets/adopt-pet-detail/tuong_vi.jpg"
-									alt=""
-								/>
-								<a
-									class="font-thin text-blue-600"
-									target="_blank"
-									href="https://www.facebook.com/messages/t/tuongvi.1106"
-									>Tường Vi</a
-								>
-							</div>
-
-							<div class="p-3">
-								<img
-									class="w-[70px] rounded-md"
-									src="/assets/adopt-pet-detail/vinh_tin.jpg"
-									alt=""
-								/>
-								<a
-									class="font-thin text-blue-600"
-									target="_blank"
-									href="https://www.facebook.com/messages/t/vinhtin.aquarius"
-									>Vĩnh Tín</a
-								>
-							</div>
-						</div>
-					</div>
-
-					<div class="text-2xl text-white flex gap-2 uppercase">
-						<a
-							routerLink="/adopt-pet/virtual-adoption"
-							class="w-full text-white bg-lime-500 font-medium rounded-full text-sm px-5 py-2.5 text-center hover:bg-lime-700 duration-100 block"
-							>Nhận nuôi ảo</a
-						>
-						<a
-							class="w-full text-white bg-blue-500 font-medium rounded-full text-sm px-5 py-2.5 text-center hover:bg-blue-700 duration-100 block"
-							routerLink="/adopt-pet/contact"
-							>Bạn có câu hỏi?</a
-						>
+						<h1>
+							Ngày nhận nuôi: <span class="font-thin">{{ pet.petEntryDate }}</span>
+						</h1>
 					</div>
 
 					<!-- thong tin them -->
@@ -154,15 +61,25 @@
 
 						<div class="font-thin">
 							<h1>
-								<i class="status-info text-danger fas fa-times-circle"></i> Tẩy giun
+								@if (pet.petWormed === 1) {
+								<i class="status-info text-danger fas fa-times-circle"></i> Đã tẩy
+								giun } @else {
+								<i class="status-info text-danger fas fa-times-circle"></i> Chưa tẩy
+								giun }
 							</h1>
 							<h1>
+								@if (pet.petVaccined === 1) {
 								<i class="status-info text-success fas fa-check-circle"></i> Tim vắc
-								xin
+								xin } @else {
+								<i class="status-info text-success fas fa-check-circle"></i> Chưa
+								tim vắc xin }
 							</h1>
 							<h1>
-								<i class="status-info text-warning fas fa-question-circle"></i> Gắn
-								microchip
+								@if (pet.petMicrochipped === 1) {
+								<i class="status-info text-warning fas fa-question-circle"></i> Có
+								Microchip } @else {
+								<i class="status-info text-warning fas fa-question-circle"></i> Chưa
+								có Microchip }
 							</h1>
 						</div>
 					</div>
@@ -174,19 +91,7 @@
 				<h1 class="text-3xl pb-4">Tìm Hiểu Về Thú Cưng</h1>
 
 				<p class="font-thin">
-					Bé bị tàu cán cụt 2 chân sau. Hiện tại bé đã có thể dùng 2 chân trước của mình
-					để nâng cơ thể lên để đi . Hai chân sau của bé đã lành và mọc kín lông. POM -
-					chú cún liệt đầy nghị lực Pom là bé đực được nhóm cứu về trong tình trạng bị tàu
-					cán cụt hai chân sau. Phần chân sau của bé chỉ còn nguyên vẹn từ phần đầu gối
-					trở lên vì bác sĩ đã phải cưa bỏ phần chân dưới của bé. Hiện tại thì hai chân
-					sau của bé đã liền da và đã mọc kín lông. Khi phẫu thuật xong bác sĩ nghĩ bé sẽ
-					trở thành một chú chó liệt nằm im một chỗ và phải sinh hoạt bằng cách bò lê.
-					Nhưng không, bằng việc vượt qua hoàn cảnh khó khăn bé đã dùng chính hai chi
-					trước của mình để lâng cơ thể lên và đi lại. Bé đi lại rất nhanh nhẹn, rất thích
-					được dắt đi dạo. Bé thì có khẩu phần ăn giống như bao bạn chó khác, đôi khi còn
-					ăn rất nhanh và sạch bát để có đầy đủ năng lượng cho cả ngày dài hoạt động. POM
-					đã tiêm phòng và triệt sản đầy đủ. Bé rất thích chơi với các bạn chó khác và
-					quấn người lắm nên ba mẹ yêu thương cứ yên tâm đón bé về nha !!!
+					{{ pet.petDescription }}
 				</p>
 			</div>
 
@@ -235,87 +140,6 @@
 							src="https://i.pinimg.com/564x/ae/28/6c/ae286cf1f4748d60ca0433cdb76fff60.jpg"
 							alt=""
 						/>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- ban da san san giup do -->
-
-	<div class="donate">
-		<h1>Bạn đã sẵn sàng giúp đỡ?</h1>
-
-		<a routerLink="/adopt-pet/donate">Ủng hộ ngay</a>
-	</div>
-
-	<div class="jumbotron">
-		<div class="grid grid-cols-6">
-			<div class="col-span-4">
-				<div class="jumbotron-adoption-process">
-					<h1>Quy Trình Nhận Nuôi</h1>
-					<br />
-					<p>
-						Trước khi quyết định nhận nuôi bé chó hay mèo nào, bạn hãy tự hỏi bản thân
-						rằng mình đã sẵn sàng để chịu trách nhiệm cả đời cho bé chưa, cả về tài
-						chính, nơi ở cũng như tinh thần. Việc nhận nuôi cần được sự đồng thuận lớn
-						từ bản thân bạn cũng như gia đình và những người liên quan. Xin cân nhắc kỹ
-						trước khi liên hệ với HPA về việc nhận nuôi.
-						<br /><br />
-						Bạn đã sẵn sàng? Hãy thực hiện các bước sau đây nhé:
-						<br /><br />
-						1️⃣Tìm hiểu về thú cưng bạn muốn nhận nuôi trên trang web của HPA.
-						<br />
-						2️⃣Liên hệ với Tình nguyện viên phụ trách bé để tìm hiểu thêm về bé.
-						<br />
-						3️⃣Tham gia phỏng vấn nhận nuôi.
-						<br />
-						4️⃣Chuẩn bị cơ sở vật chất, ký giấy tờ nhận nuôi và đóng tiền vía để đón bé
-						về.
-						<br />
-						5️⃣Thường xuyên cập nhật về tình hình của bé, đặc biệt là khi có sự cố để
-						được tư vấn kịp thời.
-
-						<br /><br />
-						❗ Lưu ý:
-						<br />
-						- Chỉ inbox 01 Tình nguyện viên phỏng vấn, KHÔNG NÊN inbox tất cả danh sách.
-						Trường hợp TNV chưa phản hồi lại trong vòng 1 ngày, vui lòng inbox cho Page.
-						<br />
-						- Phần phỏng vấn có thể có nhiều câu hỏi mang tính chất riêng tư, vì vậy
-						mong bạn hãy kiên nhẫn nhé!
-						<br />
-						- Tiền vía mỗi bé sẽ khác nhau tùy thuộc vào tình trạng của bé khi cứu cũng
-						như các dịch vụ y tế (tiêm phòng, triệt sản) đã thực hiện.
-						<br />
-						- Tiền vía dùng để trả các khoản chi về y tế trước đây cho bé, cũng như để
-						hỗ trợ chi phí chăm sóc, nuôi dưỡng các bé khác tại nhà chung.
-						<br />
-						- Trường hợp không nuôi được tiếp cần trả lại cho Nhóm, không tự ý đem cho
-						người khác.
-
-						<br /><br />
-						😸Nếu bạn chỉ có thể chăm sóc tạm thời (foster), tham khảo thông tin tại mục
-						Tình nguyện
-						<br /><br />
-						🐶Tìm hiểu thêm về chương trình Nhận nuôi Ảo ở banner cuối trang này.
-					</p>
-				</div>
-			</div>
-
-			<div class="col-span-2">
-				<div class="adopt-condition">
-					<div class="adopt-condition-body">
-						<h1>Điều Kiện Nhận Nuôi</h1>
-
-						<p>
-							<img src="/assets/pink-cat-foot.png" alt="" class="inline" /> Tài chính
-							tự chủ và ổn định. <br />
-							<img src="/assets/pink-cat-foot.png" alt="" class="inline" /> Chỗ ở cố
-							định, ưu tiên tại Hà Nội. <br />
-							<img src="/assets/pink-cat-foot.png" alt="" class="inline" /> Cam kết
-							tiêm phòng và triệt sản. <br />
-						</p>
 					</div>
 				</div>
 			</div>

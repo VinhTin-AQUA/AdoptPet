@@ -1,3 +1,7 @@
+import { PetBreed } from "./PetBreed";
+import { PetColour } from "./PetColour";
+
+
 export interface PetDto {
 	id: number;
 	petName: string;
@@ -15,6 +19,8 @@ export interface PetDto {
 
 	// khoa ngoai
 	volunteerId: number;
-	locationId: number;
 	ownerId: number;
+
+	petBreeds: PetBreed[];
+	petColours: PetColour[];
 }

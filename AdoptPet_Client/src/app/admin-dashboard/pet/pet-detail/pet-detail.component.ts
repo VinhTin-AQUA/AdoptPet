@@ -25,11 +25,11 @@ export class PetDetailComponent {
 	}
 
 	private getPet(petId: number) {
-    this.petService.getPet(petId).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        this.pet = res;
-      }
-    })
-  }
+		this.petService.getPet(petId).subscribe({
+			next: (res: any) => {
+				console.log(res);
+				this.pet = res;
+			},
+		});
+	}
 }

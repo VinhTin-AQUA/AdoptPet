@@ -77,7 +77,36 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<Pet?> GetByIdAsync(int id)
         {
-            Pet? pet = await _context.Pets.Where(p => p.Id == id).FirstOrDefaultAsync();
+            Pet? pet = await _context.Pets
+                .Select(u => new Pet
+                {
+                    Id = u.Id,
+                    PetName = u.PetName,
+                    PetDescription = u.PetDescription,
+                    PetWeight = u.PetWeight,
+                    PetAge = u.PetAge,
+                    PetGender = u.PetGender,
+                    PetDesexed = u.PetDesexed,
+                    PetWormed = u.PetWormed,
+                    PetVaccined = u.PetVaccined,
+                    PetMicrochipped = u.PetMicrochipped,
+                    PetEntryDate = u.PetEntryDate,
+                    Status = u.Status,
+                    IsDeleted = u.IsDeleted,
+                    PetBreeds = u.PetBreeds.Select(uc => new PetBreed
+                    {
+                        BreedId = uc.BreedId,
+                        Breed = uc.Breed
+                    }).ToList(),
+                    PetColours = u.PetColours.Select(pc => new PetColour
+                    {
+                        Id = pc.Id,
+                        ColourId = pc.ColourId,
+                        Colour = pc.Colour,
+                        IsDeleted = pc.IsDeleted,
+                    }).ToList()
+                })
+                .Where(p => p.Id == id).FirstOrDefaultAsync();
             return pet;
         }
 
