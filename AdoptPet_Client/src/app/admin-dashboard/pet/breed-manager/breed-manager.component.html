@@ -22,7 +22,7 @@
 				@for (breed of breeds; track $index) {
 					<div class="bg-white border border-gray-200 rounded-lg shadow ">
 						<a href="#">
-							<img class="rounded-t-lg" [src]="baseBreedImage + '/' + breed.thumbPath" alt="" />
+							<img class="rounded-t-lg" [src]="baseBreedImage + '' + breed.thumbPath" alt="" />
 						</a>
 						<div class="p-5 flex flex-col items-start justify-around">
 							<div class="line-clamp-4 overflow-hidden text-overflow-ellipsis">

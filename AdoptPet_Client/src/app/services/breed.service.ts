@@ -14,8 +14,8 @@ export class BreedService {
     return this.http.post(`${this.baseUrl}/add-breed`,form)
   }
 
-  getAllBreed() {
-    return this.http.get(`${this.baseUrl}/get-all-breed`);
+  getAllBreed(pageNumber: number, pageSize: number) {
+    return this.http.get(`${this.baseUrl}/get-all-breed?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   getBreedById(id: number) {

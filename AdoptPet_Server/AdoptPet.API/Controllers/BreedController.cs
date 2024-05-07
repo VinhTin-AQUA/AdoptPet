@@ -32,7 +32,7 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-breed")]
-        public async Task<IActionResult> GetAllBreeds(int pageNumber, int pageSize)
+        public async Task<IActionResult> GetAllBreeds([FromQuery]int pageNumber, [FromQuery] int pageSize)
         {
             var breeds = await genericRepository.GetAllAsync(pageNumber,pageSize);
             return Ok(new Success<List<Breed>> { Status = true, Title = "", Messages = [], Data = breeds.Items!.ToList() });

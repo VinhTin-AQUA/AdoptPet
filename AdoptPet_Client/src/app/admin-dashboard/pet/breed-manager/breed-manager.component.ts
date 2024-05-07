@@ -14,18 +14,19 @@ import { environment } from '../../../../environments/environment.development';
 export class BreedManagerComponent {
   breeds: Breed[] =[]
   baseBreedImage = environment.baseImgUrl + '/Breeds';
+  pageNumber: number = 1;
+  pageSize: number = 20;
 
   constructor(private breedService: BreedService) {}
 
   ngOnInit() {
-    this.breedService.getAllBreed().subscribe({
+    this.breedService.getAllBreed(this.pageNumber, this.pageSize).subscribe({
       next: (res: any) => {
         // console.log(res.data);
         this.breeds = res.data;
       },
       error: (err) => {
         console.log(err);
-        
       }
     })
   }
