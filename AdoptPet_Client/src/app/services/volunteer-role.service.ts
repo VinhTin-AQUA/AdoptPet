@@ -15,8 +15,8 @@ export class VolunteerRoleService {
     return this.http.post(`${this.baseApiUrl}/add-volunteerrole`,volunteerRoleDto);
   }
 
-  getAllVolunteerRoles() {
-    return this.http.get(`${this.baseApiUrl}/get-all-volunteerrole`);
+  getAllVolunteerRoles(pageNumber: number, pageSize: number) {
+    return this.http.get(`${this.baseApiUrl}/get-all-volunteerrole?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   softDelete(id: number) {

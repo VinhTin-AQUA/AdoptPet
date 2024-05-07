@@ -15,11 +15,15 @@ export class BreedManagerComponent {
   breeds: Breed[] =[]
   baseBreedImage = environment.baseImgUrl + '/Breeds';
   pageNumber: number = 1;
-  pageSize: number = 20;
+  pageSize: number = 8;
 
   constructor(private breedService: BreedService) {}
 
   ngOnInit() {
+    this.getBreeds();
+  }
+
+  private getBreeds() {
     this.breedService.getAllBreed(this.pageNumber, this.pageSize).subscribe({
       next: (res: any) => {
         // console.log(res.data);
@@ -30,8 +34,21 @@ export class BreedManagerComponent {
       }
     })
   }
-
   
+
+  onPrevPage() {
+		this.pageNumber--;
+		if (this.pageNumber < 1) {
+			this.pageNumber = 1;
+		}
+		this.getBreeds();
+	}
+
+	onNextPage() {
+		this.pageNumber++;
+		this.getBreeds();
+	}
+
 
 
 }

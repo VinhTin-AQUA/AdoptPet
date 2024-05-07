@@ -10,8 +10,8 @@ export class DonorService {
 
   constructor(private http: HttpClient) { }
 
-  getAllDonors() {
-    return this.http.get(this.baseApi + '/get-all-donor');
+  getAllDonors(pageNumber: number, pageSize : number) {
+    return this.http.get(this.baseApi + `/get-all-donor?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   softDeleteDonor(donorId: number) {

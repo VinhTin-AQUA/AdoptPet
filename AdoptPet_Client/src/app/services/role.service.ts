@@ -10,8 +10,8 @@ export class RoleService {
 
   constructor(private http: HttpClient) { }
 
-  getAllRoles() {
-    return this.http.get(`${this.baseApiUrl}/get-all-roles`);
+  getAllRoles(pageNumber: number, pageSize: number) {
+    return this.http.get(`${this.baseApiUrl}/get-all-roles?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   addRole(form: FormData) {

@@ -14,8 +14,8 @@ export class ColorService {
 		return this.http.post(`${this.baseApiUrl}/add-colour`, { colourName: colorName });
 	}
 
-	getAllColor() {
-		return this.http.get(`${this.baseApiUrl}/get-all-colour`);
+	getAllColor(pageNumber: number, pageSize: number) {
+		return this.http.get(`${this.baseApiUrl}/get-all-colour?pageNumber=${pageNumber}&pageSize=${pageSize}`);
 	}
 
 	softDeleteColor(id: number) {

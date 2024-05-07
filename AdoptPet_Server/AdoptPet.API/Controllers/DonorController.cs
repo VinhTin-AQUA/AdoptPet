@@ -27,7 +27,7 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-donor")]
-        public async Task<IActionResult> GetAllDonor(int pageNumber, int pageSize)
+        public async Task<IActionResult> GetAllDonor([FromQuery]int pageNumber, [FromQuery] int pageSize)
         {
             var donors = await donorService.GetAllAsync(pageNumber,pageSize);
             return Ok(new Success<List<Donor>> { Status = true, Messages = [], Data = donors.Items!.ToList() });

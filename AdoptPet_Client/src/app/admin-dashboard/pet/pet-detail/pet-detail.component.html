@@ -45,7 +45,12 @@
 
 					<div class="gender">
 						<h1>
-							Giới tính: <span class="font-thin">{{ pet.petGender }}</span>
+							Giới tính: 
+							@if (pet.petGender === 0) {
+								<span class="font-thin">Cái</span>
+							} @else {
+								<span class="font-thin">Đực</span>
+							}
 						</h1>
 					</div>
 

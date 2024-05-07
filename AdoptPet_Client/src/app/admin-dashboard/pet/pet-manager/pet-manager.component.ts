@@ -11,9 +11,9 @@ import { PetDto } from '../../../shared/models/pet/PetDto';
 	styleUrl: './pet-manager.component.scss',
 })
 export class PetManagerComponent {
-	pageSize: number = 20;
+	pageSize: number = 8;
 	pageNumber: number = 1;
-  pets: PetDto[] = []
+	pets: PetDto[] = [];
 
 	constructor(private petService: PetService) {}
 
@@ -25,11 +25,24 @@ export class PetManagerComponent {
 		this.petService.getAllPets(this.pageNumber, this.pageSize).subscribe({
 			next: (res: any) => {
 				// console.log(res.data);
-        this.pets = res.data;
+				this.pets = res.data;
 			},
 			error: err => {
 				console.log(err.error);
 			},
 		});
+	}
+
+	onPrevPage() {
+		this.pageNumber--;
+		if (this.pageNumber < 1) {
+			this.pageNumber = 1;
+		}
+		this.getPets();
+	}
+
+	onNextPage() {
+		this.pageNumber++;
+		this.getPets();
 	}
 }

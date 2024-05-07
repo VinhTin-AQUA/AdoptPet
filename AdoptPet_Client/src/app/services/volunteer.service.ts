@@ -24,4 +24,6 @@ export class VolunteerService {
 	addVolunteer(model: VolunteerAdd) {
 		return this.http.post(`${this.baseApi}/add-volunteer`, model);
 	}
+
+	
 }

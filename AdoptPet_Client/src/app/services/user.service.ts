@@ -9,8 +9,8 @@ export class UserService {
   private readonly baseUrl = environment.baseUrl + '/user'
   constructor(private http: HttpClient) { }
 
-  getAllUsers() {
-    return this.http.get(`${this.baseUrl}/get-all-users`);
+  getAllUsers(pageNumber: number, pageSize: number) {
+    return this.http.get(`${this.baseUrl}/get-all-users?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   lockUser(userId: string) {

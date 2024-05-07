@@ -25,9 +25,9 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-users")]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
         {
-            var users = await userRepository.GetAllUsers();
+            var users = await userRepository.GetAllUsers(pageNumber, pageSize);
             var r = users.Select(u =>
             {
                 return new UserDto

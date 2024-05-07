@@ -1,6 +1,7 @@
 ﻿using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdoptPet.Infrastructure.Repositories
@@ -19,9 +20,12 @@ namespace AdoptPet.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<AppUser>> GetAllUsers()
+        public async Task<List<AppUser>> GetAllUsers(int pageNumber, int pageSize)
         {
-            var r = await userManager.Users.ToListAsync();
+            var r = await userManager.Users
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
             return r;
         }
 

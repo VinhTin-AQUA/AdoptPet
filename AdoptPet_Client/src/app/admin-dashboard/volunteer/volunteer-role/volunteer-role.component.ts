@@ -16,11 +16,17 @@ export class VolunteerRoleComponent {
 	roles: any = [];
 	isShowRoleDelete: boolean = false;
 	roleDelete: any;
+	pageNumber: number = 1;
+	pageSize: number = 5;
 
 	constructor(private volunteerRoleService: VolunteerRoleService) {}
 
 	ngOnInit() {
-		this.volunteerRoleService.getAllVolunteerRoles().subscribe({
+		this.getVolunteerRoles();
+	}
+
+	private getVolunteerRoles() {
+		this.volunteerRoleService.getAllVolunteerRoles(this.pageNumber, this.pageSize).subscribe({
 			next: (res: any) => {
 				this.roles = res.data;
 				// console.log(this.roles);
@@ -54,5 +60,18 @@ export class VolunteerRoleComponent {
 	onShowRoleDelete(role: any) {
 		this.isShowRoleDelete = !this.isShowRoleDelete;
 		this.roleDelete = role;
+	}
+
+	onPrevPage() {
+		this.pageNumber--;
+		if (this.pageNumber < 1) {
+			this.pageNumber = 1;
+		}
+		this.getVolunteerRoles();
+	}
+
+	onNextPage() {
+		this.pageNumber++;
+		this.getVolunteerRoles();
 	}
 }

@@ -28,10 +28,10 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-colour")]
-        public async Task<IActionResult> GetAllColours(int pageNumber, int pageSize)
+        public async Task<IActionResult> GetAllColours([FromQuery]int pageNumber, [FromQuery] int pageSize)
         {
             var colours = await colourService.GetAllAsync(pageNumber,pageSize);
-            return Ok();
+            return Ok(colours);
         }
 
         [HttpPost]

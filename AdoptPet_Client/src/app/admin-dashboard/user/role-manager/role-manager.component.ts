@@ -19,10 +19,17 @@ export class RoleManagerComponent {
 	roleDelete!: Role | null;
 	isShowRoleDelete: boolean = false;
 
+	pageNumber: number = 1;
+	pageSize: number = 10;
+
 	constructor(private roleService: RoleService) {}
 
 	ngOnInit() {
-		this.roleService.getAllRoles().subscribe({
+		this.getRoles();
+	}
+
+	private getRoles() {
+		this.roleService.getAllRoles(this.pageNumber, this.pageSize).subscribe({
 			next: (res: any) => {
 				// console.log(res.data);
 				this.roles = res.data;
@@ -46,7 +53,7 @@ export class RoleManagerComponent {
 				roleNameInput.focus();
 			},
 			error: err => {
-				let messages = err.error.messages.join("\n");
+				let messages = err.error.messages.join('\n');
 				patchState(this.dialog, { message: messages, title: 'Lỗi', isShowed: true });
 			},
 		});
@@ -58,20 +65,34 @@ export class RoleManagerComponent {
 	}
 
 	onDeleteRole() {
-		if(this.roleDelete === null) {
+		if (this.roleDelete === null) {
 			return;
 		}
 		const id = this.roleDelete.id;
 
 		this.roleService.deleteRole(this.roleDelete.id).subscribe({
-			next:(res: any) => {
+			next: (res: any) => {
 				const tempRoles = this.roles.filter(r => r.id !== id);
 				this.roles = tempRoles;
 				this.isShowRoleDelete = false;
 				this.roleDelete = null;
-			}, error: (err) => {
+			},
+			error: err => {
 				console.log(err);
-			}
-		})
+			},
+		});
+	}
+
+	onPrevPage() {
+		this.pageNumber--;
+		if(this.pageNumber < 1) {
+			this.pageNumber = 1
+		}
+		this.getRoles();
+	}
+
+	onNextPage() {
+		this.pageNumber++;
+		this.getRoles();
 	}
 }

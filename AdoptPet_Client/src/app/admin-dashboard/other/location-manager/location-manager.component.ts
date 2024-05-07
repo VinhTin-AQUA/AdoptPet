@@ -11,13 +11,16 @@ import { Location } from '../../../shared/models/location/location';
 })
 export class LocationManagerComponent {
 	locations: Location[] = [];
+	pageNumber: number = 1;
+	pageSize: number = 20;
+
 	constructor(private locationService: LocationService) {}
 
 	ngOnInit() {
-		this.locationService.getSavedLocation().subscribe({
+		this.locationService.getSavedLocation(this.pageNumber, this.pageSize).subscribe({
 			next: (res: any) => {
 				// console.log(res.data);
-        this.locations = res.data;
+				this.locations = res.data;
 			},
 			error: err => {
 				console.log(err);

@@ -20,47 +20,45 @@
 									<th scope="col" class="px-6 py-4">Phone</th>
 									<th scope="col" class="px-6 py-4">Lock</th>
 									<th scope="col" class="px-6 py-4">Vai trò</th>
-									<th scope="col" class="px-6 py-4">
-									</th>
+									<th scope="col" class="px-6 py-4"></th>
 								</tr>
 							</thead>
 
 							<tbody>
-
 								@for (u of users; track $index) {
-									<tr class="border-b border-neutral-200">
-										<td class="whitespace-nowrap px-6 py-4 font-medium">{{$index}}</td>
-										<td class="whitespace-nowrap px-6 py-4">{{u.lastName}} {{u.firstName}}</td>
-										<td class="whitespace-nowrap px-6 py-4">{{u.email}}</td>
-										<td class="whitespace-nowrap px-6 py-4">{{u.phoneNumber}}</td>
-										<td class="whitespace-nowrap px-6 py-4">
-											@if(u.lockoutEnd === null) {
-												<span>Chưa khóa</span>
-											} @else {
-												<span>Đã khóa</span>
-											}
-										</td>
-										<td class="whitespace-nowrap px-6 py-4">
-											@for (role of u.roles; track $index) {
-												<span>{{role}}</span>
-											}
-										</td>
-										<td class="whitespace-nowrap px-6 py-4">
-
-
-											@if(u.lockoutEnd === null) {
-												<button (click)="lockUser(u)">
-													<i class="fa-solid fa-lock text-yellow-500"></i>
-												</button>
-											} @else {
-												<button (click)="lockUser(u)">
-													<i class="fa-solid fa-unlock text-red-500"></i>
-												</button>
-											}
-
-											
-										</td>
-									</tr>
+								<tr class="border-b border-neutral-200">
+									<td class="whitespace-nowrap px-6 py-4 font-medium">
+										{{ $index + 1 }}
+									</td>
+									<td class="whitespace-nowrap px-6 py-4">
+										{{ u.lastName }} {{ u.firstName }}
+									</td>
+									<td class="whitespace-nowrap px-6 py-4">{{ u.email }}</td>
+									<td class="whitespace-nowrap px-6 py-4">{{ u.phoneNumber }}</td>
+									<td class="whitespace-nowrap px-6 py-4">
+										@if(u.lockoutEnd === null) {
+										<span>Chưa khóa</span>
+										} @else {
+										<span>Đã khóa</span>
+										}
+									</td>
+									<td class="whitespace-nowrap px-6 py-4">
+										@for (role of u.roles; track $index) {
+										<span>{{ role }}</span>
+										}
+									</td>
+									<td class="whitespace-nowrap px-6 py-4">
+										@if(u.lockoutEnd === null) {
+										<button (click)="lockUser(u)">
+											<i class="fa-solid fa-lock text-yellow-500"></i>
+										</button>
+										} @else {
+										<button (click)="lockUser(u)">
+											<i class="fa-solid fa-unlock text-red-500"></i>
+										</button>
+										}
+									</td>
+								</tr>
 								}
 							</tbody>
 						</table>
@@ -70,52 +68,34 @@
 							<nav aria-label="Page navigation example mx-auto">
 								<ul class="list-style-none mb-6 flex">
 									<li>
-										<a
+										<button
+											(click)="onPrevPage()"
 											class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
-											href="#!"
-											>Previous</a
 										>
-									</li>
-
-									<li>
-										<a
-											class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300"
-											href="#!"
-											>1</a
-										>
+											Previous
+										</button>
 									</li>
 
 									<li aria-current="page">
 										<a
 											class="relative block rounded bg-success-100 px-3 py-1.5 text-sm font-medium text-success-700 transition duration-300 focus:outline-none dark:bg-green-950 dark:text-success-500"
-											href="#!"
-											>2
+											>{{ pageNumber }}
 											<span
 												class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]"
 												>(current)</span
 											>
 										</a>
 									</li>
-
 									<li>
-										<a
-											class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300"
-											href="#!"
-											>3</a
-										>
-									</li>
-
-									<li>
-										<a
+										<button
+										(click)="onNextPage()"
 											class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
-											href="#!"
-											>Next</a
+											>Next</button
 										>
 									</li>
 								</ul>
 							</nav>
 						</div>
-
 					</div>
 				</div>
 			</div>

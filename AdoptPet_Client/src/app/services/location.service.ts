@@ -22,7 +22,7 @@ export class LocationService {
 		return this.http.get('https://vapi.vnappmob.com/api/province/ward/' + districtId);
 	}
 
-	getSavedLocation() {
-		return this.http.get(this.baseApi + '/get-all-location');
+	getSavedLocation(pageNumber: number, pageSize: number) {
+		return this.http.get(this.baseApi + `/get-all-location?pageNumber=${pageNumber}&pageSize=${pageSize}`);
 	}
 }

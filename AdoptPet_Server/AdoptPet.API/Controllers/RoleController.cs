@@ -57,9 +57,9 @@ namespace AdoptPet.API.Controllers
 
         [HttpGet]
         [Route("get-all-roles")]
-        public async Task<IActionResult> GetAllRoles()
+        public async Task<IActionResult> GetAllRoles([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
         {
-            var roles = await roleRepository.GetAllRoles();
+            var roles = await roleRepository.GetAllRoles(pageNumber, pageSize);
             var _roles = roles.Select(r => new
             {
                 Id = r.Id,

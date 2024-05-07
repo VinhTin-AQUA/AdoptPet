@@ -13,6 +13,8 @@ export class DonorManagerComponent {
 	donors: DonorDto[] = [];
 	isShowDonorDelete: boolean = false;
 	donorDelete: any;
+	pageNumber: number = 1;
+	pageSize: number = 10;
 
 	constructor(private donorService: DonorService) {}
 
@@ -21,7 +23,7 @@ export class DonorManagerComponent {
 	}
 
 	private getAllDonors() {
-		this.donorService.getAllDonors().subscribe({
+		this.donorService.getAllDonors(this.pageNumber, this.pageSize).subscribe({
 			next: (res: any) => {
 				// console.log(res.data);
 				this.donors = res.data;
@@ -55,4 +57,18 @@ export class DonorManagerComponent {
 			},
 		});
 	}
+
+	onPrevPage() {
+		this.pageNumber--;
+		if (this.pageNumber < 1) {
+			this.pageNumber = 1;
+		}
+		this.getAllDonors();
+	}
+
+	onNextPage() {
+		this.pageNumber++;
+		this.getAllDonors();
+	}
+
 }

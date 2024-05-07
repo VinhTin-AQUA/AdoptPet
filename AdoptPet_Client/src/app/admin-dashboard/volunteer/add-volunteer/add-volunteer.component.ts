@@ -76,7 +76,7 @@ export class AddVolunteerComponent {
 	}
 
 	private getVolunteerRoles() {
-		this.volunteerRoleService.getAllVolunteerRoles().subscribe({
+		this.volunteerRoleService.getAllVolunteerRoles(1,10).subscribe({
 			next: (res: any) => {
 				// console.log(res.data);
 				this.volunteerRoles = res.data;

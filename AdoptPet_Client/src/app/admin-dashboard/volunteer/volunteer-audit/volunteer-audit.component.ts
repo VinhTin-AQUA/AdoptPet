@@ -9,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class VolunteerAuditComponent {
   
+  constructor() {}
+
+  ngOnInit() {
+    
+  }
+
+  private getVolunteerAudits() {
+    
+  }
 }

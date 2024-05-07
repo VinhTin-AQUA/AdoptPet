@@ -18,34 +18,40 @@
 									<th scope="col" class="px-6 py-4">Người tài trợ</th>
 									<th scope="col" class="px-6 py-4">Tổng tài trợ</th>
 									<th scope="col" class="px-6 py-4">Địa chỉ</th>
-									<th scope="col" class="px-6 py-4">
-									</th>
+									<th scope="col" class="px-6 py-4"></th>
 								</tr>
 							</thead>
 
 							<tbody>
-								
 								@for (donor of donors; track $index) {
-									<tr class="border-b border-neutral-200">
-										<td class="whitespace-nowrap px-6 py-4 font-medium">{{$index}}</td>
-										<td class="whitespace-nowrap px-6 py-4">{{donor.name}}</td>
-										<td class="whitespace-nowrap px-6 py-4">{{donor.totalDonation}}</td>
-										<td class="whitespace-nowrap px-6 py-4">{{donor.location.street}} {{donor.location.wards}} {{donor.location.districtCity}} {{donor.location.provinceCity}}</td>
-										<td class="whitespace-nowrap px-6 py-4">
-								
-											@if(donor.isDeleted === false) {
-												<button (click)="onShowDelete(donor)">
-													<i class="fa-solid fa-trash text-red-500"></i>
-												</button>
-											} @else {
-												<button (click)="onShowDelete(donor)" class="trash-btn">
-													<i class="fa-solid fa-trash-can-arrow-up text-yellow-500"></i>
-												</button>
-											}
-										</td>
-									</tr>
+								<tr class="border-b border-neutral-200">
+									<td class="whitespace-nowrap px-6 py-4 font-medium">
+										{{ $index + 1 }}
+									</td>
+									<td class="whitespace-nowrap px-6 py-4">{{ donor.name }}</td>
+									<td class="whitespace-nowrap px-6 py-4">
+										{{ donor.totalDonation }}
+									</td>
+									<td class="whitespace-nowrap px-6 py-4">
+										{{ donor.location.street }} {{ donor.location.wards }}
+										{{ donor.location.districtCity }}
+										{{ donor.location.provinceCity }}
+									</td>
+									<td class="whitespace-nowrap px-6 py-4">
+										@if(donor.isDeleted === false) {
+										<button (click)="onShowDelete(donor)">
+											<i class="fa-solid fa-trash text-red-500"></i>
+										</button>
+										} @else {
+										<button (click)="onShowDelete(donor)" class="trash-btn">
+											<i
+												class="fa-solid fa-trash-can-arrow-up text-yellow-500"
+											></i>
+										</button>
+										}
+									</td>
+								</tr>
 								}
-								
 							</tbody>
 						</table>
 
@@ -54,26 +60,18 @@
 							<nav aria-label="Page navigation example mx-auto">
 								<ul class="list-style-none mb-6 flex">
 									<li>
-										<a
+										<button
+											(click)="onPrevPage()"
 											class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
-											href="#!"
-											>Previous</a
 										>
-									</li>
-
-									<li>
-										<a
-											class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300"
-											href="#!"
-											>1</a
-										>
+											Previous
+										</button>
 									</li>
 
 									<li aria-current="page">
 										<a
 											class="relative block rounded bg-success-100 px-3 py-1.5 text-sm font-medium text-success-700 transition duration-300 focus:outline-none dark:bg-green-950 dark:text-success-500"
-											href="#!"
-											>2
+											>{{ pageNumber }}
 											<span
 												class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]"
 												>(current)</span
@@ -82,24 +80,16 @@
 									</li>
 
 									<li>
-										<a
-											class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300"
-											href="#!"
-											>3</a
-										>
-									</li>
-
-									<li>
-										<a
+										<button
+											(click)="onNextPage()"
 											class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
-											href="#!"
-											>Next</a
 										>
+											Next
+										</button>
 									</li>
 								</ul>
 							</nav>
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -108,46 +98,46 @@
 </div>
 
 @if (isShowDonorDelete === true && donorDelete !== null) {
-	<div class="fixed w-full h-full bg-[#d1d5db]/40 top-0 left-0">
-		<div class="flex justify-center items-center h-full">
-			<div
-				class="w-1/4 bg-[#bbf7d0] shadow-md h-1/4 rounded-xl p-4 flex justify-between flex-col"
-			>
+<div class="fixed w-full h-full bg-[#d1d5db]/40 top-0 left-0">
+	<div class="flex justify-center items-center h-full">
+		<div
+			class="w-1/4 bg-[#bbf7d0] shadow-md h-1/4 rounded-xl p-4 flex justify-between flex-col"
+		>
+			@if(donorDelete.isDeleted === false) {
+			<h1 class="text-center text-black text-2xl">
+				Bạn có muốn xóa người tài trợ <b>{{ donorDelete.name }} ?</b>
+			</h1>
+			} @else {
+			<h1 class="text-center text-black text-2xl">
+				Bạn có muốn khôi phục người tài trợ <b>{{ donorDelete.name }} ?</b>
+			</h1>
+			}
+
+			<div class="flex justify-end items-center gap-2">
 				@if(donorDelete.isDeleted === false) {
-				<h1 class="text-center text-black text-2xl">
-					Bạn có muốn xóa người tài trợ <b>{{ donorDelete.name }} ?</b>
-				</h1>
+				<button
+					(click)="deleteDonor()"
+					class="bg-red-500 rounded-md text-white py-2 px-4 hover:bg-red-700 duration-150"
+				>
+					Xóa
+				</button>
 				} @else {
-				<h1 class="text-center text-black text-2xl">
-					Bạn có muốn khôi phục người tài trợ <b>{{ donorDelete.name }} ?</b>
-				</h1>
+				<button
+					(click)="deleteDonor()"
+					class="bg-lime-500 rounded-md text-white py-2 px-4 hover:bg-lime-700 duration-150"
+				>
+					Khôi phục
+				</button>
 				}
-	
-				<div class="flex justify-end items-center gap-2">
-					@if(donorDelete.isDeleted === false) {
-					<button
-						(click)="deleteDonor()"
-						class="bg-red-500 rounded-md text-white py-2 px-4 hover:bg-red-700 duration-150"
-					>
-						Xóa
-					</button>
-					} @else {
-					<button
-						(click)="deleteDonor()"
-						class="bg-lime-500 rounded-md text-white py-2 px-4 hover:bg-lime-700 duration-150"
-					>
-						Khôi phục
-					</button>
-					}
-	
-					<button
-						(click)="onShowDelete(null)"
-						class="border-red-500 border rounded-md text-red-500 py-2 px-4 hover:bg-red-500 duration-150 hover:text-white"
-					>
-						Hủy
-					</button>
-				</div>
+
+				<button
+					(click)="onShowDelete(null)"
+					class="border-red-500 border rounded-md text-red-500 py-2 px-4 hover:bg-red-500 duration-150 hover:text-white"
+				>
+					Hủy
+				</button>
 			</div>
 		</div>
 	</div>
-	}
+</div>
+}

@@ -15,6 +15,8 @@ import { patchState } from '@ngrx/signals';
 export class UserManagerComponent {
   users: UserDto[] = []
   dialog = inject(DialogStore);
+  pageNumber: number = 1;
+  pageSize: number = 10;
 
 	constructor(private userService: UserService) {}
 
@@ -23,7 +25,11 @@ export class UserManagerComponent {
   }
 
   private getAllUsers() {
-    this.userService.getAllUsers().subscribe({
+    this.getUsers();
+  }
+
+  private getUsers() {
+    this.userService.getAllUsers(this.pageNumber, this.pageSize).subscribe({
       next: (res: any) => {
         // console.log(res);
         this.users = res;
@@ -60,5 +66,18 @@ export class UserManagerComponent {
         }
       })
     }
+  }
+
+  onPrevPage() {
+    this.pageNumber--;
+    if(this.pageNumber < 1) {
+      this.pageNumber = 1
+    }
+    this.getUsers();
+  }
+
+  onNextPage() {
+    this.pageNumber++;
+    this.getUsers();
   }
 }

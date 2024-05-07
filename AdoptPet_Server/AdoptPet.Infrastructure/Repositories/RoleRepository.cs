@@ -41,9 +41,12 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-        public async Task<ICollection<IdentityRole>> GetAllRoles()
+        public async Task<ICollection<IdentityRole>> GetAllRoles(int pageNumber, int pageSize)
         {
-            var roles = await roleManager.Roles.ToListAsync();
+            var roles = await roleManager.Roles
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
             return roles;
         }
 

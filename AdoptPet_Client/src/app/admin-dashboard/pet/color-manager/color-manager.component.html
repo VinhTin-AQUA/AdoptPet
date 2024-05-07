@@ -50,26 +50,18 @@
 				<nav aria-label="Page navigation example mx-auto">
 					<ul class="list-style-none mb-6 flex">
 						<li>
-							<a
+							<button
+								(click)="onPrevPage()"
 								class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
-								href="#!"
-								>Previous</a
 							>
-						</li>
-
-						<li>
-							<a
-								class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300"
-								href="#!"
-								>1</a
-							>
+								Previous
+							</button>
 						</li>
 
 						<li aria-current="page">
 							<a
 								class="relative block rounded bg-success-100 px-3 py-1.5 text-sm font-medium text-success-700 transition duration-300 focus:outline-none dark:bg-green-950 dark:text-success-500"
-								href="#!"
-								>2
+								>{{pageNumber}}
 								<span
 									class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]"
 									>(current)</span
@@ -78,18 +70,10 @@
 						</li>
 
 						<li>
-							<a
-								class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300"
-								href="#!"
-								>3</a
-							>
-						</li>
-
-						<li>
-							<a
+							<button
+								(click)="onNextPage()"
 								class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
-								href="#!"
-								>Next</a
+								>Next</button
 							>
 						</li>
 					</ul>

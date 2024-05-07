@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 })
 export class VolunteerManagerComponent {
 	pageNumber: number = 1;
-	pageSize: number = 20;
+	pageSize: number = 10;
 	volunteers: Volunteer[] = [];
 
 	constructor(private volunteerService: VolunteerService) {}
@@ -43,5 +43,18 @@ export class VolunteerManagerComponent {
 				console.log(err);
 			},
 		});
+	}
+
+	onPrevPage() {
+		this.pageNumber--;
+		if (this.pageNumber < 1) {
+			this.pageNumber = 1;
+		}
+		this.getVolunteers();
+	}
+
+	onNextPage() {
+		this.pageNumber++;
+		this.getVolunteers();
 	}
 }

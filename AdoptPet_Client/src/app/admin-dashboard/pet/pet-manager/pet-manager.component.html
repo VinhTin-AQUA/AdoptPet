@@ -21,11 +21,11 @@
 				
 				@for (pet of pets; track $index) {
 					<div class="bg-white border border-gray-200 rounded-lg shadow ">
-						<a href="#">
+						<a>
 							<img class="rounded-t-lg" src="https://cdn.britannica.com/70/234870-050-D4D024BB/Orange-colored-cat-yawns-displaying-teeth.jpg" alt="" />
 						</a>
 						<div class="p-5">
-							<a href="#">
+							<a>
 								<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{pet.petName}}</h5>
 							</a>
 							<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{pet.petDescription}}</p>
@@ -46,26 +46,17 @@
 				<nav aria-label="Page navigation example mx-auto">
 					<ul class="list-style-none mb-6 flex">
 						<li>
-							<a
+							<button
+								(click)="onPrevPage()"
 								class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
-								href="#!"
-								>Previous</a
-							>
-						</li>
-
-						<li>
-							<a
-								class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300"
-								href="#!"
-								>1</a
+								>Previous</button
 							>
 						</li>
 
 						<li aria-current="page">
 							<a
 								class="relative block rounded bg-success-100 px-3 py-1.5 text-sm font-medium text-success-700 transition duration-300 focus:outline-none dark:bg-green-950 dark:text-success-500"
-								href="#!"
-								>2
+								>{{pageNumber}}
 								<span
 									class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]"
 									>(current)</span
@@ -74,18 +65,10 @@
 						</li>
 
 						<li>
-							<a
-								class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300"
-								href="#!"
-								>3</a
-							>
-						</li>
-
-						<li>
-							<a
+							<button
+								(click)="onNextPage()"
 								class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
-								href="#!"
-								>Next</a
+								>Next</button
 							>
 						</li>
 					</ul>
