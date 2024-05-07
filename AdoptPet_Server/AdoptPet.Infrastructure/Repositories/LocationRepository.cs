@@ -15,7 +15,6 @@ namespace AdoptPet.Infrastructure.Repositories
         {
             this.context = context;
         }
-
         public async Task<int> AddAsync(Location model)
         {
             context.Locations.Add(model);
@@ -63,6 +62,11 @@ namespace AdoptPet.Infrastructure.Repositories
                 return context.SaveChangesAsync();
             }
             return Task.CompletedTask;
+        }
+
+        public Task<int> TotalItems()
+        {
+            return context.Locations.CountAsync();
         }
 
         public async Task UpdateAsync(Location model)

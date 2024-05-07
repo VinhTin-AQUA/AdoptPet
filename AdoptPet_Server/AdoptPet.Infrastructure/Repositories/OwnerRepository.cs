@@ -16,7 +16,7 @@ namespace AdoptPet.Infrastructure.Repositories
         {
             this.context = context;
         }
-        public async Task<int?> AddAsync(Owner model)
+        public async Task<int> AddAsync(Owner model)
         {
             context.Owners.Add(model);
             var r = await context.SaveChangesAsync();
@@ -70,15 +70,15 @@ namespace AdoptPet.Infrastructure.Repositories
             return Task.CompletedTask;
         }
 
+        public Task<int> TotalItems()
+        {
+            return context.Owners.CountAsync();
+        }
+
         public async Task UpdateAsync(Owner model)
         {
             context.Owners.Update(model);
             await context.SaveChangesAsync();
-        }
-
-        Task<int> IGenericRepository<Owner>.AddAsync(Owner model)
-        {
-            throw new NotImplementedException();
         }
     }
 }

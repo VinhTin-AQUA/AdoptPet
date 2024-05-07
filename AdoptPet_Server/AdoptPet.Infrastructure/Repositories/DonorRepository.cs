@@ -17,7 +17,7 @@ namespace AdoptPet.Infrastructure.Repositories
             this.context = context;
         }
 
-        public async Task<int?> AddAsync(Donor model)
+        public async Task<int> AddAsync(Donor model)
         {
             context.Donors.Add(model);
             var r = await context.SaveChangesAsync();
@@ -65,18 +65,25 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public Task SoftDelete(int Id)
         {
-            throw new NotImplementedException();
+            var model = context.Donors.Find(Id);
+            if (model != null)
+            {
+                model.IsDeleted = true;
+                context.Donors.Update(model);
+                context.SaveChanges();
+            }
+            return Task.CompletedTask;
+        }
+
+        public Task<int> TotalItems()
+        {
+            return context.Donors.CountAsync();
         }
 
         public async Task UpdateAsync(Donor model)
         {
             context.Donors.Update(model);
             await context.SaveChangesAsync();
-        }
-
-        Task<int> IGenericRepository<Donor>.AddAsync(Donor model)
-        {
-            throw new NotImplementedException();
         }
     }
 }

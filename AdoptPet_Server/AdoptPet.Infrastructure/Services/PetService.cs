@@ -22,6 +22,11 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<PaginatedResult<Pet>> GetAllAsync(int pageNumber, int pageSize)
         {
+            String  validationMessage = await ValidateNumber(pageNumber, pageSize);
+            if (String.IsNullOrEmpty(validationMessage))
+            {
+                throw new Exception(validationMessage);
+            }
             return await _repository.GetAllAsync(pageNumber, pageSize);
         }
 
@@ -52,7 +57,12 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<PaginatedResult<Pet>> SearchPetsByCriteria(SearchCriteria searchCriteria, int pageNumber, int pageSize)
         {
-            if(searchCriteria == null)
+            String validationMessage = await ValidateNumber(pageNumber, pageSize);
+            if (String.IsNullOrEmpty(validationMessage))
+            {
+                throw new Exception(validationMessage);
+            }
+            if (searchCriteria == null)
             {
                 return await _repository.GetAllAsync(pageNumber, pageSize);
             }
@@ -62,7 +72,10 @@ namespace AdoptPet.Infrastructure.Services
         public async Task<Pet?> GetByIdAsync(int id)
         {
             var pet = await _repository.GetByIdAsync(id);
-
+            if(pet == null)
+            {
+                throw new ArgumentException("Pet not found");
+            }
             return pet;
         }
 

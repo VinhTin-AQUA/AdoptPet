@@ -63,7 +63,7 @@ namespace AdoptPet.Infrastructure.Repositories
                         .Skip((pageNumber - 1) * pageSize)
                         .Take(pageSize)
                         .ToListAsync();
-            var totalItems = _context.Pets.Count();
+            var totalItems = await TotalItems();
             return new PaginatedResult<Pet>
             {
                 Items = petList,
@@ -202,10 +202,17 @@ namespace AdoptPet.Infrastructure.Repositories
             }
         }
 
+        public Task<int> TotalItems()
+        {
+            return _context.Pets.CountAsync();
+        }
+
         public Task UpdateAsync(Pet model)
         {
             _context.Pets.Update(model);
             return _context.SaveChangesAsync();
         }
+
+       
     }
 }

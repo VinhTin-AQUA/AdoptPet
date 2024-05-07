@@ -19,7 +19,7 @@ namespace VolunteerRoles.Infrastructure.Repositories
         {
             _context = dbContext;
         }
-        public async Task<int?> AddAsync(VolunteerRole model)
+        public async Task<int> AddAsync(VolunteerRole model)
         {
             if(model != null)
             {
@@ -79,13 +79,13 @@ namespace VolunteerRoles.Infrastructure.Repositories
 
         public Task<int> TotalItems()
         {
-            _context.Entry(model).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            return _context.VolunteerRoles.CountAsync();
         }
 
-        Task<int> IGenericRepository<VolunteerRole>.AddAsync(VolunteerRole model)
+        public async Task UpdateAsync(VolunteerRole model)
         {
-            throw new NotImplementedException();
+            _context.Entry(model).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

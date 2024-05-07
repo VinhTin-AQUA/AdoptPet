@@ -10,5 +10,6 @@ namespace AdoptPet.Application.Interfaces.IRepositories
         Task UpdateAsync(T model);
         Task DeletePermanentlyAsync(T model);
         Task SoftDelete(int Id);
+        Task<int> TotalItems();
     }
 }

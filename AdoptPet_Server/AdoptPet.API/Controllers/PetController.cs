@@ -25,13 +25,16 @@ namespace AdoptPet.API.Controllers
         [Route("get-all-pets")]
         public async Task<IActionResult> GetAll([FromQuery] int pageNumber, [FromQuery] int pageSize)
         {
-            if (pageNumber <= 0 || pageSize <= 0)
+            try
             {
-                return BadRequest("Page number and page size must be greater than 0.");
+                var results = await _petService.GetAllAsync(pageNumber, pageSize);
+                return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = results.Items.ToList() });
             }
-
-            var results = await _petService.GetAllAsync(pageNumber, pageSize);
-            return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = results.Items!.ToList() });
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpGet]
@@ -50,41 +53,38 @@ namespace AdoptPet.API.Controllers
         [Route("search-by-criteria")]
         public async Task<IActionResult> SearchByCriteria([FromQuery] SearchCriteria searchCriteria, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            if (pageNumber <= 0 || pageSize <= 0)
+            try
             {
-                return BadRequest("Page number and page size must be greater than 0.");
+                var result = await _petService.SearchPetsByCriteria(searchCriteria, pageNumber, pageSize);
+                return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = result.Items.ToList() });
             }
-
-            var result = await _petService.SearchPetsByCriteria(searchCriteria, pageNumber, pageSize);
-            return Ok(result);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("get-pet-by-id/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var pet = await _petService.GetByIdAsync(id);
-            if (pet == null)
+            try
             {
-                return NotFound();
+                var pet = await _petService.GetByIdAsync(id);
+                return Ok(pet);
             }
-            return Ok(pet);
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpPost]
         [Route("add-pet")]
         public async Task<IActionResult> Add([FromBody] Pet pet)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var r = await _petService.AddAsync(pet);
-            if (r == 0)
-            {
-                return BadRequest("Failed to add pet");
-            }
             return Ok();
         }
 
