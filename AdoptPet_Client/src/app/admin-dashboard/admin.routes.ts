@@ -18,6 +18,7 @@ import { PetAuditComponent } from './pet/pet-audit/pet-audit.component';
 import { PetAuditDetailComponent } from './pet/pet-audit-detail/pet-audit-detail.component';
 import { AddVolunteerRoleComponent } from './volunteer/add-volunteer-role/add-volunteer-role.component';
 import { BreedDetailComponent } from './pet/breed-detail/breed-detail.component';
+import { PetDetailComponent } from './pet/pet-detail/pet-detail.component';
 
 export const adminRoutes: Routes = [
 	{
@@ -33,6 +34,7 @@ export const adminRoutes: Routes = [
 			{ path: 'add-volunteer', component: AddVolunteerComponent, title: 'Add volunteer' },
 			{ path: 'add-volunteer-role', component: AddVolunteerRoleComponent, title: 'Add volunteer role' },
 			{ path: 'pet-manager', component: PetManagerComponent, title: 'Pet manager' },
+			{ path: 'pet-details/:id', component: PetDetailComponent, title: 'Pet details' },
 			{ path: 'add-pet', component: AddPetComponent, title: 'Add pet' },
 			{ path: 'pet-audit', component: PetAuditComponent, title: 'Pet audit' },
 			{ path: 'pet-audit-detail', component: PetAuditDetailComponent, title: 'Pet audit detail' },

@@ -10,6 +10,7 @@ using AdoptPet.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using AdoptPet.Application.DTOs;
 using Microsoft.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdoptPet.Infrastructure.Repositories
 {
@@ -40,6 +41,27 @@ namespace AdoptPet.Infrastructure.Repositories
         public async Task<PaginatedResult<Pet>> GetAllAsync(int pageNumber, int pageSize)
         {
             var petList = await _context.Pets
+                        .Select(u => new Pet
+                        {
+                            Id = u.Id,
+                            PetName = u.PetName,
+                            PetDescription = u.PetDescription,
+                            PetWeight = u.PetWeight,
+                            PetAge = u.PetAge,
+                            PetGender = u.PetGender,
+                            PetDesexed = u.PetDesexed,
+                            PetWormed = u.PetWormed,
+                            PetVaccined = u.PetVaccined,
+                            PetMicrochipped = u.PetMicrochipped,
+                            PetEntryDate = u.PetEntryDate,
+                            Status = u.Status,
+                            IsDeleted = u.IsDeleted,
+                            PetBreeds = u.PetBreeds.Select(uc => new PetBreed
+                            {
+                                BreedId = uc.BreedId,
+                                Breed = uc.Breed
+                            }).ToList()
+                        })
                         .Skip((pageNumber - 1) * pageSize)
                         .Take(pageSize)
                         .ToListAsync();
@@ -98,7 +120,7 @@ namespace AdoptPet.Infrastructure.Repositories
                 query = query.Where(p => p.PetDesexed == (searchCriteria.Desexed.Value ? 1 : 0));
             }
 
-            if(searchCriteria.AgeRange != null)
+            if (searchCriteria.AgeRange != null)
             {
                 query = query.Where(p => p.PetAge == searchCriteria.AgeRange);
             }

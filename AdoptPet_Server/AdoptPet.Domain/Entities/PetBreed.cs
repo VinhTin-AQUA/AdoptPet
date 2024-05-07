@@ -6,7 +6,11 @@ namespace AdoptPet.Domain.Entities
     {
         public int Id { get; set; }
         public int BreedId { get; set; }
+
+        public Breed? Breed { get; set; }
+
         public int PetId { get; set; }
+
         public bool IsDeleted { get; set; }
     }
 }

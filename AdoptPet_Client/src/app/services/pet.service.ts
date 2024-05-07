@@ -15,4 +15,8 @@ export class PetService {
   getAllPets(pageNumber: number, pageSize: number) {
     return this.http.get(this.baseApi + `/get-all-pets?pageNumber=${pageNumber}&pageSize=${pageSize}`)
   }
+
+  getPet(petId: number) {
+    return this.http.get(this.baseApi + '/get-pet-by-id/' + petId);
+  }
 }
