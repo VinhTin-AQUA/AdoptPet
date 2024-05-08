@@ -1,16 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using AdoptPet.Application.DTOs;
-using Microsoft.Data.SqlClient;
-using System.ComponentModel.DataAnnotations;
+
 
 namespace AdoptPet.Infrastructure.Repositories
 {
