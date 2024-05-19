@@ -65,11 +65,6 @@ namespace VolunteerRoles.Infrastructure.Repositories
             return _context.SaveChangesAsync();
         }
 
-        public Task<int> TotalItems()
-        {
-            return _context.VolunteerRoles.CountAsync();
-        }
-
         public async Task UpdateAsync(VolunteerRole model)
         {
             return _context.VolunteerRoles.CountAsync();

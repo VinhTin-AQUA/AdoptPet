@@ -66,12 +66,7 @@ namespace AdoptPet.Infrastructure.Repositories
             return context.Colours.CountAsync();
         }
 
-        public Task<int> TotalItems()
-        {
-            return context.Colours.CountAsync();
-        }
-
-        public async Task UpdateAsync(Colour model)
+        public async Task<int> UpdateAsync(Colour model)
         {
             context.Colours.Update(model);
             return await context.SaveChangesAsync();;
