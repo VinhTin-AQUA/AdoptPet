@@ -7,9 +7,9 @@ namespace AdoptPet.Application.Interfaces.IRepositories
         Task<T?> GetByIdAsync(int id);
         Task<PaginatedResult<T>> GetAllAsync(int pageNumber, int pageSize);
         Task<int> AddAsync(T model);
-        Task UpdateAsync(T model);
+        Task<int> UpdateAsync(T model);
         Task DeletePermanentlyAsync(T model);
-        Task SoftDelete(int Id);
+        Task<int> SoftDelete(T model);
         Task<int> TotalItems();
     }
 }

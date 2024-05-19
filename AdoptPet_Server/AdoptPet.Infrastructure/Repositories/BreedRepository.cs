@@ -28,19 +28,13 @@ namespace AdoptPet.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Breed>> GetAllAsync()
-        {
-            var r = await _context.Breeds.Where(c => c.IsDeleted == false).ToListAsync();
-            return r;
-        }
-
         public async Task<PaginatedResult<Breed>> GetAllAsync(int pageNumber, int pageSize)
         {
             var breeds = await _context.Breeds
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
-            var totalItems = _context.VolunteerRoles.Count();
+            var totalItems = await TotalItems();
             return new PaginatedResult<Breed>
             {
                 Items =  breeds,
@@ -58,15 +52,12 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-        public async Task SoftDelete(int Id)
+
+        public Task<int> SoftDelete(Breed model)
         {
-            var breed = _context.Breeds.Find(Id);
-            if(breed != null)
-            {
-                breed.IsDeleted = !breed.IsDeleted;
-                _context.Breeds.Update(breed);
-                await _context.SaveChangesAsync();
-            }
+            model.IsDeleted = true;
+            _context.Breeds.Update(model);
+            return _context.SaveChangesAsync();
         }
 
         public Task<int> TotalItems()
@@ -74,10 +65,10 @@ namespace AdoptPet.Infrastructure.Repositories
             return _context.Breeds.CountAsync();
         }
 
-        public async Task UpdateAsync(Breed model)
+        public async Task<int> UpdateAsync(Breed model)
         {
             _context.Breeds.Update(model);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
     }
 }

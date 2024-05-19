@@ -35,7 +35,7 @@ namespace AdoptPet.Infrastructure.Repositories
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-            var totalItems = context.Colours.Count();
+            var totalItems = await TotalItems();
             return new PaginatedResult<Colour>
             {
                 Items =  colourList,
@@ -54,16 +54,11 @@ namespace AdoptPet.Infrastructure.Repositories
         }
 
 
-        public Task SoftDelete(int Id)
+        public Task<int> SoftDelete(Colour model)
         {
-            var colour = context.Colours.Find(Id);
-            if (colour != null)
-            {
-                colour.IsDeleted = true;
-                context.Colours.Update(colour);
-                return context.SaveChangesAsync();
-            }
-            return Task.CompletedTask;
+            model.IsDeleted = true;
+            context.Colours.Update(model);
+            return context.SaveChangesAsync();
         }
 
         public Task<int> TotalItems()
@@ -71,10 +66,10 @@ namespace AdoptPet.Infrastructure.Repositories
             return context.Colours.CountAsync();
         }
 
-        public async Task UpdateAsync(Colour model)
+        public async Task<int> UpdateAsync(Colour model)
         {
             context.Colours.Update(model);
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();;
         }
     }
 }

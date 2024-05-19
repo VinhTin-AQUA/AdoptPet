@@ -7,7 +7,7 @@ using AdoptPet.Infrastructure.Data;
 
 namespace AdoptPet.Infrastructure.Services
 {
-    public class LocationService
+    public class LocationService : IGenericService<Location>
     {
         private readonly IGenericRepository<Location> genericRepository;
 
@@ -15,12 +15,11 @@ namespace AdoptPet.Infrastructure.Services
         {
             this.genericRepository = genericRepository;
         }
-
-        public async Task<int> AddAsync(LocationDto model)
+        public async Task<int?> AddAsync(Location model)
         {
             if(model == null)
             {
-                return 0;
+                throw new Exception("Adding Location Model is null");
             }
             Location newLocation = new Location()
             {
@@ -30,7 +29,11 @@ namespace AdoptPet.Infrastructure.Services
                 ProvinceCity = model.ProvinceCity
             };
             var r = await genericRepository.AddAsync(newLocation);
-            return r > 0 ? newLocation.Id : 0;
+            if (r == 0)
+            {
+                throw new Exception("Adding location is failed");
+            }
+            return r;
         }
 
         public async Task DeletePermanentlyAsync(int id)
@@ -39,48 +42,73 @@ namespace AdoptPet.Infrastructure.Services
 
             if (location == null)
             {
-                return;
+                throw new ArgumentNullException("Deleting Location model is null");
             }
             await genericRepository.DeletePermanentlyAsync(location);
         }
 
         public async Task<PaginatedResult<Location>> GetAllAsync(int pageNumber, int pageSize)
         {
+            int totalItems = await genericRepository.TotalItems();
+            string message = await IGenericService<Location>.ValidateNumber(totalItems, pageNumber, pageSize);
+            if (String.IsNullOrEmpty(message))
+            {
+                throw new Exception(message);
+            }
+
             var locations = await genericRepository.GetAllAsync(pageNumber, pageSize);
+            if (locations.Items == null)
+            {
+                throw new ArgumentNullException("Can't get list of location");
+            }
+
             return locations;
         }
 
         public async Task<Location?> GetByIdAsync(int id)
         {
             var r = await genericRepository.GetByIdAsync(id);
+            if (r == null)
+            {
+                throw new Exception("Location not found");
+            }
             return r;
         }
 
-        public async Task SoftDelete(int id)
+        public async Task<int> SoftDelete(int id)
         {
             var location = await genericRepository.GetByIdAsync(id);
 
             if (location == null)
             {
-                return;
+                throw new Exception("Location not found");
             }
-            await genericRepository.SoftDelete(id);
+            int affectedRows = await genericRepository.SoftDelete(location);
+            if (affectedRows == 0)
+            {
+                throw new Exception("Soft deleting location is failed");
+            }
+            return affectedRows;
         }
-        public async Task<Location?> UpdateAsync(int id, LocationDto model)
+        public async Task<int?> UpdateAsync(int id, Location model)
         {
             var oldLoction = await genericRepository.GetByIdAsync(id);
 
             if (oldLoction == null)
             {
-                return null;
+                throw new Exception("Updating location not found");
             }
             oldLoction.Street = model.Street;
             oldLoction.Wards = model.Wards;
             oldLoction.DistrictCity = model.DistrictCity;
             oldLoction.ProvinceCity = model.ProvinceCity;
 
-            await genericRepository.UpdateAsync(oldLoction);
-            return oldLoction;
+            int affectedRows = await genericRepository.UpdateAsync(oldLoction);
+            if(affectedRows == 0)
+            {
+                throw new Exception("Updating Location is failed");
+            }
+            return affectedRows;
         }
     }
 }

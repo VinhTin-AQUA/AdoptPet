@@ -5,7 +5,7 @@ using AdoptPet.Domain.Entities;
 
 namespace AdoptPet.Infrastructure.Services
 {
-    public class ColourService
+    public class ColourService: IGenericService<Colour>
     {
         private readonly IGenericRepository<Colour> genericRepository;
 
@@ -14,17 +14,16 @@ namespace AdoptPet.Infrastructure.Services
             this.genericRepository = genericRepository;
         }
 
-        public async Task<int?> AddAsync(ColourDto model)
+        public async Task<int?> AddAsync(Colour model)
         {
-            // kiểm tra model null
             if(model == null)
             {
-                return null;
+                throw new Exception("Model is null");
             }
 
             if(string.IsNullOrEmpty(model.ColourName) == true)
             {
-                return null;
+                throw new Exception("ColourName is null");
             }
 
             // tạo colour
@@ -33,6 +32,10 @@ namespace AdoptPet.Infrastructure.Services
                 ColourName = model.ColourName
             };
             var r = await genericRepository.AddAsync(newColour);
+            if(r == 0)
+            {
+                throw new Exception("Adding colour is failed");
+            }
             return r;
         }
 
@@ -43,7 +46,7 @@ namespace AdoptPet.Infrastructure.Services
             // kiểm tra colour có tồn tại không
             if (colour == null)
             {
-                return;
+                throw new Exception("Deleting colour is not exists");
             }
 
             await genericRepository.DeletePermanentlyAsync(colour);
@@ -51,28 +54,49 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<PaginatedResult<Colour>> GetAllAsync(int pageNumber, int pageSize)
         {
+            int totalItems = await genericRepository.TotalItems();
+            String message = await IGenericService<Colour>.ValidateNumber(totalItems,pageNumber, pageSize);
+            if (String.IsNullOrEmpty(message))
+            {
+                throw new Exception(message);
+            }
+
             var r = await genericRepository.GetAllAsync(pageNumber, pageSize);
+            if (r.Items == null)
+            {
+                throw new Exception("Can't get list of colour");
+            }
             return r;
         }
+
 
         public async Task<Colour?> GetByIdAsync(int id)
         {
             var r = await genericRepository.GetByIdAsync(id);
+            if(r == null)
+            {
+                throw new Exception("Colour not found");
+            }
             return r;
         }
 
-        public async Task SoftDelete(int id)
+        public async Task<int> SoftDelete(int id)
         {
             var colour = await genericRepository.GetByIdAsync(id);
 
             if (colour == null)
             {
-                return;
+                throw new Exception("Deleting colour is not exists");
             }
-            await genericRepository.SoftDelete(colour.Id);
+            int affectedRows = await genericRepository.SoftDelete(colour);
+            if (affectedRows == 0)
+            {
+                throw new Exception("Deleting colour is failed");
+            }
+            return affectedRows;
         }
 
-        public async Task<Colour?> UpdateAsync(int id, ColourDto model)
+        public async Task<int?> UpdateAsync(int id, Colour model)
         {
             // tìm color
             var oldColour = await genericRepository.GetByIdAsync(id);
@@ -80,7 +104,7 @@ namespace AdoptPet.Infrastructure.Services
             // kiểm tra tìm thấy không không
             if (oldColour == null)
             {
-                return null;
+                throw new Exception("Updating colour is not found");
             }
             oldColour.ColourName = model.ColourName; // gán lại màu đỏ
 
@@ -88,9 +112,12 @@ namespace AdoptPet.Infrastructure.Services
              oldColour.ColourName = "Black"
              */
 
-            await genericRepository.UpdateAsync(oldColour);
-
-            return oldColour;
+            int affectedRows = await genericRepository.UpdateAsync(oldColour);
+            if(affectedRows == 0)
+            {
+                throw new Exception("Updating colour is failed");
+            }
+            return affectedRows;
         }
     }
 }

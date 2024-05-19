@@ -43,7 +43,7 @@ namespace VolunteerRoles.Infrastructure.Repositories
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
-            var totalItems = _context.VolunteerRoles.Count();
+            var totalItems = await TotalItems();
             return new PaginatedResult<VolunteerRole>
             {
                 Items =  volunteerRoles,
@@ -58,23 +58,11 @@ namespace VolunteerRoles.Infrastructure.Repositories
             return await _context.VolunteerRoles.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task SoftDelete(VolunteerRole model)
+        public Task<int> SoftDelete(VolunteerRole model)
         {
             model.IsDeleted = !model.IsDeleted; // Assuming Status field indicates soft delete
             _context.Entry(model).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-        }
-
-        public Task SoftDelete(int Id)
-        {
-            var model = _context.VolunteerRoles.Find(Id);
-            if (model != null)
-            {
-                model.IsDeleted = true; // Assuming Status field indicates soft delete
-                _context.Entry(model).State = EntityState.Modified;
-                return _context.SaveChangesAsync();
-            }
-            return Task.CompletedTask;
+            return _context.SaveChangesAsync();
         }
 
         public Task<int> TotalItems()
@@ -82,10 +70,10 @@ namespace VolunteerRoles.Infrastructure.Repositories
             return _context.VolunteerRoles.CountAsync();
         }
 
-        public async Task UpdateAsync(VolunteerRole model)
+        public async Task<int> UpdateAsync(VolunteerRole model)
         {
-            _context.Entry(model).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _context.VolunteerRoles.Update(model);
+            return await _context.SaveChangesAsync();
         }
     }
 }

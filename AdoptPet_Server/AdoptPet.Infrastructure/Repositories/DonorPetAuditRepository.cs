@@ -35,7 +35,7 @@ namespace AdoptPet.Infrastructure.Repositories
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-            var totalItems = context.DonorPetAudits.Count();
+            var totalItems = await TotalItems();
             return new PaginatedResult<DonorPetAudit>
             {
                 Items = donorPetAudit,
@@ -51,16 +51,11 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-        public Task SoftDelete(int Id)
+        public Task<int> SoftDelete(DonorPetAudit model)
         {
-            var donorPetAudit = context.DonorPetAudits.Find(Id);
-            if (donorPetAudit != null)
-            {
-                donorPetAudit.IsDeleted = true;
-                context.DonorPetAudits.Update(donorPetAudit);
-                return context.SaveChangesAsync();
-            }
-            return Task.CompletedTask;
+            model.IsDeleted = true;
+            context.DonorPetAudits.Update(model);
+            return context.SaveChangesAsync();
         }
 
         public Task<int> TotalItems()
@@ -68,10 +63,10 @@ namespace AdoptPet.Infrastructure.Repositories
             return context.DonorPetAudits.CountAsync();
         }
 
-        public async Task UpdateAsync (DonorPetAudit model)
+        public async Task<int> UpdateAsync (DonorPetAudit model)
         {
             context.DonorPetAudits.Update(model);
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
     }
 }

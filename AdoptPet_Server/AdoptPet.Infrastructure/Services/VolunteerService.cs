@@ -5,7 +5,7 @@ using AdoptPet.Domain.Entities;
 
 namespace AdoptPet.Infrastructure.Services
 {
-    public class VolunteerService
+    public class VolunteerService : IGenericService<Volunteer>
     {
         private readonly IGenericRepository<Volunteer> genericRepository;
 
@@ -14,14 +14,18 @@ namespace AdoptPet.Infrastructure.Services
             this.genericRepository = genericRepository;
         }
 
-        public async Task<Volunteer?> AddAsync(Volunteer model)
+        public async Task<int?> AddAsync(Volunteer model)
         {
             if (model == null)
             {
-                return null;
+                throw new ArgumentNullException($"Adding Model is null");
             }
-            await genericRepository.AddAsync(model);
-            return model;
+            int affectedRows =await genericRepository.AddAsync(model);
+            if (affectedRows == 0)
+            {
+                throw new InvalidOperationException($"Adding volunteer is failed");
+            }
+            return affectedRows;
         }
 
         public async Task DeletePermanentlyAsync(Volunteer model)
@@ -46,18 +50,41 @@ namespace AdoptPet.Infrastructure.Services
             return r;
         }
 
-        public async Task SoftDelete(int Id)
+        public async Task<int?> SoftDelete(int Id)
         {
-            await genericRepository.SoftDelete(Id);
+            var volunteer = await genericRepository.GetByIdAsync(Id);
+            if (volunteer == null)
+            {
+                throw new InvalidOperationException($"Volunteer with id {Id} not found.");
+            }
+            int affectedRows = await genericRepository.SoftDelete(volunteer);
+            if (affectedRows == 0)
+            {
+                throw new InvalidOperationException($"Deleting volunteer is failed");
+            }
+            return affectedRows;
         }
 
-        public async Task UpdateAsync(Volunteer model)
+        public async Task<int?> UpdateAsync(int id, Volunteer model)
         {
             if (model == null)
             {
-                return;
+                throw new ArgumentNullException($"Sent volunteer model isn't received");
             }
-            await genericRepository.UpdateAsync(model);
+            var volunteer = await genericRepository.GetByIdAsync(id);
+            if (volunteer == null)
+            {
+                throw new InvalidOperationException($"Volunteer with id {id} not found.");
+            }
+            volunteer.DateStart = model.DateStart;
+            volunteer.LocationId = model.LocationId;
+
+            int affectedRows = await genericRepository.UpdateAsync(volunteer);
+            if (affectedRows == 0)
+            {
+                throw new InvalidOperationException($"Updating volunteer is failed");
+            }
+            return affectedRows;
         }
     }
 }

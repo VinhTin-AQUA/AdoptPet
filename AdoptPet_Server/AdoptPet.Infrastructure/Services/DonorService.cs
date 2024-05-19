@@ -8,7 +8,7 @@ using AdoptPet.Domain.Entities;
 namespace AdoptPet.Infrastructure.Services
 {
     
-    public class DonorService
+    public class DonorService : IGenericService<Donor>
     {
         private readonly IGenericRepository<Donor> genericRepository;
 
@@ -16,23 +16,28 @@ namespace AdoptPet.Infrastructure.Services
         {
             this.genericRepository = genericRepository;
         }
-        public async Task<int?> AddAsync(DonorDto model)
+        public async Task<int?> AddAsync(Donor model)
         {
             if(model == null)
             {
-                return null;
+                throw new Exception("Adding Donor Model is null");
             }
             if(string.IsNullOrEmpty(model.Name) == true)
             {
-                return null;
+                throw new Exception("Donor Name is null");
             }
             Donor newDonor = new Donor()
             {
                 Name = model.Name,
                 TotalDonation = model.TotalDonation
+
             };
 
             var r = await genericRepository.AddAsync(newDonor);
+            if (r == 0)
+            {
+                throw new Exception("Adding donor is failed");
+            }
             return r;
         }
 
@@ -49,40 +54,63 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<PaginatedResult<Donor>> GetAllAsync(int pageNumber, int pageSize)
         {
+            int totalItems = await genericRepository.TotalItems();
+            string message = await IGenericService<Donor>.ValidateNumber(totalItems, pageNumber, pageSize);
+            if (String.IsNullOrEmpty(message))
+            {
+                throw new Exception(message);
+            }
             var donors = await genericRepository.GetAllAsync(pageNumber, pageSize);
+            if (donors.Items == null)
+            {
+                throw new Exception("Can't get list of donor");
+            }
             return donors;
         }
 
         public async Task<Donor?> GetByIdAsync(int id)
         {
             var r = await genericRepository.GetByIdAsync(id);
+            if (r == null)
+            {
+                throw new Exception("Donor not found");
+            }
             return r;
         }
 
-        public async Task SoftDelete(int id)
+        public async Task<int> SoftDelete(int id)
         {
             var donor = await genericRepository.GetByIdAsync(id);
 
             if (donor == null)
             {
-                return;
+                throw new Exception("Donor not found");
             }
-            await genericRepository.SoftDelete(id);
+            int affectedRows = await genericRepository.SoftDelete(donor);
+            if (affectedRows == 0)
+            {
+                throw new Exception("Can't soft delete Donor");
+            }
+            return affectedRows;
         }
 
-        public async Task<Donor?> UpdateAsync(int id, DonorDto model)
+        public async Task<int?> UpdateAsync(int id, Donor model)
         {
             var oldDonor = await genericRepository.GetByIdAsync(id);
 
             if (oldDonor == null)
             {
-                return null;
+                throw new Exception("Updating Donor not found");
             }
             oldDonor.Name = model.Name;
             oldDonor.TotalDonation = model.TotalDonation;
 
-            await genericRepository.UpdateAsync(oldDonor);
-            return oldDonor;
+            int affectedRows = await genericRepository.UpdateAsync(oldDonor);
+            if(affectedRows == 0)
+            {
+                throw new Exception("Can't update Donor");
+            }
+            return affectedRows;
         }
     }
 }

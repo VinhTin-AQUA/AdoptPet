@@ -35,7 +35,7 @@ namespace AdoptPet.Infrastructure.Repositories
                         .Skip((pageNumber - 1) * pageSize)
                         .Take(pageSize)
                         .ToListAsync();
-            var totalItems = _context.Pets.Count();
+            var totalItems = await TotalItems();
             return new PaginatedResult<Volunteer>
             {
                 Items = r,
@@ -53,15 +53,12 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-        public async Task SoftDelete(int Id)
+
+        public Task<int> SoftDelete(Volunteer existsVolunteer)
         {
-            var existsVolunteer = _context.Volunteers.Find(Id);
-            if (existsVolunteer != null)
-            {
-                existsVolunteer.IsDeleted = !existsVolunteer.IsDeleted;
-                _context.Volunteers.Update(existsVolunteer);
-               await _context.SaveChangesAsync();
-            }
+            existsVolunteer.IsDeleted = true;
+            _context.Volunteers.Update(existsVolunteer);
+            return _context.SaveChangesAsync();
         }
 
         public Task<int> TotalItems()
@@ -69,10 +66,10 @@ namespace AdoptPet.Infrastructure.Repositories
             return _context.Volunteers.CountAsync();
         }
 
-        public async Task UpdateAsync(Volunteer model)
+        public async Task<int> UpdateAsync(Volunteer model)
         {
             _context.Volunteers.Update(model);
-            await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
     }

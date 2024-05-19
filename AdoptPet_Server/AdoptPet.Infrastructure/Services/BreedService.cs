@@ -1,15 +1,10 @@
 ﻿using AdoptPet.Application.DTOs.BreedDto;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdoptPet.Infrastructure.Services
 {
-    public class BreedService
+    public class BreedService : IGenericService<Breed>
     {
         private readonly IGenericRepository<Breed> genericRepository;
 
@@ -18,7 +13,7 @@ namespace AdoptPet.Infrastructure.Services
             this.genericRepository = genericRepository;
         }
 
-        public async Task<int?> AddAsync(BreedDto model)
+        public async Task<int?> AddAsync(Breed model)
         {
             // kiểm tra model null
             if (model == null)
@@ -36,6 +31,10 @@ namespace AdoptPet.Infrastructure.Services
                 BreedName = model.BreedName
             };
             var r = await genericRepository.AddAsync(newBreed);
+            if (r == 0)
+            {
+                throw new Exception("Adding breed is failed");
+            }
             return r;
         }
 
@@ -54,12 +53,17 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<PaginatedResult<Breed>> GetAllAsync(int pageNumber, int pageSize)
         {
-            String validationMessage = await ValidateNumber(pageNumber, pageSize);
+            int totalItems = await genericRepository.TotalItems();
+            String validationMessage = await IGenericService<Breed>.ValidateNumber(totalItems, pageNumber, pageSize);
             if (String.IsNullOrEmpty(validationMessage))
             {
                 throw new Exception(validationMessage);
             }
             var r = await genericRepository.GetAllAsync(pageNumber, pageSize);
+            if(r.Items == null)
+            {
+                throw new Exception("No breed found");
+            }
             return r;
         }
 
@@ -73,7 +77,7 @@ namespace AdoptPet.Infrastructure.Services
             return r;
         }
 
-        public async Task SoftDelete(int id)
+        public async Task<int> SoftDelete(int id)
         {
             var Breed = await genericRepository.GetByIdAsync(id);
 
@@ -81,10 +85,15 @@ namespace AdoptPet.Infrastructure.Services
             {
                 throw new Exception("Deleting breed is not exists");
             }
-            await genericRepository.SoftDelete(Breed.Id);
+            int affectedRows = await genericRepository.SoftDelete(Breed);
+            if (affectedRows == 0)
+            {
+                throw new Exception("Soft delete failed");
+            }
+            return affectedRows;
         }
 
-        public async Task<Breed?> UpdateAsync(int id, BreedDto model)
+        public async Task<int?> UpdateAsync(int id, Breed model)
         {
             // tìm color
             var oldBreed = await genericRepository.GetByIdAsync(id);
@@ -100,27 +109,12 @@ namespace AdoptPet.Infrastructure.Services
              oldBreed.BreedName = "Black"
              */
 
-            await genericRepository.UpdateAsync(oldBreed);
-
-            return oldBreed;
-        }
-        public async Task<String> ValidateNumber(int pageNumber, int pageSize)
-        {
-            String message = "";
-            if (pageNumber < 1 || pageSize < 1)
+            int affectedRows = await genericRepository.UpdateAsync(oldBreed);
+            if(affectedRows == 0)
             {
-                message += "Page number and page size must be greater than zero.";
+                throw new Exception("Update failed");
             }
-
-            var totalItems = await genericRepository.TotalItems();
-            var maxPageNumber = (int)Math.Ceiling((double)totalItems / pageSize);
-
-            if (pageNumber > maxPageNumber)
-            {
-                message += "Page number exceeds the maximum number of pages.";
-            }
-
-            return message;
+            return affectedRows;
         }
 
     }

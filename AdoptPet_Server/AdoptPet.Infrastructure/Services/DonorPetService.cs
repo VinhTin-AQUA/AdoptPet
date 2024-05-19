@@ -6,7 +6,7 @@ using AdoptPet.Infrastructure.Data;
 
 namespace AdoptPet.Infrastructure.Services
 {
-    public class DonorPetService
+    public class DonorPetService : IGenericService<DonorPet>
     {
         private readonly IGenericRepository<DonorPet> genericRepository;
         public DonorPetService(IGenericRepository<DonorPet> genericRepository)
@@ -14,11 +14,11 @@ namespace AdoptPet.Infrastructure.Services
             this.genericRepository = genericRepository;
         }
 
-        public async Task<int?> AddAsync(DonorPetDto model)
+        public async Task<int?> AddAsync(DonorPet model)
         {
             if(model == null)
             {
-                return null;
+                throw new Exception("Adding Model is null");
             }
             DonorPet newDonorPet = new DonorPet()
             {
@@ -27,6 +27,10 @@ namespace AdoptPet.Infrastructure.Services
             };
 
             var r = await genericRepository.AddAsync(newDonorPet);
+            if (r == 0)
+            {
+                throw new Exception("Adding donor pet is failed");
+            }
             return r;
         }
 
@@ -36,45 +40,68 @@ namespace AdoptPet.Infrastructure.Services
 
             if (donorPet == null)
             {
-                return ;
+                throw new ArgumentNullException("Deleting Donor pet model is null");
             }
             await genericRepository.DeletePermanentlyAsync(donorPet);
         }
 
         public async Task<PaginatedResult<DonorPet>> GetAllAsync(int pageSize, int pageNumber)
         {
+            int totalItems = await genericRepository.TotalItems();
+            string message = await IGenericService<DonorPet>.ValidateNumber(totalItems, pageNumber, pageSize);
+            if (String.IsNullOrEmpty(message))
+            {
+                throw new Exception(message);
+            }
             var donorPets = await genericRepository.GetAllAsync(pageNumber, pageSize);
+            if(donorPets.Items == null)
+            {
+                throw new ArgumentNullException("Can't get list of donor pet");
+            }
             return donorPets;
         }
         public async Task<DonorPet?> GetByIdAsync(int id)
         {
             var r = await genericRepository.GetByIdAsync(id);
+            if(r == null)
+            {
+                throw new ArgumentNullException("Donor pet model is null");
+            }
             return r;
         }
-        public async Task SoftDelete(int id)
+        public async Task<int> SoftDelete(int id)
         {
             var donorPet = await genericRepository.GetByIdAsync(id);
 
             if (donorPet == null)
             {
-                return ;
+                throw new ArgumentNullException("Donor pet model is null");
             }
-            await genericRepository.SoftDelete(id);
+            int affectedRows = await genericRepository.SoftDelete(id);
+            if (affectedRows == 0)
+            {
+                throw new Exception("Can't soft delete Donor pet model");
+            }
+            return affectedRows;
         }
 
-        public async Task<DonorPet?> UpdateAsync(int id, DonorPetDto model)
+        public async Task<int?> UpdateAsync(int id, DonorPet model)
         {
             var oldDonorPet = await genericRepository.GetByIdAsync(id);
 
             if (oldDonorPet == null)
             {
-                return null;
+                throw new Exception("Updating Donor pet model is null");
             }
             oldDonorPet.LastDonation = model.LastDonation;
             oldDonorPet.TotalDonation = model.TotalDonation;
 
-            await genericRepository.UpdateAsync(oldDonorPet);
-            return oldDonorPet;
+            int affectedRows = await genericRepository.UpdateAsync(oldDonorPet);
+            if (affectedRows == 0)
+            {
+                throw new Exception("Updating Donor pet model is failed");
+            }
+            return affectedRows;
         }
     }
 }

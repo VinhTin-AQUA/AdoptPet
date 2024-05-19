@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdoptPet.Infrastructure.Services
 {
-    public class PetService
+    public class PetService : IGenericService<Pet>
     {
         private readonly IPetRepository _repository;
 
@@ -22,12 +22,19 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<PaginatedResult<Pet>> GetAllAsync(int pageNumber, int pageSize)
         {
-            String  validationMessage = await ValidateNumber(pageNumber, pageSize);
+            int totalItems = await _repository.TotalItems();
+            String  validationMessage = await IGenericService<Pet>.ValidateNumber(totalItems,pageNumber, pageSize);
             if (String.IsNullOrEmpty(validationMessage))
             {
                 throw new Exception(validationMessage);
             }
-            return await _repository.GetAllAsync(pageNumber, pageSize);
+            var listPet = await _repository.GetAllAsync(pageNumber, pageSize);
+            if(listPet.Items == null)
+            {
+                throw new Exception("List of pets is empty");
+            }
+
+            return listPet;
         }
 
         public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(int breedId, int pageNumber, int pageSize)
@@ -57,7 +64,8 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<PaginatedResult<Pet>> SearchPetsByCriteria(SearchCriteria searchCriteria, int pageNumber, int pageSize)
         {
-            String validationMessage = await ValidateNumber(pageNumber, pageSize);
+            int totalItems = await _repository.TotalItems();
+            String validationMessage = await IGenericService<Pet>.ValidateNumber(totalItems, pageNumber, pageSize);
             if (String.IsNullOrEmpty(validationMessage))
             {
                 throw new Exception(validationMessage);
@@ -79,44 +87,69 @@ namespace AdoptPet.Infrastructure.Services
             return pet;
         }
 
-        public async Task<int> AddAsync(Pet pet)
+        public async Task<int?> AddAsync(Pet pet)
         {
-            if(!ValidatePet(pet))
+            if(pet == null)
             {
-                return 0;
+                throw new ArgumentException("Pet is null");
             }
-            return await _repository.AddAsync(pet);
+
+            int affectedRows = await _repository.AddAsync(pet);
+            if (affectedRows == 0)
+            {
+                throw new Exception("Adding pet is failed");
+            }
+            return affectedRows;
         }
 
-        public async Task UpdateAsync(Pet pet)
+        public async Task<int?> UpdateAsync(int id, Pet pet)
         {
-            if(!ValidatePet(pet))
+            if(pet == null)
             {
-                throw new ArgumentException("Pet is not valid");
+                throw new ArgumentException("Updating Pet model is null");
             }
-            await _repository.UpdateAsync(pet);
+            var petToUpdate = await _repository.GetByIdAsync(id);
+            if (petToUpdate == null)
+            {
+                throw new Exception("Pet not found");
+            }
+            petToUpdate.Status = pet.Status;
+            petToUpdate.PetGender = pet.PetGender;
+            petToUpdate.PetAge = pet.PetAge;
+            petToUpdate.PetName = pet.PetName;
+            petToUpdate.PetDescription = pet.PetDescription;
+            petToUpdate.PetVaccined = pet.PetVaccined;
+            petToUpdate.PetMicrochipped = pet.PetMicrochipped;
+            petToUpdate.LocationId = pet.LocationId;
+            petToUpdate.PetEntryDate = pet.PetEntryDate;
+            petToUpdate.PetDesexed = pet.PetDesexed;
+            petToUpdate.PetWeight = pet.PetWeight;
+            petToUpdate.PetWormed = pet.PetWormed;
+            petToUpdate.OwnerId = pet.OwnerId;
+            petToUpdate.VolunteerId = pet.VolunteerId;
+            int affectedRows = await _repository.UpdateAsync(petToUpdate);
+            if (affectedRows == 0)
+            {
+                throw new Exception("Updating pet is failed");
+            }
+            return affectedRows;
         }
 
-        public async Task SoftDelete(int id)
+        public async Task<int> SoftDelete(int id)
         {
             var pet = await _repository.GetByIdAsync(id);
-            if (pet != null)
+            if (pet == null)
             {
-                await _repository.SoftDelete(id);
+                throw new Exception("Deleting pet is not found!");
             }
-
-        }
-        private bool ValidatePet(Pet pet)
-        {
-            var context = new ValidationContext(pet, serviceProvider: null, items: null);
-            var results = new List<ValidationResult>();
-
-            if (!Validator.TryValidateObject(pet, context, results, validateAllProperties: true))
+            int affectedRows = await _repository.SoftDelete(pet);
+            if (affectedRows == 0)
             {
-                var validationErrors = results.Select(r => r.ErrorMessage);
-                return false;
+                throw new Exception("Soft delete failed");
             }
-            return true;
+            return affectedRows;
         }
+
+
     }
 }

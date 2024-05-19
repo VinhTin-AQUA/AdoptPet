@@ -18,10 +18,6 @@ namespace AdoptPet.Infrastructure.Repositories
         }
         public async Task<int> AddAsync(Pet model)
         {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
             await _context.Pets.AddAsync(model);
             var r = await _context.SaveChangesAsync();
             return r;
@@ -191,15 +187,11 @@ namespace AdoptPet.Infrastructure.Repositories
             };
         }
 
-        public async Task SoftDelete(int Id)
+        public Task<int> SoftDelete(Pet pet)
         {
-            var pet = _context.Pets.Find(Id);
-            if (pet != null)
-            {
-                pet.IsDeleted = !pet.IsDeleted;
-                _context.Pets.Update(pet);
-                await _context.SaveChangesAsync();
-            }
+            pet.IsDeleted = true;
+            _context.Pets.Update(pet);
+            return _context.SaveChangesAsync();
         }
 
         public Task<int> TotalItems()
@@ -207,7 +199,7 @@ namespace AdoptPet.Infrastructure.Repositories
             return _context.Pets.CountAsync();
         }
 
-        public Task UpdateAsync(Pet model)
+        public Task<int> UpdateAsync(Pet model)
         {
             _context.Pets.Update(model);
             return _context.SaveChangesAsync();

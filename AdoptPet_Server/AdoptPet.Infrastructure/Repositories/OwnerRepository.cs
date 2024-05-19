@@ -26,7 +26,7 @@ namespace AdoptPet.Infrastructure.Repositories
         public async Task DeletePermanentlyAsync(Owner model)
         {
             context.Owners.Remove(model);
-            await context.SaveChangesAsync();
+            int afftectedRows = await context.SaveChangesAsync();
         }
 
         public async Task<PaginatedResult<Owner>> GetAllAsync(int pageNumber, int pageSize)
@@ -35,7 +35,7 @@ namespace AdoptPet.Infrastructure.Repositories
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-            var totalItems = context.Owners.Count();
+            var totalItems = await TotalItems();
             return new PaginatedResult<Owner>
             {
                 Items = await ownerList,
@@ -51,23 +51,11 @@ namespace AdoptPet.Infrastructure.Repositories
             return r;
         }
 
-        public async Task SoftDelete(Owner model)
+        public Task<int> SoftDelete(Owner model)
         {
             model.IsDeleted = true; 
             context.Owners.Update(model);
-            await context.SaveChangesAsync();
-        }
-
-        public Task SoftDelete(int Id)
-        {
-            var owner = context.Owners.Find(Id);
-            if (owner != null)
-            {
-                owner.IsDeleted = true;
-                context.Owners.Update(owner);
-                return context.SaveChangesAsync();
-            }
-            return Task.CompletedTask;
+            return context.SaveChangesAsync();
         }
 
         public Task<int> TotalItems()
@@ -75,10 +63,10 @@ namespace AdoptPet.Infrastructure.Repositories
             return context.Owners.CountAsync();
         }
 
-        public async Task UpdateAsync(Owner model)
+        public async Task<int> UpdateAsync(Owner model)
         {
             context.Owners.Update(model);
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync();
         }
     }
 }
