@@ -82,7 +82,7 @@ namespace AdoptPet.Infrastructure.Services
             var r = await genericRepository.GetByIdAsync(id);
             if (r == null)
             {
-                return null;
+                throw new SqlNullValueException("Owner not found");
             }
             return r;
         }

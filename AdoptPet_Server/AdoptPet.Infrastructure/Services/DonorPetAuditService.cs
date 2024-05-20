@@ -71,7 +71,7 @@ namespace AdoptPet.Infrastructure.Services
             var r = await genericRepository.GetByIdAsync(id);
             if (r == null)
             {
-                throw new SqlNotFilledException("Can't not find Donor pet audit with id = " + id);
+                throw new SqlNullValueException("Can't not find Donor pet audit with id = " + id);
             }
             return r;
         }
