@@ -4,6 +4,7 @@ using AdoptPet.Application.DTOs.Location;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.Infrastructure.Services
 {
@@ -19,7 +20,7 @@ namespace AdoptPet.Infrastructure.Services
         {
             if(model == null)
             {
-                throw new Exception("Adding Location Model is null");
+                throw new ArgumentNullException("Adding Location Model is null");
             }
             Location newLocation = new Location()
             {
@@ -31,7 +32,7 @@ namespace AdoptPet.Infrastructure.Services
             var r = await genericRepository.AddAsync(newLocation);
             if (r == 0)
             {
-                throw new Exception("Adding location is failed");
+                throw new SqlNullValueException("Adding location is failed");
             }
             return r;
         }
@@ -53,7 +54,7 @@ namespace AdoptPet.Infrastructure.Services
             string message = await IGenericService<Location>.ValidateNumber(totalItems, pageNumber, pageSize);
             if (String.IsNullOrEmpty(message))
             {
-                throw new Exception(message);
+                throw new InvalidDataException(message);
             }
 
             var locations = await genericRepository.GetAllAsync(pageNumber, pageSize);
@@ -67,36 +68,48 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<Location?> GetByIdAsync(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var r = await genericRepository.GetByIdAsync(id);
             if (r == null)
             {
-                throw new Exception("Location not found");
+                throw new SqlNullValueException("Location not found");
             }
             return r;
         }
 
         public async Task<int> SoftDelete(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var location = await genericRepository.GetByIdAsync(id);
 
             if (location == null)
             {
-                throw new Exception("Location not found");
+                throw new ArgumentNullException("Location not found");
             }
             int affectedRows = await genericRepository.SoftDelete(location);
             if (affectedRows == 0)
             {
-                throw new Exception("Soft deleting location is failed");
+                throw new SqlNullValueException("Soft deleting location is failed");
             }
             return affectedRows;
         }
         public async Task<int?> UpdateAsync(int id, Location model)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var oldLoction = await genericRepository.GetByIdAsync(id);
 
             if (oldLoction == null)
             {
-                throw new Exception("Updating location not found");
+                throw new ArgumentNullException("Updating location not found");
             }
             oldLoction.Street = model.Street;
             oldLoction.Wards = model.Wards;
@@ -106,7 +119,7 @@ namespace AdoptPet.Infrastructure.Services
             int affectedRows = await genericRepository.UpdateAsync(oldLoction);
             if(affectedRows == 0)
             {
-                throw new Exception("Updating Location is failed");
+                throw new SqlNullValueException("Updating Location is failed");
             }
             return affectedRows;
         }

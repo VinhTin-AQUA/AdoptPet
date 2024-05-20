@@ -2,6 +2,7 @@
 using AdoptPet.Application.DTOs.Colour;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.Infrastructure.Services
 {
@@ -18,12 +19,12 @@ namespace AdoptPet.Infrastructure.Services
         {
             if(model == null)
             {
-                throw new Exception("Model is null");
+                throw new ArgumentNullException("Model is null");
             }
 
             if(string.IsNullOrEmpty(model.ColourName) == true)
             {
-                throw new Exception("ColourName is null");
+                throw new ArgumentNullException("ColourName is null");
             }
 
             // tạo colour
@@ -34,19 +35,23 @@ namespace AdoptPet.Infrastructure.Services
             var r = await genericRepository.AddAsync(newColour);
             if(r == 0)
             {
-                throw new Exception("Adding colour is failed");
+                throw new SqlNullValueException("Adding colour is failed");
             }
             return r;
         }
 
         public async Task DeletePermanentlyAsync(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var colour = await genericRepository.GetByIdAsync(id);
 
             // kiểm tra colour có tồn tại không
             if (colour == null)
             {
-                throw new Exception("Deleting colour is not exists");
+                throw new ArgumentNullException("Deleting colour is not exists");
             }
 
             await genericRepository.DeletePermanentlyAsync(colour);
@@ -58,13 +63,13 @@ namespace AdoptPet.Infrastructure.Services
             String message = await IGenericService<Colour>.ValidateNumber(totalItems,pageNumber, pageSize);
             if (String.IsNullOrEmpty(message))
             {
-                throw new Exception(message);
+                throw new InvalidDataException(message);
             }
 
             var r = await genericRepository.GetAllAsync(pageNumber, pageSize);
             if (r.Items == null)
             {
-                throw new Exception("Can't get list of colour");
+                throw new SqlNullValueException("Can't get list of colour");
             }
             return r;
         }
@@ -72,39 +77,51 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<Colour?> GetByIdAsync(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var r = await genericRepository.GetByIdAsync(id);
             if(r == null)
             {
-                throw new Exception("Colour not found");
+                throw new SqlNullValueException("Colour not found");
             }
             return r;
         }
 
         public async Task<int> SoftDelete(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var colour = await genericRepository.GetByIdAsync(id);
 
             if (colour == null)
             {
-                throw new Exception("Deleting colour is not exists");
+                throw new ArgumentNullException("Deleting colour is not exists");
             }
             int affectedRows = await genericRepository.SoftDelete(colour);
             if (affectedRows == 0)
             {
-                throw new Exception("Deleting colour is failed");
+                throw new SqlNullValueException("Deleting colour is failed");
             }
             return affectedRows;
         }
 
         public async Task<int?> UpdateAsync(int id, Colour model)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             // tìm color
             var oldColour = await genericRepository.GetByIdAsync(id);
 
             // kiểm tra tìm thấy không không
             if (oldColour == null)
             {
-                throw new Exception("Updating colour is not found");
+                throw new ArgumentNullException("Updating colour is not found");
             }
             oldColour.ColourName = model.ColourName; // gán lại màu đỏ
 
@@ -115,7 +132,7 @@ namespace AdoptPet.Infrastructure.Services
             int affectedRows = await genericRepository.UpdateAsync(oldColour);
             if(affectedRows == 0)
             {
-                throw new Exception("Updating colour is failed");
+                throw new SqlNullValueException("Updating colour is failed");
             }
             return affectedRows;
         }

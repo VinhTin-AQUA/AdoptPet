@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Threading.Tasks;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
@@ -16,11 +17,15 @@ public class VolunteerRoleService : IGenericService<VolunteerRole>
 
     public async Task<VolunteerRole?> GetByIdAsync(int id)
     {
+        if(id <= 0)
+        {
+            throw new InvalidDataException("Id must be greater than 0");
+        }
         // Implement logic to get volunteer role by id from the repository
         VolunteerRole? role = await _repository.GetByIdAsync(id);
         if(role == null)
         {
-            throw new InvalidOperationException($"VolunteerRole with id {id} not found.");
+            throw new SqlNullValueException($"VolunteerRole with id {id} not found.");
         }
         return role;
     }
@@ -31,12 +36,12 @@ public class VolunteerRoleService : IGenericService<VolunteerRole>
         string validationMessage = await IGenericService<VolunteerRole>.ValidateNumber(totalItems, pageNumber, pageSize);
         if (String.IsNullOrEmpty(validationMessage))
         {
-            throw new Exception(validationMessage);
+            throw new InvalidDataException(validationMessage);
         }
         var listVolunteerRole = await _repository.GetAllAsync(pageNumber,pageSize);
         if (listVolunteerRole.Items == null)
         {
-            throw new Exception("List of VolunteerRoles is empty");
+            throw new SqlNullValueException("List of VolunteerRoles is empty");
         }
         return listVolunteerRole;
     }
@@ -51,22 +56,26 @@ public class VolunteerRoleService : IGenericService<VolunteerRole>
         int affectedRows = await _repository.AddAsync(role);
         if (affectedRows == 0)
         {
-            throw new Exception("Failed to add VolunteerRole");
+            throw new SqlNullValueException("Failed to add VolunteerRole");
         }
         return affectedRows;
     }
 
     public async Task<int?> UpdateAsync(int Id, VolunteerRole role)
     {
+        if(Id <= 0)
+        {
+            throw new InvalidDataException("Id must be greater than 0");
+        }
         if (role == null)
         {
-            throw new Exception(nameof(role));
+            throw new ArgumentNullException(nameof(role));
         }
 
         var existingRole = await _repository.GetByIdAsync(Id);
         if (existingRole == null)
         {
-            throw new Exception($"VolunteerRole with id {Id} not found.");
+            throw new ArgumentNullException($"VolunteerRole with id {Id} not found.");
         }
         existingRole.Description = role.Description;
         existingRole.Name = role.Name;
@@ -74,7 +83,7 @@ public class VolunteerRoleService : IGenericService<VolunteerRole>
         int affectedRows = await _repository.UpdateAsync(existingRole);
         if(affectedRows == 0)
         {
-            throw new Exception($"Failed to update VolunteerRole with id {role.Id}");
+            throw new SqlNullValueException($"Failed to update VolunteerRole with id {role.Id}");
         }
         return affectedRows;
     }
@@ -97,16 +106,20 @@ public class VolunteerRoleService : IGenericService<VolunteerRole>
 
     public async Task<int> SoftDelete(int id)
     {
+        if (id <= 0)
+        {
+            throw new InvalidDataException("Id must be greater than 0");
+        }
         var existingRole = await _repository.GetByIdAsync(id);
         if (existingRole == null)
         {
-            throw new InvalidOperationException($"VolunteerRole with id {id} not found.");
+            throw new ArgumentNullException($"VolunteerRole with id {id} not found.");
         }
 
         int affectedRows = await _repository.SoftDelete(existingRole);
         if (affectedRows == 0)
         {
-            throw new Exception($"Failed to soft delete VolunteerRole with id {id}");
+            throw new SqlNullValueException($"Failed to soft delete VolunteerRole with id {id}");
         }
         return affectedRows;
     }

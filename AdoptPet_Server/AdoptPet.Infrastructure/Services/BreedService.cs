@@ -1,6 +1,7 @@
 ﻿using AdoptPet.Application.DTOs.BreedDto;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.Infrastructure.Services
 {
@@ -18,12 +19,12 @@ namespace AdoptPet.Infrastructure.Services
             // kiểm tra model null
             if (model == null)
             {
-                throw new Exception("Model is null");
+                throw new ArgumentNullException("Model is null");
             }
 
             if (string.IsNullOrEmpty(model.BreedName) == true)
             {
-                throw new Exception("BreedName is null");
+                throw new ArgumentNullException("BreedName is null");
             }
             // tạo Breed
             Breed newBreed = new Breed()
@@ -33,19 +34,23 @@ namespace AdoptPet.Infrastructure.Services
             var r = await genericRepository.AddAsync(newBreed);
             if (r == 0)
             {
-                throw new Exception("Adding breed is failed");
+                throw new SqlNullValueException("Adding breed is failed");
             }
             return r;
         }
 
         public async Task DeletePermanentlyAsync(int id)
         {
+            if(id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var Breed = await genericRepository.GetByIdAsync(id);
 
             // kiểm tra Breed có tồn tại không
             if (Breed == null)
             {
-                throw new Exception("Deleting breed is not exists");
+                throw new ArgumentNullException("Deleting breed is not exists");
             }
 
             await genericRepository.DeletePermanentlyAsync(Breed);
@@ -57,38 +62,46 @@ namespace AdoptPet.Infrastructure.Services
             String validationMessage = await IGenericService<Breed>.ValidateNumber(totalItems, pageNumber, pageSize);
             if (String.IsNullOrEmpty(validationMessage))
             {
-                throw new Exception(validationMessage);
+                throw new InvalidDataException(validationMessage);
             }
             var r = await genericRepository.GetAllAsync(pageNumber, pageSize);
             if(r.Items == null)
             {
-                throw new Exception("No breed found");
+                throw new SqlNullValueException("No breed found");
             }
             return r;
         }
 
         public async Task<Breed?> GetByIdAsync(int id)
         {
+            if(id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var r = await genericRepository.GetByIdAsync(id);
             if (r == null)
             {
-                throw new Exception("Breed not found");
+                throw new SqlNullValueException("Breed not found");
             }
             return r;
         }
 
         public async Task<int> SoftDelete(int id)
         {
+            if(id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var Breed = await genericRepository.GetByIdAsync(id);
 
             if (Breed == null)
             {
-                throw new Exception("Deleting breed is not exists");
+                throw new ArgumentNullException("Deleting breed is not exists");
             }
             int affectedRows = await genericRepository.SoftDelete(Breed);
             if (affectedRows == 0)
             {
-                throw new Exception("Soft delete failed");
+                throw new SqlNullValueException("Soft delete failed");
             }
             return affectedRows;
         }
@@ -96,12 +109,16 @@ namespace AdoptPet.Infrastructure.Services
         public async Task<int?> UpdateAsync(int id, Breed model)
         {
             // tìm color
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var oldBreed = await genericRepository.GetByIdAsync(id);
 
-            // kiểm tra tìm thấy không không
+            // kiểm tra tìm thấy không
             if (oldBreed == null)
             {
-                throw new Exception("Updating breed is not found");
+                throw new ArgumentNullException("Updating breed is not found");
             }
             oldBreed.BreedName = model.BreedName; // gán lại màu đỏ
             oldBreed.Description = model.Description; // gán lại mô tả
@@ -112,7 +129,7 @@ namespace AdoptPet.Infrastructure.Services
             int affectedRows = await genericRepository.UpdateAsync(oldBreed);
             if(affectedRows == 0)
             {
-                throw new Exception("Update failed");
+                throw new SqlNullValueException("Update failed");
             }
             return affectedRows;
         }

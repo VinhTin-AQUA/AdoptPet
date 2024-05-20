@@ -3,6 +3,7 @@ using AdoptPet.Application.DTOs.DonorPet;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.Infrastructure.Services
 {
@@ -18,7 +19,7 @@ namespace AdoptPet.Infrastructure.Services
         {
             if(model == null)
             {
-                throw new Exception("Adding Model is null");
+                throw new ArgumentNullException("Adding Model is null");
             }
             DonorPet newDonorPet = new DonorPet()
             {
@@ -29,13 +30,17 @@ namespace AdoptPet.Infrastructure.Services
             var r = await genericRepository.AddAsync(newDonorPet);
             if (r == 0)
             {
-                throw new Exception("Adding donor pet is failed");
+                throw new SqlNullValueException("Adding donor pet is failed");
             }
             return r;
         }
 
         public async Task DeletePermanentlyAsync(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var donorPet = await genericRepository.GetByIdAsync(id);
 
             if (donorPet == null)
@@ -51,26 +56,34 @@ namespace AdoptPet.Infrastructure.Services
             string message = await IGenericService<DonorPet>.ValidateNumber(totalItems, pageNumber, pageSize);
             if (String.IsNullOrEmpty(message))
             {
-                throw new Exception(message);
+                throw new InvalidDataException(message);
             }
             var donorPets = await genericRepository.GetAllAsync(pageNumber, pageSize);
             if(donorPets.Items == null)
             {
-                throw new ArgumentNullException("Can't get list of donor pet");
+                throw new SqlNullValueException("Can't get list of donor pet");
             }
             return donorPets;
         }
         public async Task<DonorPet?> GetByIdAsync(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var r = await genericRepository.GetByIdAsync(id);
             if(r == null)
             {
-                throw new ArgumentNullException("Donor pet model is null");
+                throw new SqlNullValueException("Donor pet model is null");
             }
             return r;
         }
         public async Task<int> SoftDelete(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var donorPet = await genericRepository.GetByIdAsync(id);
 
             if (donorPet == null)
@@ -80,18 +93,26 @@ namespace AdoptPet.Infrastructure.Services
             int affectedRows = await genericRepository.SoftDelete(id);
             if (affectedRows == 0)
             {
-                throw new Exception("Can't soft delete Donor pet model");
+                throw new SqlNullValueException("Can't soft delete Donor pet model");
             }
             return affectedRows;
         }
 
         public async Task<int?> UpdateAsync(int id, DonorPet model)
         {
+            if(id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
+            if(model == null)
+            {
+                throw new ArgumentNullException("Updating Model is null");
+            }
             var oldDonorPet = await genericRepository.GetByIdAsync(id);
 
             if (oldDonorPet == null)
             {
-                throw new Exception("Updating Donor pet model is null");
+                throw new ArgumentNullException("Updating Donor pet model is null");
             }
             oldDonorPet.LastDonation = model.LastDonation;
             oldDonorPet.TotalDonation = model.TotalDonation;
@@ -99,7 +120,7 @@ namespace AdoptPet.Infrastructure.Services
             int affectedRows = await genericRepository.UpdateAsync(oldDonorPet);
             if (affectedRows == 0)
             {
-                throw new Exception("Updating Donor pet model is failed");
+                throw new SqlNullValueException("Updating Donor pet model is failed");
             }
             return affectedRows;
         }

@@ -4,6 +4,7 @@ using AdoptPet.Application.DTOs.Owner;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Data;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.Infrastructure.Services
 {
@@ -19,11 +20,11 @@ namespace AdoptPet.Infrastructure.Services
         {
             if(model == null)
             {
-                throw new Exception("Adding Model is null");
+                throw new ArgumentNullException("Adding Model is null");
             }
             if (string.IsNullOrEmpty(model.Name) == true)
             {
-                throw new Exception("Owner Name is null");
+                throw new ArgumentNullException("Owner Name is null");
             }
             Owner newOwner = new Owner()
             {
@@ -32,11 +33,19 @@ namespace AdoptPet.Infrastructure.Services
             };
 
             var r = await genericRepository.AddAsync(newOwner);
+            if (r == 0)
+            {
+                throw new SqlNullValueException("Adding owner is failed");
+            }
             return r;
         }
 
         public async Task DeletePermanentlyAsync(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var owner = await genericRepository.GetByIdAsync(id);
 
             if (owner == null)
@@ -52,13 +61,13 @@ namespace AdoptPet.Infrastructure.Services
             string message = await IGenericService<Owner>.ValidateNumber(totalItems, pageNumber, pageSize);
             if (String.IsNullOrEmpty(message))
             {
-                throw new Exception(message);
+                throw new InvalidDataException(message);
             }
 
             var owners = await genericRepository.GetAllAsync(pageNumber, pageSize);
             if (owners.Items == null)
             {
-                throw new ArgumentNullException("Can't get list of owner");
+                throw new SqlNullValueException("Can't get list of owner");
             }
 
             return owners;
@@ -66,6 +75,10 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<Owner?> GetByIdAsync(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var r = await genericRepository.GetByIdAsync(id);
             if (r == null)
             {
@@ -76,6 +89,10 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<int> SoftDelete(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var owner = await genericRepository.GetByIdAsync(id);
 
             if (owner == null)
@@ -92,6 +109,10 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<int?> UpdateAsync(int id, Owner model)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var oldOwner = await genericRepository.GetByIdAsync(id);
 
             if (oldOwner == null)

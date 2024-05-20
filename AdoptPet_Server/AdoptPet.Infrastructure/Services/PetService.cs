@@ -5,6 +5,7 @@ using AdoptPet.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,12 +27,12 @@ namespace AdoptPet.Infrastructure.Services
             String  validationMessage = await IGenericService<Pet>.ValidateNumber(totalItems,pageNumber, pageSize);
             if (String.IsNullOrEmpty(validationMessage))
             {
-                throw new Exception(validationMessage);
+                throw new InvalidDataException(validationMessage);
             }
             var listPet = await _repository.GetAllAsync(pageNumber, pageSize);
             if(listPet.Items == null)
             {
-                throw new Exception("List of pets is empty");
+                throw new SqlNullValueException("List of pets is empty");
             }
 
             return listPet;
@@ -68,7 +69,7 @@ namespace AdoptPet.Infrastructure.Services
             String validationMessage = await IGenericService<Pet>.ValidateNumber(totalItems, pageNumber, pageSize);
             if (String.IsNullOrEmpty(validationMessage))
             {
-                throw new Exception(validationMessage);
+                throw new InvalidDataException(validationMessage);
             }
             if (searchCriteria == null)
             {
@@ -79,10 +80,14 @@ namespace AdoptPet.Infrastructure.Services
 
         public async Task<Pet?> GetByIdAsync(int id)
         {
+            if(id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var pet = await _repository.GetByIdAsync(id);
             if(pet == null)
             {
-                throw new ArgumentException("Pet not found");
+                throw new SqlNullValueException("Pet not found");
             }
             return pet;
         }
@@ -97,21 +102,25 @@ namespace AdoptPet.Infrastructure.Services
             int affectedRows = await _repository.AddAsync(pet);
             if (affectedRows == 0)
             {
-                throw new Exception("Adding pet is failed");
+                throw new SqlNullValueException("Adding pet is failed");
             }
             return affectedRows;
         }
 
         public async Task<int?> UpdateAsync(int id, Pet pet)
         {
-            if(pet == null)
+            if (id <= 0)
             {
-                throw new ArgumentException("Updating Pet model is null");
+                throw new InvalidDataException("Id must be greater than 0");
+            }
+            if (pet == null)
+            {
+                throw new ArgumentNullException("Updating Pet model is null");
             }
             var petToUpdate = await _repository.GetByIdAsync(id);
             if (petToUpdate == null)
             {
-                throw new Exception("Pet not found");
+                throw new ArgumentNullException("Pet not found");
             }
             petToUpdate.Status = pet.Status;
             petToUpdate.PetGender = pet.PetGender;
@@ -130,22 +139,26 @@ namespace AdoptPet.Infrastructure.Services
             int affectedRows = await _repository.UpdateAsync(petToUpdate);
             if (affectedRows == 0)
             {
-                throw new Exception("Updating pet is failed");
+                throw new SqlNullValueException("Updating pet is failed");
             }
             return affectedRows;
         }
 
         public async Task<int> SoftDelete(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
             var pet = await _repository.GetByIdAsync(id);
             if (pet == null)
             {
-                throw new Exception("Deleting pet is not found!");
+                throw new ArgumentNullException("Deleting pet is not found!");
             }
             int affectedRows = await _repository.SoftDelete(pet);
             if (affectedRows == 0)
             {
-                throw new Exception("Soft delete failed");
+                throw new SqlNullValueException("Soft delete failed");
             }
             return affectedRows;
         }
