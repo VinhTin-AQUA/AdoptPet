@@ -6,6 +6,7 @@ using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.API.Controllers
 {
@@ -22,33 +23,80 @@ namespace AdoptPet.API.Controllers
         [Route("get-location-by-id/{id}")]
         public async Task<IActionResult> GetBreedById(int id)
         {
-            var r = await locationService.GetByIdAsync(id);
-
-            return Ok(new Success<Location> { Status = true, Title = "", Messages = [], Data = r });
+            try
+            {
+                var r = await locationService.GetByIdAsync(id);
+                return Ok(new Success<Location> { Status = true, Title = "", Messages = [], Data = r });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("get-all-location")]
         public async Task<IActionResult> GetAllLocation(int pageNumber, int pageSize)
         {
-            var locations = await locationService.GetAllAsync(pageNumber, pageSize);
-            return Ok(new Success<List<Location>> { Status = true, Messages = [], Data = locations.Items!.ToList() });
+            try
+            {
+                var locations = await locationService.GetAllAsync(pageNumber, pageSize);
+                return Ok(new Success<List<Location>> { Status = true, Messages = [], Data = locations.Items.ToList() });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         [Route("add-location")]
-        public async Task<IActionResult> AddLocation(LocationDto model)
+        public async Task<IActionResult> AddLocation(Location model)
         {
-            var r = await locationService.AddAsync(model);
-            return Ok(new Success<Location> { Status = true, Messages = []});
+            try
+            {
+                var r = await locationService.AddAsync(model);
+                return Ok(new Success<Location> { Status = true, Messages = [] });
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         [Route("update-location/{id}")]
-        public async Task<IActionResult> UpdateLocation(int id, LocationDto model)
+        public async Task<IActionResult> UpdateLocation(int id, Location model)
         {
-            var oldLoction = await locationService.UpdateAsync(id, model);
-            return Ok(new Success<Location> { Status = true, Messages = ["Update successfully"], Data = oldLoction });
+            try
+            {
+                var affectedRows = await locationService.UpdateAsync(id, model);
+                return Ok(new Success<Location> { Status = true, Messages = ["Update successfully"] });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
@@ -61,10 +109,25 @@ namespace AdoptPet.API.Controllers
 
         [HttpPut]
         [Route("soft-delete-location/{id}")] 
-        public async Task<IActionResult> DeleteLoction(int id)
+        public async Task<IActionResult> SoftDeleteLoction(int id)
         {
-            await locationService.SoftDelete(id);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            try
+            {
+                await locationService.SoftDelete(id);
+                return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

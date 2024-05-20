@@ -4,6 +4,7 @@ using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.API.Controllers
 {
@@ -22,32 +23,81 @@ namespace AdoptPet.API.Controllers
         [Route("get-colour-by-id/{id}")]
         public async Task<IActionResult> GetColourById(int id)
         {
-            var r = await colourService.GetByIdAsync(id);
-            return Ok(new Success<Colour> { Status = true, Title = "", Messages = [], Data = r });
+            try
+            {
+                var r = await colourService.GetByIdAsync(id);
+                return Ok(new Success<Colour> { Status = true, Title = "", Messages = [], Data = r });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("get-all-colour")]
         public async Task<IActionResult> GetAllColours([FromQuery]int pageNumber, [FromQuery] int pageSize)
         {
-            var colours = await colourService.GetAllAsync(pageNumber,pageSize);
-            return Ok(colours);
+            try
+            {
+                var colours = await colourService.GetAllAsync(pageNumber, pageSize);
+                return Ok();
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         [Route("add-colour")]
-        public async Task<IActionResult> AddColour(ColourDto model)
+        public async Task<IActionResult> AddColour(Colour model)
         {
-            var r = await colourService.AddAsync(model);
-            return Ok();
+            try
+            {
+                var r = await colourService.AddAsync(model);
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         [Route("update-colour/{id}")]
-        public async Task<IActionResult> UpdateColour(int id, ColourDto model)
+        public async Task<IActionResult> UpdateColour(int id, Colour model)
         {
-            var oldColour = await colourService.UpdateAsync(id, model);
-            return Ok(new Success<Colour> { Status = true, Title = "", Messages = ["Update successfully"], Data = oldColour });
+            try
+            {
+                var oldColour = await colourService.UpdateAsync(id, model);
+                return Ok(new Success<Colour> { Status = true, Title = "", Messages = ["Update successfully"] });
+            }
+            catch
+            (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
@@ -60,10 +110,26 @@ namespace AdoptPet.API.Controllers
 
         [HttpPut]
         [Route("soft-delete-colour/{id}")] 
-        public async Task<IActionResult> DeleteColour(int id)
+        public async Task<IActionResult> SoftDeleteColour(int id)
         {
-            await colourService.SoftDelete(id);
-            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
+            try
+            {
+                await colourService.SoftDelete(id);
+                return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
+            }
+            catch
+            (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

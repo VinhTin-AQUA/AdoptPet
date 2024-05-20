@@ -3,8 +3,10 @@ using AdoptPet.Application.DTOs.BreedDto;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Application.Interfaces.IService;
 using AdoptPet.Domain.Entities;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.API.Controllers
 {
@@ -12,12 +14,12 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class BreedController : ControllerBase
     {
-        private readonly IGenericRepository<Breed> genericRepository;
+        private readonly BreedService breedService;
         private readonly IImageService imageService;
 
-        public BreedController(IGenericRepository<Breed> genericRepository, IImageService imageService)
+        public BreedController(BreedService breedService, IImageService imageService)
         {
-            this.genericRepository = genericRepository;
+            this.breedService = breedService;
             this.imageService = imageService;
         }
 
@@ -25,86 +27,128 @@ namespace AdoptPet.API.Controllers
         [Route("get-breed-by-id/{id}")]
         public async Task<IActionResult> GetBreedById(int id)
         {
-            var r = await genericRepository.GetByIdAsync(id);
+            try
+            {
+                var r = await breedService.GetByIdAsync(id);
+                return Ok(new Success<Breed> { Status = true, Title = "", Messages = [], Data = r });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return NotFound(ex.Message);
+            }
 
-            return Ok(new Success<Breed> { Status = true, Title = "", Messages = [], Data = r });
         }
 
         [HttpGet]
         [Route("get-all-breed")]
         public async Task<IActionResult> GetAllBreeds([FromQuery]int pageNumber, [FromQuery] int pageSize)
         {
-            var breeds = await genericRepository.GetAllAsync(pageNumber,pageSize);
-            return Ok(new Success<List<Breed>> { Status = true, Title = "", Messages = [], Data = breeds.Items!.ToList() });
+            try
+            {
+                var breeds = await breedService.GetAllAsync(pageNumber, pageSize);
+                return Ok(new Success<List<Breed>> { Status = true, Title = "", Messages = [], Data = breeds.Items.ToList() });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpPost]
         [Route("add-breed")]
-        public async Task<IActionResult> AddBreed([FromForm] BreedDto model, IFormFile file)
+        public async Task<IActionResult> AddBreed([FromForm] Breed model, IFormFile file)
         {
-            Breed newBreed = new Breed()
+            try
             {
-                BreedName = model.BreedName,
-                Description = model.Description,
-                ThumbPath = ""
-            };
-            var r = await genericRepository.AddAsync(newBreed);
-
-            if (file != null)
-            {
-                await imageService.SaveImage(file, "Breeds", newBreed.Id.ToString());
-                newBreed.ThumbPath = file.FileName;
+                if (file != null)
+                {
+                    await imageService.SaveImage(file, "Breeds", model.Id.ToString());
+                    model.ThumbPath = file.FileName;
+                }
+                var r = await breedService.AddAsync(model);
+                return Ok(new Success<Breed> { Status = true, Title = "", Messages = [] });
             }
-
-            return Ok(new Success<Breed> { Status = true, Title = "", Messages = [] });
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         [Route("update-breed/{id}")]
-        public async Task<IActionResult> UpdateBreed(int id, BreedDto model)
+        public async Task<IActionResult> UpdateBreed(int id, Breed model)
         {
-            var oldBreed = await genericRepository.GetByIdAsync(id);
-
-            if(oldBreed == null)
+            try
             {
-                return BadRequest(new Success<object> { Status = false, Title = "Không tìm thấy thú cưng", Messages = ["Xin vui lòng thử lại."], Data = null });
+                await breedService.UpdateAsync(id, model);
+                return Ok(new Success<BreedDto> { Status = true, Title = "", Messages = ["Update successfully"] });
             }
-            oldBreed.Description = model.Description;
-            oldBreed.BreedName = model.BreedName;
+            catch(InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
-            /* cap nhat anhr */
-
-            await genericRepository.UpdateAsync(oldBreed);
-
-            return Ok(new Success<BreedDto> { Status = true, Title = "", Messages = ["Update successfully"], Data = model });
         }
 
         [HttpDelete]
         [Route("delete-permanently-breed/{id}")] // https://localhost:7245/api/Breed/delete-breed/12
         public async Task<IActionResult> DeletePermanentlyBreed(int id)
         {
-            var breed = await genericRepository.GetByIdAsync(id);
-
-            if(breed == null)
+            try
             {
-                return BadRequest(new Success<object> { Status = false, Title = "", Messages = ["Xin vui lòng thử lại"], Data = null });
+                await breedService.DeletePermanentlyAsync(id);
+                return Ok(new Success<object> { Status = true, Title = "", Messages = ["Xóa thành công"], Data = null });
             }
-            await genericRepository.DeletePermanentlyAsync(breed);
-            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Xóa thành công"], Data = null });
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         [Route("soft-delete-breed/{id}")] // https://localhost:7245/api/Breed/delete-breed/12
-        public async Task<IActionResult> DeleteBreed(int id)
+        public async Task<IActionResult> SoftDeleteBreed(int id)
         {
-            var breed = await genericRepository.GetByIdAsync(id);
-
-            if (breed == null)
+            try
             {
-                return BadRequest(new Success<object> { Status = false, Title = "Không tìm thấy giống", Messages = ["Xin vui lòng thử lại"], Data = null });
+                await breedService.SoftDelete(id);
+                return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
             }
-            await genericRepository.SoftDelete(id);
-            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
+
     }
 }

@@ -6,6 +6,7 @@ using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.API.Controllers
 {
@@ -22,35 +23,79 @@ namespace AdoptPet.API.Controllers
         [Route("get-donorpetaudit-by-id/{id}")]
         public async Task<IActionResult> GetDonorPetAuditById(int id)
         {
-            var r = await donorPetAuditService.GetByIdAsync(id);
-            return Ok(new Success<DonorPetAudit> { Status = true, Messages = [], Data = r });
+            try
+            {
+                var r = await donorPetAuditService.GetByIdAsync(id);
+                return Ok(new Success<DonorPetAudit> { Status = true, Messages = [], Data = r });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
         [HttpGet]
         [Route("get-all-donorpetaudit")]
         public async Task<IActionResult> GetAllDonorPetAudit(int pageNumber, int pageSize)
         {
-            var donorPetAudits = await donorPetAuditService.GetAllAsync(pageNumber, pageSize);
-            return Ok(new Success<List<DonorPetAudit>> { Status = true, Messages = [], Data = donorPetAudits.Items!.ToList() });
+            try
+            {
+                var donorPetAudits = await donorPetAuditService.GetAllAsync(pageNumber, pageSize);
+                return Ok(new Success<List<DonorPetAudit>> { Status = true, Messages = [], Data = donorPetAudits.Items.ToList() });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         [Route("add-donorpetaudit")]
-        public async Task<IActionResult> AddDonorPetAudit(DonorPetAuditDto model)
+        public async Task<IActionResult> AddDonorPetAudit(DonorPetAudit model)
         {
-            var r = await donorPetAuditService.AddAsync(model);
-            if(r == null)
+            try
             {
-                return BadRequest("Adding donor pet audit record fail!");
+                var r = await donorPetAuditService.AddAsync(model);
+                return Ok(new Success<DonorPetAudit> { Status = true, Messages = [] });
             }
-            return Ok(new Success<DonorPetAudit> { Status = true, Messages = []});
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         [Route("update-donorpetaudit/{id}")]
-        public async Task<IActionResult> UpdateDonorPetAudit(int id, DonorPetAuditDto model)
+        public async Task<IActionResult> UpdateDonorPetAudit(int id, DonorPetAudit model)
         {
-            var oldDonorPetAudit = await donorPetAuditService.UpdateAsync(id, model);
-            return Ok(new Success<DonorPetAudit> { Status = true, Messages = ["Update successfully"], Data = oldDonorPetAudit });
+            try
+            {
+                var affectedRows = await donorPetAuditService.UpdateAsync(id, model);
+                return Ok(new Success<DonorPetAudit> { Status = true, Messages = ["Update successfully"] });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
@@ -63,10 +108,25 @@ namespace AdoptPet.API.Controllers
 
         [HttpPut]
         [Route("soft-delete-donorpetaudit/{id}")]
-        public async Task<IActionResult> DeleteDonorPetAudit(int id)
+        public async Task<IActionResult> SoftDeleteDonorPetAudit(int id)
         {
-            await donorPetAuditService.SoftDelete(id);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            try
+            {
+                await donorPetAuditService.SoftDelete(id);
+                return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

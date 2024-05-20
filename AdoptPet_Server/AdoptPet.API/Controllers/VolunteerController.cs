@@ -6,7 +6,7 @@ using AdoptPet.Infrastructure.Data;
 using AdoptPet.Infrastructure.Repositories;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.API.Controllers
 {
@@ -34,26 +34,20 @@ namespace AdoptPet.API.Controllers
         [Route("get-all-volunteer/pageNumber/{pageNumber}/pageSize/{pageSize}")]
         public async Task<IActionResult> GetAllVolunteers(int pageNumber, int pageSize)
         {
-            var r = await volunteerService.GetAllAsync(pageNumber, pageSize);
-
-            var data = new List<object>();
-
-            foreach(var v in r.Items!)
+            try
             {
-                var volunteerRoles = await volunteerRoleXVolunteerRepository.GetVolunteerRolesByVolunteerId(v.Id);
-
-                var d = new
-                {
-                    v.Id,
-                    v.DateStart,
-                    v.IsDeleted,
-                    v.LocationId,
-                    v.Location,
-                    v.UserId,
-                    Roles = volunteerRoles
-                };
-                data.Add(d);
+                var r = await volunteerService.GetAllAsync(pageNumber, pageSize);
+                return Ok(new Success<List<Volunteer>> { Status = true, Data = r.Items.ToList() });
             }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(new Success<List<Volunteer>> { Status = false, Title = ex.Message });
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(new Success<List<Volunteer>> { Status = false, Title = ex.Message });
+            }
+        }
 
             return Ok(new Success<List<object>> { Status = true, Data = data });
         }
@@ -62,13 +56,19 @@ namespace AdoptPet.API.Controllers
         [Route("get-volunteer/{id}")]
         public async Task<IActionResult> GetVolunteerById(int id)
         {
-            var r = await volunteerService.GetByIdAsync(id);
-            if (r == null)
+            try
             {
-                return Ok(new Success<Volunteer> { Status = false, Data = r });
+                var r = await volunteerService.GetByIdAsync(id);
+                return Ok(new Success<Volunteer> { Status = true, Data = r });
             }
-
-            return Ok(new Success<Volunteer> { Status = true, Data = r });
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -106,23 +106,30 @@ namespace AdoptPet.API.Controllers
             {
                 return BadRequest(new Success<Volunteer> { Status = false, Title = "Có lỗi xảy ra. Vui lòng thử lại" });
             }
-            return Ok(new Success<Volunteer> { Status = true, Data = r });
+            return Ok(new Success<int> { Status = true, Data = (int)r });
         }
 
         [HttpPut]
         [Route("update-volunteer")]
-        public IActionResult UpdateVolunteer(Volunteer model)
+        public async Task<IActionResult> UpdateVolunteer(int Id, Volunteer model)
         {
-            //var oldVolunteer = await volunteerService.GetByIdAsync(model.Id);
-
-            //if (oldVolunteer == null)
-            //{
-            //    return Ok(new Success<Volunteer> { Status = false, Title = "Volunteer not found" });
-            //}
-
-
-            //await volunteerService.UpdateAsync(oldVolunteer);
-            return Ok();
+            try
+            {
+                await volunteerService.UpdateAsync(Id, model);
+                return Ok();
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpDelete]

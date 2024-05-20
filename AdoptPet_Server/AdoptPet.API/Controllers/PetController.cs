@@ -7,6 +7,7 @@ using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.API.Controllers
 {
@@ -30,22 +31,21 @@ namespace AdoptPet.API.Controllers
                 var results = await _petService.GetAllAsync(pageNumber, pageSize);
                 return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = results.Items.ToList() });
             }
-            catch (Exception ex)
+            catch (InvalidDataException ex)
             {
                 return BadRequest(ex.Message);
             }
-            
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpGet]
         [Route("search-by-breed/{breed}")]
         public async Task<IActionResult> SearchByBreed(int breedId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            if (pageNumber <= 0 || pageSize <= 0)
-            {
-                return BadRequest("Page number and page size must be greater than 0.");
-            }
-
             var results = await _petService.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
             return Ok(results);
         }
@@ -58,7 +58,7 @@ namespace AdoptPet.API.Controllers
                 var result = await _petService.SearchPetsByCriteria(searchCriteria, pageNumber, pageSize);
                 return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = result.Items.ToList() });
             }
-            catch (Exception ex)
+            catch (InvalidDataException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -73,9 +73,13 @@ namespace AdoptPet.API.Controllers
                 var pet = await _petService.GetByIdAsync(id);
                 return Ok(pet);
             }
-            catch (ArgumentException ex)
+            catch (InvalidDataException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return NotFound(ex.Message);
             }
 
         }
@@ -84,42 +88,67 @@ namespace AdoptPet.API.Controllers
         [Route("add-pet")]
         public async Task<IActionResult> Add([FromBody] Pet pet)
         {
-            var r = await _petService.AddAsync(pet);
-            return Ok();
+            try
+            {
+                var r = await _petService.AddAsync(pet);
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         [Route("update-pet/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Pet pet)
         {
-            if (id != pet.Id)
-            {
-                return BadRequest("Id in the URL and body don't match");
-            }
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             try
             {
-                await _petService.UpdateAsync(pet);
+                await _petService.UpdateAsync(id, pet);
+                return Ok();
             }
-            catch (ArgumentException ex)
+            catch (InvalidDataException ex)
             {
                 return BadRequest(ex.Message);
             }
-
-            return NoContent();
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
         [Route("soft-delete-pet/{id}")]
         public async Task<IActionResult> SoftDelete(int id)
         {
-            await _petService.SoftDelete(id);
-            return NoContent();
+            try
+            {
+                await _petService.SoftDelete(id);
+                return Ok();
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

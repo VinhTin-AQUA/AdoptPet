@@ -4,6 +4,7 @@ using AdoptPet.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using AdoptPet.Application.DTOs.Donor;
 using AdoptPet.Infrastructure.Services;
+using System.Data.SqlTypes;
 
 namespace AdoptPet.API.Controllers
 {
@@ -21,32 +22,80 @@ namespace AdoptPet.API.Controllers
         [Route("get-donor-by-id/{id}")]
         public async Task<IActionResult> GetDonorById(int id)
         {
-            var r = await donorService.GetByIdAsync(id);
-            return Ok(new Success<Donor> { Status = true, Messages = [], Data = r });
+            try
+            {
+                var r = await donorService.GetByIdAsync(id);
+                return Ok(new Success<Donor> { Status = true, Messages = [], Data = r });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("get-all-donor")]
         public async Task<IActionResult> GetAllDonor([FromQuery]int pageNumber, [FromQuery] int pageSize)
         {
-            var donors = await donorService.GetAllAsync(pageNumber,pageSize);
-            return Ok(new Success<List<Donor>> { Status = true, Messages = [], Data = donors.Items!.ToList() });
+            try
+            {
+                var donors = await donorService.GetAllAsync(pageNumber, pageSize);
+                return Ok(new Success<List<Donor>> { Status = true, Messages = [], Data = donors.Items.ToList() });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         [Route("add-donor")]
-        public async Task<IActionResult> AddDonor(DonorDto model)
+        public async Task<IActionResult> AddDonor(Donor model)
         {
-            var r = await donorService.AddAsync(model);
-            return Ok(new Success<Donor> { Status = true, Messages = []});
+            try
+            {
+                var r = await donorService.AddAsync(model);
+                return Ok(new Success<Donor> { Status = true, Messages = [] });
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         [Route("update-donor/{id}")]
-        public async Task<IActionResult> UpdateDonor(int id, DonorDto model)
+        public async Task<IActionResult> UpdateDonor(int id, Donor model)
         {
-            var oldDonor = await donorService.UpdateAsync(id, model);
-            return Ok(new Success<Donor> { Status = true, Messages = ["Update successfully"], Data = oldDonor });
+            try
+            {
+                var affectedRows = await donorService.UpdateAsync(id, model);
+                return Ok(new Success<Donor> { Status = true, Messages = ["Update successfully"] });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
@@ -59,10 +108,25 @@ namespace AdoptPet.API.Controllers
 
         [HttpPut]
         [Route("soft-delete-donor/{id}")]
-        public async Task<IActionResult> DeleteDonor(int id)
+        public async Task<IActionResult> SoftDeleteDonor(int id)
         {
-            await donorService.SoftDelete(id);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            try
+            {
+                await donorService.SoftDelete(id);
+                return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (SqlNullValueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
