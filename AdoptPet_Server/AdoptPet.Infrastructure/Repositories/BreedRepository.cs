@@ -19,7 +19,8 @@ namespace AdoptPet.Infrastructure.Repositories
         {
             _context.Breeds.Add(model);
             var r = await _context.SaveChangesAsync();
-            return r;
+           await _context.Entry(model).ReloadAsync();
+            return model.Id;
         }
 
         public async Task DeletePermanentlyAsync(Breed model)
@@ -30,14 +31,14 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<PaginatedResult<Breed>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var breeds = await _context.Breeds
+            var breeds =await _context.Breeds
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
             var totalItems = await TotalItems();
             return new PaginatedResult<Breed>
             {
-                Items =  breeds,
+                Items = breeds,
                 TotalItems = totalItems,
                 PageNumber = pageNumber,
                 PageSize = pageSize

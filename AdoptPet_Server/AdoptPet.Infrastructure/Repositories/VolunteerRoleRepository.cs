@@ -46,7 +46,7 @@ namespace VolunteerRoles.Infrastructure.Repositories
             var totalItems = await TotalItems();
             return new PaginatedResult<VolunteerRole>
             {
-                Items =  volunteerRoles,
+                Items = volunteerRoles,
                 TotalItems = totalItems,
                 PageNumber = pageNumber,
                 PageSize = pageSize

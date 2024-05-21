@@ -30,7 +30,7 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public async Task<PaginatedResult<Location>> GetAllAsync(int pageNumber, int pageSize)
         {
-            var locationList = context.Locations
+            var locationList = await context.Locations
                 .Where(c => c.IsDeleted == false)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -38,7 +38,7 @@ namespace AdoptPet.Infrastructure.Repositories
             var totalItems = await TotalItems();
             return new PaginatedResult<Location>
             {
-                Items = await locationList,
+                Items = locationList,
                 TotalItems = totalItems,
                 PageNumber = pageNumber,
                 PageSize = pageSize

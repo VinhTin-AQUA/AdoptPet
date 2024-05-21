@@ -38,7 +38,7 @@ namespace AdoptPet.Infrastructure.Repositories
             var totalItems = await TotalItems();
             return new PaginatedResult<Colour>
             {
-                Items =  colourList,
+                Items = colourList,
                 TotalItems = totalItems,
                 PageNumber = pageNumber,
                 PageSize = pageSize
