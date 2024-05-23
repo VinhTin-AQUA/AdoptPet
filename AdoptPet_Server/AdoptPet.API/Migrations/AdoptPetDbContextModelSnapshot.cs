@@ -199,6 +199,8 @@ namespace AdoptPet.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DonorId");
+
                     b.HasIndex("PetId", "DonorId")
                         .IsUnique();
 
@@ -295,6 +297,8 @@ namespace AdoptPet.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LocationId");
+
                     b.ToTable("Owners");
                 });
 
@@ -355,6 +359,12 @@ namespace AdoptPet.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("VolunteerId");
 
                     b.ToTable("Pets");
                 });
@@ -417,7 +427,7 @@ namespace AdoptPet.API.Migrations
 
                     b.Property<string>("UserChangeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Version")
                         .HasColumnType("int");
@@ -426,6 +436,16 @@ namespace AdoptPet.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("PetId");
+
+                    b.HasIndex("UserChangeId");
+
+                    b.HasIndex("VolunteerId");
 
                     b.ToTable("PetAudits");
                 });
@@ -448,6 +468,8 @@ namespace AdoptPet.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PetId");
 
                     b.HasIndex("BreedId", "PetId")
                         .IsUnique();
@@ -473,6 +495,8 @@ namespace AdoptPet.API.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ColourId");
 
                     b.HasIndex("PetId", "ColourId")
                         .IsUnique();
@@ -500,6 +524,8 @@ namespace AdoptPet.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PetId");
+
                     b.ToTable("PetImages");
                 });
 
@@ -522,11 +548,13 @@ namespace AdoptPet.API.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Volunteers");
                 });
@@ -553,16 +581,22 @@ namespace AdoptPet.API.Migrations
 
                     b.Property<string>("UserChangeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("VolunteerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserChangeId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VolunteerId");
 
                     b.ToTable("VolunteerAudits");
                 });
@@ -761,6 +795,25 @@ namespace AdoptPet.API.Migrations
                     b.Navigation("Location");
                 });
 
+            modelBuilder.Entity("AdoptPet.Domain.Entities.DonorPet", b =>
+                {
+                    b.HasOne("AdoptPet.Domain.Entities.Donor", "Donor")
+                        .WithMany()
+                        .HasForeignKey("DonorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Donor");
+
+                    b.Navigation("Pet");
+                });
+
             modelBuilder.Entity("AdoptPet.Domain.Entities.DonorPetAudit", b =>
                 {
                     b.HasOne("AdoptPet.Domain.Entities.Donor", "Donor")
@@ -780,7 +833,7 @@ namespace AdoptPet.API.Migrations
                     b.Navigation("Pet");
                 });
 
-            modelBuilder.Entity("AdoptPet.Domain.Entities.Volunteer", b =>
+            modelBuilder.Entity("AdoptPet.Domain.Entities.Owner", b =>
                 {
                     b.HasOne("AdoptPet.Domain.Entities.Location", "Location")
                         .WithMany()
@@ -789,6 +842,169 @@ namespace AdoptPet.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("AdoptPet.Domain.Entities.Pet", b =>
+                {
+                    b.HasOne("AdoptPet.Domain.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.Owner", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.Volunteer", "Volunteer")
+                        .WithMany()
+                        .HasForeignKey("VolunteerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Owner");
+
+                    b.Navigation("Volunteer");
+                });
+
+            modelBuilder.Entity("AdoptPet.Domain.Entities.PetAudit", b =>
+                {
+                    b.HasOne("AdoptPet.Domain.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.Owner", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.AppUser", "UserChange")
+                        .WithMany()
+                        .HasForeignKey("UserChangeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.Volunteer", "Volunteer")
+                        .WithMany()
+                        .HasForeignKey("VolunteerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Owner");
+
+                    b.Navigation("Pet");
+
+                    b.Navigation("UserChange");
+
+                    b.Navigation("Volunteer");
+                });
+
+            modelBuilder.Entity("AdoptPet.Domain.Entities.PetBreed", b =>
+                {
+                    b.HasOne("AdoptPet.Domain.Entities.Breed", "Breed")
+                        .WithMany()
+                        .HasForeignKey("BreedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.Pet", "Pet")
+                        .WithMany("PetBreeds")
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Breed");
+
+                    b.Navigation("Pet");
+                });
+
+            modelBuilder.Entity("AdoptPet.Domain.Entities.PetColour", b =>
+                {
+                    b.HasOne("AdoptPet.Domain.Entities.Colour", "Colour")
+                        .WithMany()
+                        .HasForeignKey("ColourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.Pet", null)
+                        .WithMany("PetColours")
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Colour");
+                });
+
+            modelBuilder.Entity("AdoptPet.Domain.Entities.PetImage", b =>
+                {
+                    b.HasOne("AdoptPet.Domain.Entities.Pet", "Pet")
+                        .WithMany("PetImages")
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pet");
+                });
+
+            modelBuilder.Entity("AdoptPet.Domain.Entities.Volunteer", b =>
+                {
+                    b.HasOne("AdoptPet.Domain.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AdoptPet.Domain.Entities.VolunteerAudit", b =>
+                {
+                    b.HasOne("AdoptPet.Domain.Entities.AppUser", "UserChange")
+                        .WithMany()
+                        .HasForeignKey("UserChangeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AdoptPet.Domain.Entities.Volunteer", "Volunteer")
+                        .WithMany()
+                        .HasForeignKey("VolunteerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("UserChange");
+
+                    b.Navigation("Volunteer");
                 });
 
             modelBuilder.Entity("AdoptPet.Domain.Entities.VolunteerRoleXVolunteer", b =>
@@ -859,6 +1075,15 @@ namespace AdoptPet.API.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AdoptPet.Domain.Entities.Pet", b =>
+                {
+                    b.Navigation("PetBreeds");
+
+                    b.Navigation("PetColours");
+
+                    b.Navigation("PetImages");
                 });
 
             modelBuilder.Entity("AdoptPet.Domain.Entities.Volunteer", b =>

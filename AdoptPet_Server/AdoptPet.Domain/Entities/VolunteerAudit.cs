@@ -10,8 +10,13 @@ namespace AdoptPet.Domain.Entities
         public DateTime LastChange { get; set; }
 
         public int VolunteerId { get; set; }
+        public Volunteer? Volunteer { get; set; }
         public string UserId { get; set; } = string.Empty;
+        public AppUser? User { get; set; }
+
         public string UserChangeId { get; set; } = string.Empty;
+        public AppUser? UserChange { get; set; }
+
         public bool IsDeleted { get; set; }
     }
 }

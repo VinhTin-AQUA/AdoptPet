@@ -24,9 +24,14 @@ namespace AdoptPet.Domain.Entities
 
         // khoa ngoai
         public int PetId { get; set; }
+        public Pet? Pet { get; set; }
         public string UserChangeId { get; set; } = string.Empty;
+        public AppUser? UserChange { get; set; }
         public int VolunteerId { get; set; }
+        public Volunteer? Volunteer { get; set; }
         public int LocationId { get; set; }
+        public Location? Location {  get; set; } 
         public int OwnerId { get; set; }
+        public Owner? Owner { get; set; }
     }
 }

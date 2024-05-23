@@ -48,7 +48,7 @@ using var scope = app.Services.CreateScope();
 try
 {
     var contextSeedService = scope.ServiceProvider.GetService<ContextSeedService>();
-    await contextSeedService!.InitializeContextAsync();
+    await contextSeedService!.InitializeContextAsync(); // gọi hàm để sinh dữ liệu mẫu
 }
 catch (Exception ex)
 {

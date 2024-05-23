@@ -11,5 +11,6 @@ namespace AdoptPet.Domain.Entities
 
         // khoa ngoai
         public int LocationId { get; set; }
+        public Location? Location { get; set; }
     }
 }

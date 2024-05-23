@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AdoptPet.API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,23 +42,6 @@ namespace AdoptPet.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DonorPets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LastDonation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalDonation = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    PetId = table.Column<int>(type: "int", nullable: false),
-                    DonorId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DonorPets", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Locations",
                 columns: table => new
                 {
@@ -73,123 +56,6 @@ namespace AdoptPet.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Locations", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Owners",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LocationId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Owners", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PetAudits",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PetDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PetWeight = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    PetAge = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PetGender = table.Column<bool>(type: "bit", nullable: false),
-                    PetDesexed = table.Column<byte>(type: "tinyint", nullable: false),
-                    PetWormed = table.Column<byte>(type: "tinyint", nullable: false),
-                    PetVaccined = table.Column<byte>(type: "tinyint", nullable: false),
-                    PetMicrochipped = table.Column<byte>(type: "tinyint", nullable: false),
-                    PetEntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Version = table.Column<int>(type: "int", nullable: false),
-                    ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    PetId = table.Column<int>(type: "int", nullable: false),
-                    UserChangeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VolunteerId = table.Column<int>(type: "int", nullable: false),
-                    LocationId = table.Column<int>(type: "int", nullable: false),
-                    OwnerId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PetAudits", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PetBreeds",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BreedId = table.Column<int>(type: "int", nullable: false),
-                    PetId = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PetBreeds", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PetColours",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PetId = table.Column<int>(type: "int", nullable: false),
-                    ColourId = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PetColours", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PetImages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PetId = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PetImages", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Pets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PetDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PetWeight = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    PetAge = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PetGender = table.Column<byte>(type: "tinyint", nullable: false),
-                    PetDesexed = table.Column<byte>(type: "tinyint", nullable: false),
-                    PetWormed = table.Column<byte>(type: "tinyint", nullable: false),
-                    PetVaccined = table.Column<byte>(type: "tinyint", nullable: false),
-                    PetMicrochipped = table.Column<byte>(type: "tinyint", nullable: false),
-                    PetEntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<byte>(type: "tinyint", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    VolunteerId = table.Column<int>(type: "int", nullable: false),
-                    LocationId = table.Column<int>(type: "int", nullable: false),
-                    OwnerId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -235,25 +101,6 @@ namespace AdoptPet.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VolunteerAudits",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OldStatus = table.Column<byte>(type: "tinyint", nullable: false),
-                    NewStatus = table.Column<byte>(type: "tinyint", nullable: false),
-                    LastChange = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    VolunteerId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserChangeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VolunteerAudits", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "VolunteerRoles",
                 columns: table => new
                 {
@@ -282,34 +129,21 @@ namespace AdoptPet.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Donors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Donors_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Volunteers",
+                name: "Owners",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    LocationId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Volunteers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Volunteers_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Owners", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -419,6 +253,83 @@ namespace AdoptPet.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Volunteers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Volunteers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PetDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PetWeight = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    PetAge = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PetGender = table.Column<byte>(type: "tinyint", nullable: false),
+                    PetDesexed = table.Column<byte>(type: "tinyint", nullable: false),
+                    PetWormed = table.Column<byte>(type: "tinyint", nullable: false),
+                    PetVaccined = table.Column<byte>(type: "tinyint", nullable: false),
+                    PetMicrochipped = table.Column<byte>(type: "tinyint", nullable: false),
+                    PetEntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<byte>(type: "tinyint", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    VolunteerId = table.Column<int>(type: "int", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
+                    OwnerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pets", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VolunteerAudits",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OldStatus = table.Column<byte>(type: "tinyint", nullable: false),
+                    NewStatus = table.Column<byte>(type: "tinyint", nullable: false),
+                    LastChange = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    VolunteerId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserChangeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VolunteerAudits", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VolunteerRoleXVolunteers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    VolunteerId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VolunteerRoleXVolunteers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DonorPetAudits",
                 columns: table => new
                 {
@@ -435,45 +346,98 @@ namespace AdoptPet.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DonorPetAudits", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DonorPetAudits_Donors_DonorId",
-                        column: x => x.DonorId,
-                        principalTable: "Donors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DonorPetAudits_Pets_PetId",
-                        column: x => x.PetId,
-                        principalTable: "Pets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "VolunteerRoleXVolunteers",
+                name: "DonorPets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    LastDonation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalDonation = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    VolunteerId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    PetId = table.Column<int>(type: "int", nullable: false),
+                    DonorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VolunteerRoleXVolunteers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_VolunteerRoleXVolunteers_VolunteerRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "VolunteerRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_VolunteerRoleXVolunteers_Volunteers_VolunteerId",
-                        column: x => x.VolunteerId,
-                        principalTable: "Volunteers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_DonorPets", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PetAudits",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PetDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PetWeight = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    PetAge = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PetGender = table.Column<bool>(type: "bit", nullable: false),
+                    PetDesexed = table.Column<byte>(type: "tinyint", nullable: false),
+                    PetWormed = table.Column<byte>(type: "tinyint", nullable: false),
+                    PetVaccined = table.Column<byte>(type: "tinyint", nullable: false),
+                    PetMicrochipped = table.Column<byte>(type: "tinyint", nullable: false),
+                    PetEntryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Version = table.Column<int>(type: "int", nullable: false),
+                    ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    PetId = table.Column<int>(type: "int", nullable: false),
+                    UserChangeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VolunteerId = table.Column<int>(type: "int", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false),
+                    OwnerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PetAudits", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PetBreeds",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BreedId = table.Column<int>(type: "int", nullable: false),
+                    PetId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PetBreeds", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PetColours",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PetId = table.Column<int>(type: "int", nullable: false),
+                    ColourId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PetColours", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PetImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PetId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PetImages", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
@@ -487,6 +451,11 @@ namespace AdoptPet.API.Migrations
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DonorPets_DonorId",
+                table: "DonorPets",
+                column: "DonorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DonorPets_PetId_DonorId",
                 table: "DonorPets",
                 columns: new[] { "PetId", "DonorId" },
@@ -498,16 +467,76 @@ namespace AdoptPet.API.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Owners_LocationId",
+                table: "Owners",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetAudits_LocationId",
+                table: "PetAudits",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetAudits_OwnerId",
+                table: "PetAudits",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetAudits_PetId",
+                table: "PetAudits",
+                column: "PetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetAudits_UserChangeId",
+                table: "PetAudits",
+                column: "UserChangeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetAudits_VolunteerId",
+                table: "PetAudits",
+                column: "VolunteerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PetBreeds_BreedId_PetId",
                 table: "PetBreeds",
                 columns: new[] { "BreedId", "PetId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_PetBreeds_PetId",
+                table: "PetBreeds",
+                column: "PetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetColours_ColourId",
+                table: "PetColours",
+                column: "ColourId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PetColours_PetId_ColourId",
                 table: "PetColours",
                 columns: new[] { "PetId", "ColourId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetImages_PetId",
+                table: "PetImages",
+                column: "PetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pets_LocationId",
+                table: "Pets",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pets_OwnerId",
+                table: "Pets",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pets_VolunteerId",
+                table: "Pets",
+                column: "VolunteerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
@@ -549,6 +578,21 @@ namespace AdoptPet.API.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_VolunteerAudits_UserChangeId",
+                table: "VolunteerAudits",
+                column: "UserChangeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VolunteerAudits_UserId",
+                table: "VolunteerAudits",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VolunteerAudits_VolunteerId",
+                table: "VolunteerAudits",
+                column: "VolunteerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VolunteerRoleXVolunteers_RoleId",
                 table: "VolunteerRoleXVolunteers",
                 column: "RoleId");
@@ -562,25 +606,21 @@ namespace AdoptPet.API.Migrations
                 name: "IX_Volunteers_LocationId",
                 table: "Volunteers",
                 column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Volunteers_UserId",
+                table: "Volunteers",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Breeds");
-
-            migrationBuilder.DropTable(
-                name: "Colours");
-
-            migrationBuilder.DropTable(
                 name: "DonorPetAudits");
 
             migrationBuilder.DropTable(
                 name: "DonorPets");
-
-            migrationBuilder.DropTable(
-                name: "Owners");
 
             migrationBuilder.DropTable(
                 name: "PetAudits");
@@ -619,22 +659,31 @@ namespace AdoptPet.API.Migrations
                 name: "Donors");
 
             migrationBuilder.DropTable(
+                name: "Breeds");
+
+            migrationBuilder.DropTable(
+                name: "Colours");
+
+            migrationBuilder.DropTable(
                 name: "Pets");
 
             migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "VolunteerRoles");
 
             migrationBuilder.DropTable(
-                name: "VolunteerRoles");
+                name: "Owners");
 
             migrationBuilder.DropTable(
                 name: "Volunteers");
 
             migrationBuilder.DropTable(
                 name: "Locations");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

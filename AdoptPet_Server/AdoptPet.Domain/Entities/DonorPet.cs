@@ -11,7 +11,11 @@ namespace AdoptPet.Domain.Entities
 
         // khoa ngoai
         public int PetId { get; set; }
+        public Pet Pet { get; set; }
+
         public int DonorId { get; set; }
+        public Donor? Donor { get; set; }
+
 
         public static implicit operator DonorPet(int? v)
         {
