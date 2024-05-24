@@ -14,10 +14,10 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class BreedController : ControllerBase
     {
-        private readonly BreedService breedService;
+        private readonly IGenericServiceWithImage<Breed> breedService;
         private readonly IImageService imageService;
 
-        public BreedController(BreedService breedService, IImageService imageService)
+        public BreedController(IGenericServiceWithImage<Breed> breedService, IImageService imageService)
         {
             this.breedService = breedService;
             this.imageService = imageService;
@@ -54,7 +54,7 @@ namespace AdoptPet.API.Controllers
             }
             catch (InvalidDataException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Data);
             }
             catch (SqlNullValueException ex)
             {
@@ -69,13 +69,8 @@ namespace AdoptPet.API.Controllers
         {
             try
             {
-                if (file != null)
-                {
-                    await imageService.SaveImage(file, "Breeds", model.Id.ToString());
-                    model.ThumbPath = file.FileName;
-                }
-                var r = await breedService.AddAsync(model);
-                return Ok(new Success<Breed> { Status = true, Title = "", Messages = [] });
+                var generatedId = await breedService.AddAsync(model, file);
+                return Ok(new Success<int> { Status = true, Title = "", Messages = [], Data = (int)generatedId });
             }
             catch (ArgumentNullException ex)
             {
@@ -89,11 +84,11 @@ namespace AdoptPet.API.Controllers
 
         [HttpPut]
         [Route("update-breed/{id}")]
-        public async Task<IActionResult> UpdateBreed(int id, Breed model)
+        public async Task<IActionResult> UpdateBreed(int id, [FromForm]Breed model, IFormFile file)
         {
             try
             {
-                await breedService.UpdateAsync(id, model);
+                await breedService.UpdateAsync(id, model, file);
                 return Ok(new Success<BreedDto> { Status = true, Title = "", Messages = ["Update successfully"] });
             }
             catch(InvalidDataException ex)
@@ -111,20 +106,20 @@ namespace AdoptPet.API.Controllers
 
         }
 
-        [HttpDelete]
-        [Route("delete-permanently-breed/{id}")] // https://localhost:7245/api/Breed/delete-breed/12
-        public async Task<IActionResult> DeletePermanentlyBreed(int id)
-        {
-            try
-            {
-                await breedService.DeletePermanentlyAsync(id);
-                return Ok(new Success<object> { Status = true, Title = "", Messages = ["Xóa thành công"], Data = null });
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //[HttpDelete]
+        //[Route("delete-permanently-breed/{id}")] // https://localhost:7245/api/Breed/delete-breed/12
+        //public async Task<IActionResult> DeletePermanentlyBreed(int id)
+        //{
+        //    try
+        //    {
+        //        await breedService.DeletePermanentlyAsync(id);
+        //        return Ok(new Success<object> { Status = true, Title = "", Messages = ["Xóa thành công"], Data = null });
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         [HttpPut]
         [Route("soft-delete-breed/{id}")] // https://localhost:7245/api/Breed/delete-breed/12

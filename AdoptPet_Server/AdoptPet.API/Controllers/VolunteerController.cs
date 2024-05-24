@@ -14,19 +14,16 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class VolunteerController : ControllerBase
     {
-        private readonly VolunteerService volunteerService;
-        private readonly LocationService locationService;
-        private readonly VolunteerRoleXVolunteerRepository volunteerRoleXVolunteerRepository;
+        private readonly IGenericService<Volunteer> volunteerService;
+        private readonly IGenericService<Location> locationService;
         private readonly IAccountRepository accountRepository;
 
-        public VolunteerController(VolunteerService volunteerService,
-            LocationService locationService,
-            VolunteerRoleXVolunteerRepository volunteerRoleXVolunteerRepository,
+        public VolunteerController(IGenericService<Volunteer> volunteerService,
+            IGenericService<Location> locationService,
             IAccountRepository accountRepository)
         {
             this.volunteerService = volunteerService;
             this.locationService = locationService;
-            this.volunteerRoleXVolunteerRepository = volunteerRoleXVolunteerRepository;
             this.accountRepository = accountRepository;
         }
 
@@ -47,9 +44,6 @@ namespace AdoptPet.API.Controllers
             {
                 return BadRequest(new Success<List<Volunteer>> { Status = false, Title = ex.Message });
             }
-        }
-
-            return Ok(new Success<List<object>> { Status = true, Data = data });
         }
 
         [HttpGet]

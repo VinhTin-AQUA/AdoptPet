@@ -15,8 +15,8 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class DonorPetController : ControllerBase
     {
-        private readonly DonorPetService donorPetService;
-        public DonorPetController(DonorPetService donorPetService)
+        private readonly IGenericService<DonorPet> donorPetService;
+        public DonorPetController(IGenericService<DonorPet> donorPetService)
         {
             this.donorPetService = donorPetService;
         }
@@ -99,13 +99,13 @@ namespace AdoptPet.API.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("delete-permanently-donorpet/{id}")]
-        public async Task<IActionResult> DeletePermanentlyDonorPet(int id)
-        {
-            await donorPetService.DeletePermanentlyAsync(id);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
-        }
+        //[HttpDelete]
+        //[Route("delete-permanently-donorpet/{id}")]
+        //public async Task<IActionResult> DeletePermanentlyDonorPet(int id)
+        //{
+        //    await donorPetService.DeletePermanentlyAsync(id);
+        //    return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+        //}
 
         [HttpPut]
         [Route("soft-delete-donorpet/{id}")]

@@ -14,10 +14,10 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class OwnerController : ControllerBase
     {
-        private readonly OwnerService ownerService;
+        private readonly IGenericService<Owner> ownerService;
         private readonly LocationService locationService;
         private readonly IAccountRepository accountRepository;
-        public OwnerController(OwnerService ownerService)
+        public OwnerController(IGenericService<Owner> ownerService)
         {
             this.ownerService = ownerService;
         }
@@ -120,13 +120,13 @@ namespace AdoptPet.API.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("delete-permanently-owner/{id}")]
-        public async Task<IActionResult> DeletePermanentlyOwner(int id)
-        {
-            await ownerService.DeletePermanentlyAsync(id);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
-        }
+        //[HttpDelete]
+        //[Route("delete-permanently-owner/{id}")]
+        //public async Task<IActionResult> DeletePermanentlyOwner(int id)
+        //{
+        //    await ownerService.DeletePermanentlyAsync(id);
+        //    return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+        //}
 
         [HttpPut]
         [Route("soft-delete-owner/{id}")]

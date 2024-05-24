@@ -14,8 +14,8 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class LocationController : ControllerBase
     {
-        private readonly LocationService locationService;
-        public LocationController (LocationService locationService)
+        private readonly IGenericService <Location> locationService;
+        public LocationController (IGenericService<Location> locationService)
         {
             this.locationService = locationService;
         }
@@ -99,13 +99,13 @@ namespace AdoptPet.API.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("delete-permanently-location/{id}")] 
-        public async Task<IActionResult> DeletePermanentlyLocation(int id)
-        {
-            await locationService.DeletePermanentlyAsync(id);
-            return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
-        }
+        //[HttpDelete]
+        //[Route("delete-permanently-location/{id}")] 
+        //public async Task<IActionResult> DeletePermanentlyLocation(int id)
+        //{
+        //    await locationService.DeletePermanentlyAsync(id);
+        //    return Ok(new Success<object> { Status = true, Messages = ["Delete successfully"], Data = null });
+        //}
 
         [HttpPut]
         [Route("soft-delete-location/{id}")] 

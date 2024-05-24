@@ -12,10 +12,11 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class ColourController : ControllerBase
     {
-        private readonly ColourService colourService;
+        private readonly IGenericService<Colour> colourService;
 
-        public ColourController(ColourService colourService)
+        public ColourController(IGenericService<Colour> colourService)
         {
+            
             this.colourService = colourService;
         }
 
@@ -59,7 +60,7 @@ namespace AdoptPet.API.Controllers
 
         [HttpPost]
         [Route("add-colour")]
-        public async Task<IActionResult> AddColour(Colour model)
+        public async Task<IActionResult> AddColour([FromForm]Colour model)
         {
             try
             {
@@ -100,13 +101,13 @@ namespace AdoptPet.API.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("delete-permanently-colour/{id}")] 
-        public async Task<IActionResult> DeletePermanentlyColour(int id)
-        {
-            await colourService.DeletePermanentlyAsync(id);
-            return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
-        }
+        //[HttpDelete]
+        //[Route("delete-permanently-colour/{id}")] 
+        //public async Task<IActionResult> DeletePermanentlyColour(int id)
+        //{
+        //    await colourService.DeletePermanentlyAsync(id);
+        //    return Ok(new Success<object> { Status = true, Title = "", Messages = ["Delete successfully"], Data = null });
+        //}
 
         [HttpPut]
         [Route("soft-delete-colour/{id}")] 

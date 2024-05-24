@@ -15,9 +15,9 @@ namespace AdoptPet.API.Controllers
     [Route("api/[controller]")]
     public class PetsController : ControllerBase
     {
-        private readonly PetService _petService;
+        private readonly IGenericService<Pet> _petService;
 
-        public PetsController(PetService petService)
+        public PetsController(IGenericService<Pet> petService)
         {
             _petService = petService;
         }
@@ -42,27 +42,27 @@ namespace AdoptPet.API.Controllers
 
         }
 
-        [HttpGet]
-        [Route("search-by-breed/{breed}")]
-        public async Task<IActionResult> SearchByBreed(int breedId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
-        {
-            var results = await _petService.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
-            return Ok(results);
-        }
-        [HttpGet]
-        [Route("search-by-criteria")]
-        public async Task<IActionResult> SearchByCriteria([FromQuery] SearchCriteria searchCriteria, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
-        {
-            try
-            {
-                var result = await _petService.SearchPetsByCriteria(searchCriteria, pageNumber, pageSize);
-                return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = result.Items.ToList() });
-            }
-            catch (InvalidDataException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //[HttpGet]
+        //[Route("search-by-breed/{breed}")]
+        //public async Task<IActionResult> SearchByBreed(int breedId, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        //{
+        //    var results = await _petService.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
+        //    return Ok(results);
+        //}
+        //[HttpGet]
+        //[Route("search-by-criteria")]
+        //public async Task<IActionResult> SearchByCriteria([FromQuery] SearchCriteria searchCriteria, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        //{
+        //    try
+        //    {
+        //        var result = await _petService.SearchPetsByCriteria(searchCriteria, pageNumber, pageSize);
+        //        return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = result.Items.ToList() });
+        //    }
+        //    catch (InvalidDataException ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         [HttpGet]
         [Route("get-pet-by-id/{id}")]
