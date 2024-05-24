@@ -2,16 +2,22 @@
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
 using System.Data.SqlTypes;
-
+using AdoptPet.Application.Interfaces.IService;
+using Microsoft.AspNetCore.Http;
+using AdoptPet.Application.DTOs;
+using Microsoft.Extensions.Options;
+using System.Runtime.CompilerServices;
 namespace AdoptPet.Infrastructure.Services
 {
-    public class BreedService : IGenericService<Breed>
+    public class BreedService : IGenericServiceWithImage<Breed>
     {
         private readonly IGenericRepository<Breed> genericRepository;
+        private readonly GlobalSettings _globalSettings;
 
-        public BreedService(IGenericRepository<Breed> genericRepository)
+        public BreedService(IOptions<GlobalSettings> globalSettings,IGenericRepository<Breed> genericRepository)
         {
             this.genericRepository = genericRepository;
+            this._globalSettings = globalSettings.Value;
         }
 
         public async Task<int?> AddAsync(Breed model)
@@ -29,7 +35,44 @@ namespace AdoptPet.Infrastructure.Services
             // tạo Breed
             Breed newBreed = new Breed()
             {
-                BreedName = model.BreedName
+                BreedName = model.BreedName,
+                Description = model.Description,
+                ThumbPath = model.ThumbPath
+            };
+            var r = await genericRepository.AddAsync(newBreed);
+            if (r == 0)
+            {
+                throw new SqlNullValueException("Adding breed is failed");
+            }
+            return r;
+        }
+
+        public async Task<int?> AddAsync(Breed model, IFormFile formFile)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException("Model is null");
+            }
+
+            if (string.IsNullOrEmpty(model.BreedName) == true)
+            {
+                throw new ArgumentNullException("BreedName is null");
+            }
+            if(formFile == null)
+            {
+                model.ThumbPath = _globalSettings.GlobalImagePath + "Breeds\\animal.png";
+            }
+            else
+            {
+                var globalPath = _globalSettings.GlobalImagePath;
+                model.ThumbPath = await IGenericServiceWithImage<Breed>.SaveImageAsync(globalPath,"Breeds", formFile);
+            }
+            // tạo Breed
+            Breed newBreed = new Breed()
+            {
+                BreedName = model.BreedName,
+                Description = model.Description,
+                ThumbPath = model.ThumbPath
             };
             var r = await genericRepository.AddAsync(newBreed);
             if (r == 0)
@@ -60,7 +103,7 @@ namespace AdoptPet.Infrastructure.Services
         {
             int totalItems = await genericRepository.TotalItems();
             String validationMessage = await IGenericService<Breed>.ValidateNumber(totalItems, pageNumber, pageSize);
-            if (String.IsNullOrEmpty(validationMessage))
+            if (!String.IsNullOrEmpty(validationMessage))
             {
                 throw new InvalidDataException(validationMessage);
             }
@@ -134,5 +177,42 @@ namespace AdoptPet.Infrastructure.Services
             return affectedRows;
         }
 
+        public async Task<int?> UpdateAsync(int id, Breed model, IFormFile formFile)
+        {
+            // tìm color
+            if (id <= 0)
+            {
+                throw new InvalidDataException("Id must be greater than 0");
+            }
+            var oldBreed = await genericRepository.GetByIdAsync(id);
+
+            // kiểm tra tìm thấy không
+            if (oldBreed == null)
+            {
+                throw new ArgumentNullException("Updating breed is not found");
+            }
+            oldBreed.BreedName = model.BreedName; // gán lại màu đỏ
+            oldBreed.Description = model.Description; // gán lại mô tả
+            if (formFile == null)
+            {
+            }
+            else
+            {
+                
+                var globalPath = _globalSettings.GlobalImagePath;
+                IGenericServiceWithImage<Breed>.DeleteOldImage(globalPath, "Breeds", oldBreed.ThumbPath);
+                oldBreed.ThumbPath = await IGenericServiceWithImage<Breed>.SaveImageAsync(globalPath, "Breeds", formFile);
+            }
+            /*
+             oldBreed.BreedName = "Black"
+             */
+
+            int affectedRows = await genericRepository.UpdateAsync(oldBreed);
+            if (affectedRows == 0)
+            {
+                throw new SqlNullValueException("Update failed");
+            }
+            return affectedRows;
+        }
     }
 }
