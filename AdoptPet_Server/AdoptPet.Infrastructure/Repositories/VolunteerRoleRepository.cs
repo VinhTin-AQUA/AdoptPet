@@ -77,7 +77,7 @@ namespace VolunteerRoles.Infrastructure.Repositories
             return Task.CompletedTask;
         }
 
-        public async Task UpdateAsync(VolunteerRole model)
+        public Task<int> TotalItems()
         {
             _context.Entry(model).State = EntityState.Modified;
             await _context.SaveChangesAsync();
