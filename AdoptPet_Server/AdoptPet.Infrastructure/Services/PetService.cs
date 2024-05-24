@@ -25,7 +25,7 @@ namespace AdoptPet.Infrastructure.Services
         {
             int totalItems = await _repository.TotalItems();
             String  validationMessage = await IGenericService<Pet>.ValidateNumber(totalItems,pageNumber, pageSize);
-            if (String.IsNullOrEmpty(validationMessage))
+            if (!String.IsNullOrEmpty(validationMessage))
             {
                 throw new InvalidDataException(validationMessage);
             }
@@ -67,7 +67,7 @@ namespace AdoptPet.Infrastructure.Services
         {
             int totalItems = await _repository.TotalItems();
             String validationMessage = await IGenericService<Pet>.ValidateNumber(totalItems, pageNumber, pageSize);
-            if (String.IsNullOrEmpty(validationMessage))
+            if (!String.IsNullOrEmpty(validationMessage))
             {
                 throw new InvalidDataException(validationMessage);
             }

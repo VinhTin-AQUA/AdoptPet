@@ -41,15 +41,16 @@ namespace AdoptPet.Infrastructure
 
 
             // service
-            services.AddTransient<VolunteerRoleService>();
-            services.AddTransient<ColourService>();
-            services.AddTransient<DonorService>();
-            services.AddTransient<DonorPetService>();
-            services.AddTransient<DonorPetAuditService>();
-            services.AddTransient<OwnerService>();
-            services.AddTransient<LocationService>();
-            services.AddTransient<VolunteerService>();
-            services.AddTransient<PetService>();
+            services.AddTransient< IGenericService<VolunteerRole> ,VolunteerRoleService >();
+            services.AddScoped< IGenericService<Colour>, ColourService >();
+            services.AddTransient< IGenericService <Donor>, DonorService >();
+            services.AddTransient< IGenericService <DonorPet>, DonorPetService >();
+            services.AddTransient< IGenericService <DonorPetAudit>, DonorPetAuditService >();
+            services.AddTransient< IGenericService <Owner>, OwnerService >();
+            services.AddTransient< IGenericService <Location>, LocationService >();
+            services.AddTransient< IGenericService <Volunteer>, VolunteerService >();
+            services.AddTransient< IGenericService <Pet>, PetService >();
+            services.AddTransient<IGenericServiceWithImage<Breed>, BreedService>();
 
             // repositories
             services.AddTransient<IAccountRepository, AccountRepository>();

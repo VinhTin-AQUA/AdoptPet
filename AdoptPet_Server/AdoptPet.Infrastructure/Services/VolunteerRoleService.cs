@@ -34,7 +34,7 @@ public class VolunteerRoleService : IGenericService<VolunteerRole>
     {
         int totalItems = await _repository.TotalItems();
         string validationMessage = await IGenericService<VolunteerRole>.ValidateNumber(totalItems, pageNumber, pageSize);
-        if (String.IsNullOrEmpty(validationMessage))
+        if (!String.IsNullOrEmpty(validationMessage))
         {
             throw new InvalidDataException(validationMessage);
         }

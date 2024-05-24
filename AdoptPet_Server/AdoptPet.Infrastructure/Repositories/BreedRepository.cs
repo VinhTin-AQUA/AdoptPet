@@ -18,6 +18,7 @@ namespace AdoptPet.Infrastructure.Repositories
         public async Task<int> AddAsync(Breed model)
         {
             _context.Breeds.Add(model);
+
             var r = await _context.SaveChangesAsync();
            await _context.Entry(model).ReloadAsync();
             return model.Id;

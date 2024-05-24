@@ -52,7 +52,7 @@ namespace AdoptPet.Infrastructure.Services
         {
             int totalItems = await genericRepository.TotalItems();
             string message = await IGenericService<Location>.ValidateNumber(totalItems, pageNumber, pageSize);
-            if (String.IsNullOrEmpty(message))
+            if (!String.IsNullOrEmpty(message))
             {
                 throw new InvalidDataException(message);
             }
