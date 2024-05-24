@@ -1,4 +1,5 @@
-﻿using AdoptPet.Infrastructure;
+﻿using AdoptPet.Application.DTOs;
+using AdoptPet.Infrastructure;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.Extensions.FileProviders;
 
@@ -19,6 +20,7 @@ builder.Services.AddCors(c =>
 {
     c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
+builder.Services.Configure<GlobalSettings>(builder.Configuration.GetSection("GlobalSettings"));
 
 
 
