@@ -554,11 +554,8 @@ namespace AdoptPet.API.Migrations
 
                     b.HasIndex("LocationId");
 
-<<<<<<< HEAD
                     b.HasIndex("UserId");
 
-=======
->>>>>>> fb84803 (update: search feauture)
                     b.ToTable("Volunteers");
                 });
 
@@ -797,8 +794,6 @@ namespace AdoptPet.API.Migrations
 
                     b.Navigation("Location");
                 });
-
-<<<<<<< HEAD
             modelBuilder.Entity("AdoptPet.Domain.Entities.DonorPet", b =>
                 {
                     b.HasOne("AdoptPet.Domain.Entities.Donor", "Donor")
@@ -818,8 +813,6 @@ namespace AdoptPet.API.Migrations
                     b.Navigation("Pet");
                 });
 
-=======
->>>>>>> fb84803 (update: search feauture)
             modelBuilder.Entity("AdoptPet.Domain.Entities.DonorPetAudit", b =>
                 {
                     b.HasOne("AdoptPet.Domain.Entities.Donor", "Donor")
@@ -839,7 +832,6 @@ namespace AdoptPet.API.Migrations
                     b.Navigation("Pet");
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("AdoptPet.Domain.Entities.Owner", b =>
                 {
                     b.HasOne("AdoptPet.Domain.Entities.Location", "Location")
@@ -968,8 +960,6 @@ namespace AdoptPet.API.Migrations
                     b.Navigation("Pet");
                 });
 
-=======
->>>>>>> fb84803 (update: search feauture)
             modelBuilder.Entity("AdoptPet.Domain.Entities.Volunteer", b =>
                 {
                     b.HasOne("AdoptPet.Domain.Entities.Location", "Location")
@@ -978,7 +968,6 @@ namespace AdoptPet.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-<<<<<<< HEAD
                     b.HasOne("AdoptPet.Domain.Entities.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -1015,9 +1004,8 @@ namespace AdoptPet.API.Migrations
                     b.Navigation("UserChange");
 
                     b.Navigation("Volunteer");
-=======
                     b.Navigation("Location");
->>>>>>> fb84803 (update: search feauture)
+
                 });
 
             modelBuilder.Entity("AdoptPet.Domain.Entities.VolunteerRoleXVolunteer", b =>
@@ -1090,7 +1078,6 @@ namespace AdoptPet.API.Migrations
                         .IsRequired();
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("AdoptPet.Domain.Entities.Pet", b =>
                 {
                     b.Navigation("PetBreeds");
@@ -1100,8 +1087,6 @@ namespace AdoptPet.API.Migrations
                     b.Navigation("PetImages");
                 });
 
-=======
->>>>>>> fb84803 (update: search feauture)
             modelBuilder.Entity("AdoptPet.Domain.Entities.Volunteer", b =>
                 {
                     b.Navigation("VolunteerRoleXVolunteer");

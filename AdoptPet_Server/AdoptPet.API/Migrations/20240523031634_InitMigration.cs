@@ -42,26 +42,6 @@ namespace AdoptPet.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
-========
-                name: "DonorPets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LastDonation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalDonation = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    PetId = table.Column<int>(type: "int", nullable: false),
-                    DonorId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DonorPets", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
                 name: "Locations",
                 columns: table => new
                 {
@@ -149,15 +129,6 @@ namespace AdoptPet.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Donors", x => x.Id);
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
-========
-                    table.ForeignKey(
-                        name: "FK_Donors_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -172,17 +143,7 @@ namespace AdoptPet.API.Migrations
                 },
                 constraints: table =>
                 {
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
                     table.PrimaryKey("PK_Owners", x => x.Id);
-========
-                    table.PrimaryKey("PK_Volunteers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Volunteers_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -292,7 +253,6 @@ namespace AdoptPet.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
                 name: "Volunteers",
                 columns: table => new
                 {
@@ -370,8 +330,6 @@ namespace AdoptPet.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-========
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
                 name: "DonorPetAudits",
                 columns: table => new
                 {
@@ -388,34 +346,14 @@ namespace AdoptPet.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DonorPetAudits", x => x.Id);
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
                 });
 
             migrationBuilder.CreateTable(
                 name: "DonorPets",
-========
-                    table.ForeignKey(
-                        name: "FK_DonorPetAudits_Donors_DonorId",
-                        column: x => x.DonorId,
-                        principalTable: "Donors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DonorPetAudits_Pets_PetId",
-                        column: x => x.PetId,
-                        principalTable: "Pets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VolunteerRoleXVolunteers",
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
                     LastDonation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalDonation = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -500,27 +438,6 @@ namespace AdoptPet.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PetImages", x => x.Id);
-========
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    VolunteerId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VolunteerRoleXVolunteers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_VolunteerRoleXVolunteers_VolunteerRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "VolunteerRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_VolunteerRoleXVolunteers_Volunteers_VolunteerId",
-                        column: x => x.VolunteerId,
-                        principalTable: "Volunteers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
                 });
 
             migrationBuilder.CreateIndex(
@@ -533,14 +450,11 @@ namespace AdoptPet.API.Migrations
                 table: "DonorPetAudits",
                 column: "PetId");
 
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
             migrationBuilder.CreateIndex(
                 name: "IX_DonorPets_DonorId",
                 table: "DonorPets",
                 column: "DonorId");
 
-========
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
             migrationBuilder.CreateIndex(
                 name: "IX_DonorPets_PetId_DonorId",
                 table: "DonorPets",
@@ -553,7 +467,6 @@ namespace AdoptPet.API.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
                 name: "IX_Owners_LocationId",
                 table: "Owners",
                 column: "LocationId");
@@ -584,8 +497,6 @@ namespace AdoptPet.API.Migrations
                 column: "VolunteerId");
 
             migrationBuilder.CreateIndex(
-========
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
                 name: "IX_PetBreeds_BreedId_PetId",
                 table: "PetBreeds",
                 columns: new[] { "BreedId", "PetId" },
@@ -667,7 +578,6 @@ namespace AdoptPet.API.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
                 name: "IX_VolunteerAudits_UserChangeId",
                 table: "VolunteerAudits",
                 column: "UserChangeId");
@@ -683,8 +593,6 @@ namespace AdoptPet.API.Migrations
                 column: "VolunteerId");
 
             migrationBuilder.CreateIndex(
-========
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
                 name: "IX_VolunteerRoleXVolunteers_RoleId",
                 table: "VolunteerRoleXVolunteers",
                 column: "RoleId");
@@ -698,14 +606,11 @@ namespace AdoptPet.API.Migrations
                 name: "IX_Volunteers_LocationId",
                 table: "Volunteers",
                 column: "LocationId");
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
 
             migrationBuilder.CreateIndex(
                 name: "IX_Volunteers_UserId",
                 table: "Volunteers",
                 column: "UserId");
-========
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
         }
 
         /// <inheritdoc />
@@ -718,12 +623,6 @@ namespace AdoptPet.API.Migrations
                 name: "DonorPets");
 
             migrationBuilder.DropTable(
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
-========
-                name: "Owners");
-
-            migrationBuilder.DropTable(
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
                 name: "PetAudits");
 
             migrationBuilder.DropTable(
@@ -755,7 +654,6 @@ namespace AdoptPet.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "VolunteerRoleXVolunteers");
-<<<<<<<< HEAD:AdoptPet_Server/AdoptPet.API/Migrations/20240523031634_InitMigration.cs
 
             migrationBuilder.DropTable(
                 name: "Donors");
@@ -777,29 +675,15 @@ namespace AdoptPet.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Owners");
-========
->>>>>>>> fb84803 (update: search feauture):AdoptPet_Server/AdoptPet.API/Migrations/20240502134217_InitialMigration.cs
-
-            migrationBuilder.DropTable(
-                name: "Donors");
-
-            migrationBuilder.DropTable(
-                name: "Pets");
-
-            migrationBuilder.DropTable(
-                name: "Locations");
-
-            migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "VolunteerRoles");
 
             migrationBuilder.DropTable(
                 name: "Volunteers");
 
             migrationBuilder.DropTable(
                 name: "Locations");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }
