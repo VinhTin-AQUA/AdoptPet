@@ -11,6 +11,5 @@ namespace AdoptPet.Application.DTOs.Volunteer
         public LocationDto Location { get; set; } = null!;
         public AdoptPet.Domain.Entities.Location Location { get; set; } = null!;
         public int RoleId { get; set; }
-        public LocationDto Location { get; set; } = null!;
     }
 }
