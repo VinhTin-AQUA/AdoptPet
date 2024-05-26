@@ -58,10 +58,8 @@ namespace AdoptPet.Infrastructure.Services
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                await file.CopyToAsync(fileStream);
+                await imageFile.CopyToAsync(fileStream);
             }
-            return fileName;
-        }
 
             return uniqueFileName;
         }
