@@ -19,8 +19,9 @@ namespace AdoptPet.Infrastructure.Repositories
         public async Task<int> AddAsync(Pet model)
         {
             await _context.Pets.AddAsync(model);
-            var r = await _context.SaveChangesAsync();
-            return r;
+            await _context.SaveChangesAsync();
+            await _context.Entry(model).ReloadAsync();
+            return model.Id;
         }
 
         public Task DeletePermanentlyAsync(Pet model)

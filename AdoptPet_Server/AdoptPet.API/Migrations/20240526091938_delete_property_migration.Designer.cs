@@ -4,6 +4,7 @@ using AdoptPet.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdoptPet.API.Migrations
 {
     [DbContext(typeof(AdoptPetDbContext))]
-    partial class AdoptPetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240526091938_delete_property_migration")]
+    partial class delete_property_migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -799,6 +802,7 @@ namespace AdoptPet.API.Migrations
 
                     b.Navigation("Location");
                 });
+
             modelBuilder.Entity("AdoptPet.Domain.Entities.DonorPet", b =>
                 {
                     b.HasOne("AdoptPet.Domain.Entities.Donor", "Donor")
@@ -995,8 +999,6 @@ namespace AdoptPet.API.Migrations
                     b.Navigation("UserChange");
 
                     b.Navigation("Volunteer");
-                    b.Navigation("Location");
-
                 });
 
             modelBuilder.Entity("AdoptPet.Domain.Entities.VolunteerRoleXVolunteer", b =>

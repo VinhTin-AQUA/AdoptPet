@@ -24,15 +24,15 @@ namespace AdoptPet.Domain.Entities
         public bool IsDeleted { get; set; }
 
         // khoa ngoai
-        public int VolunteerId { get; set; }
-        public Volunteer? Volunteer { get; set; }
+        public int? VolunteerId { get; set; }
         public int LocationId { get; set; }
         public Location? Location {  get; set; }
-        public int OwnerId { get; set; }
-        public Owner? Owner { get; set; }
+        public int? OwnerId { get; set; }
 
+        public int petBreedId;
         public List<PetBreed> PetBreeds { get; set; } = [];
-        public List<PetColour> PetColours { get; set;} = [];
+        public List<PetColour> PetBs { get; set; } = [];
+        public int petColourId;
         public List<PetImage> PetImages { get; set; } = [];
     }
 }

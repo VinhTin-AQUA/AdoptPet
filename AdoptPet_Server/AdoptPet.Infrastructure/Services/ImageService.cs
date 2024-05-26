@@ -24,33 +24,37 @@ namespace AdoptPet.Infrastructure.Services
             - Breeds
             - Pets
          */
-        public async Task<string> SaveImage(IFormFile file, string folderName, string id)
+        // validate image extension
+        public bool ValidateImageExtension(string fileName)
         {
-            // đường dẫn đến thư mục ~/wwwroot/images
-            var rootImageFolder = System.IO.Path.Combine(webHost.WebRootPath, "Images");
-            string folderOfImage = System.IO.Path.Combine(rootImageFolder, folderName);
-            
-            if(Directory.Exists(folderOfImage) == false)
+            string[] validExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+            string extension = System.IO.Path.GetExtension(fileName);
+            if (string.IsNullOrEmpty(extension) || Array.IndexOf(validExtensions, extension.ToLower()) == -1)
             {
-                Directory.CreateDirectory(folderOfImage);
+                return false;
+            }
+            return true;
+        }
+        // Validate Extension for many images: return false if any image is invalid and show which image file name is invalid
+        public bool ValidateImagesExtension(List<IFormFile> images, out string invalidImageFileName)
+        {
+            invalidImageFileName = "";
+            foreach (var image in images)
+            {
+                if (!ValidateImageExtension(image.FileName))
+                {
+                    invalidImageFileName += image.FileName ;
+                    return false;
+                }
             }
 
-            // xóa ảnh cũ
-            //DirectoryInfo di = new DirectoryInfo(folderOfImage);
-            //foreach (FileInfo oldImg in di.GetFiles())
-            //{
-            //    oldImg.Delete();
-            //}
-
-            string fileName = file.FileName;
-            string fileExtension = System.IO.Path.GetExtension(fileName);
-            string nameExrypted = EncyptFileName(fileName, id) + "." + fileExtension;
-            string filePath = System.IO.Path.Combine(folderOfImage, nameExrypted);
-            
-            //if (System.IO.File.Exists(filePath))
-            //{
-            //    System.IO.File.Delete(filePath);
-            //}
+            return true;
+        }
+        public async Task<string> SaveImageAsync(String rootImagePath, String entityName, IFormFile imageFile)
+        {
+            string uploadsFolder = Path.Combine(rootImagePath, entityName);
+            string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
@@ -59,14 +63,28 @@ namespace AdoptPet.Infrastructure.Services
             return fileName;
         }
 
-        private string EncyptFileName(string fileName, string id)
+            return uniqueFileName;
+        }
+        // Save many images
+        public async Task<List<string>> SaveImagesAsync(String rootImagePath, String entityName, List<IFormFile> images)
         {
-            string inputValue = fileName + id;
-            // băm
-            var inputBytes = Encoding.UTF8.GetBytes(inputValue);
-            var inputHash = SHA256.HashData(inputBytes);
-            string hexString = Convert.ToHexString(inputHash);
-            return hexString;
+            List<string> imageNames = new List<string>();
+            foreach (var image in images)
+            {
+                imageNames.Add(await SaveImageAsync(rootImagePath, entityName, image));
+            }
+            return imageNames;
+        }
+        public void DeleteOldImage(String rootImagePath, String entityName, string oldFileName)
+        {
+            if (!string.IsNullOrEmpty(oldFileName))
+            {
+                var imagePath = Path.Combine(rootImagePath, entityName, oldFileName);
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class LocationController : ControllerBase
     {
-        private readonly IGenericService <Location> locationService;
+        private readonly IGenericService<Location> locationService;
         public LocationController (IGenericService<Location> locationService)
         {
             this.locationService = locationService;

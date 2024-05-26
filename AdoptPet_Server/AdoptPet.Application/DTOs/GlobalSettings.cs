@@ -9,5 +9,6 @@ namespace AdoptPet.Application.DTOs
     public class GlobalSettings
     {
         public string GlobalImagePath { get; set; }
+        public string DefaultImage { get; set; }
     }
 }

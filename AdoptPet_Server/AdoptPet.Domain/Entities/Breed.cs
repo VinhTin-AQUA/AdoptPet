@@ -9,5 +9,6 @@ namespace AdoptPet.Domain.Entities
         public string Description { get; set; } = string.Empty;
         public string ThumbPath { get; set; } = string.Empty;
         public bool IsDeleted { get; set; }
+        public List<Pet> Pets { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using AdoptPet.Application.DTOs.Location;
 using AdoptPet.Application.DTOs.Pet;
 using AdoptPet.Application.Interfaces;
 using AdoptPet.Application.Interfaces.IRepositories;
+using AdoptPet.Application.Interfaces.IService;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,9 +16,9 @@ namespace AdoptPet.API.Controllers
     [Route("api/[controller]")]
     public class PetsController : ControllerBase
     {
-        private readonly IGenericService<Pet> _petService;
+        private readonly IPetService _petService;
 
-        public PetsController(IGenericService<Pet> petService)
+        public PetsController(IPetService petService)
         {
             _petService = petService;
         }
@@ -86,12 +87,12 @@ namespace AdoptPet.API.Controllers
 
         [HttpPost]
         [Route("add-pet")]
-        public async Task<IActionResult> Add([FromBody] Pet pet)
+        public async Task<IActionResult> Add([FromForm] Pet pet, List<IFormFile> Images)
         {
             try
             {
-                var r = await _petService.AddAsync(pet);
-                return Ok();
+                var generatedId = await _petService.AddAsync(pet);
+                return Ok(new Success<int> { Status = true, Title = "", Messages = [], Data = (int)generatedId });
             }
             catch (ArgumentException ex)
             {
@@ -105,7 +106,7 @@ namespace AdoptPet.API.Controllers
 
         [HttpPut]
         [Route("update-pet/{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Pet pet)
+        public async Task<IActionResult> Update(int id, [FromForm] Pet pet, List<IFormFile> images)
         {
 
 

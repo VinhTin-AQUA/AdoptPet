@@ -49,7 +49,7 @@ namespace AdoptPet.Infrastructure
             services.AddTransient< IGenericService <Owner>, OwnerService >();
             services.AddTransient< IGenericService <Location>, LocationService >();
             services.AddTransient< IGenericService <Volunteer>, VolunteerService >();
-            services.AddTransient< IGenericService <Pet>, PetService >();
+            services.AddTransient< IPetService, PetService >();
             services.AddTransient<IGenericServiceWithImage<Breed>, BreedService>();
 
             // repositories
@@ -63,6 +63,7 @@ namespace AdoptPet.Infrastructure
             services.AddTransient<IGenericRepository<DonorPetAudit>, DonorPetAuditRepository>();
             services.AddTransient<IGenericRepository<Location>, LocationRepository>();
             services.AddTransient<IGenericRepository<Owner>, OwnerRepository>();
+            services.AddTransient<IPetImageRepository, PetImageRepository>();
 
             services.AddTransient<IPetRepository, PetRepository>();
             services.AddTransient<IVolunteerRoleRepository, VolunteerRoleRepository>();

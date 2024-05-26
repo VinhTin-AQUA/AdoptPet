@@ -13,11 +13,13 @@ namespace AdoptPet.Infrastructure.Services
     {
         private readonly IGenericRepository<Breed> genericRepository;
         private readonly GlobalSettings _globalSettings;
+        private readonly IImageService _imageService;
 
-        public BreedService(IOptions<GlobalSettings> globalSettings,IGenericRepository<Breed> genericRepository)
+        public BreedService(IOptions<GlobalSettings> globalSettings,IGenericRepository<Breed> genericRepository, IImageService imageService)
         {
             this.genericRepository = genericRepository;
             this._globalSettings = globalSettings.Value;
+            _imageService = imageService;
         }
 
         public async Task<int?> AddAsync(Breed model)
@@ -65,7 +67,7 @@ namespace AdoptPet.Infrastructure.Services
             else
             {
                 var globalPath = _globalSettings.GlobalImagePath;
-                model.ThumbPath = await IGenericServiceWithImage<Breed>.SaveImageAsync(globalPath,"Breeds", formFile);
+                model.ThumbPath = await _imageService.SaveImageAsync(globalPath,"Breeds", formFile);
             }
             // tạo Breed
             Breed newBreed = new Breed()
@@ -200,8 +202,8 @@ namespace AdoptPet.Infrastructure.Services
             {
                 
                 var globalPath = _globalSettings.GlobalImagePath;
-                IGenericServiceWithImage<Breed>.DeleteOldImage(globalPath, "Breeds", oldBreed.ThumbPath);
-                oldBreed.ThumbPath = await IGenericServiceWithImage<Breed>.SaveImageAsync(globalPath, "Breeds", formFile);
+                _imageService.DeleteOldImage(globalPath, "Breeds", oldBreed.ThumbPath);
+                oldBreed.ThumbPath = await _imageService.SaveImageAsync(globalPath, "Breeds", formFile);
             }
             /*
              oldBreed.BreedName = "Black"
