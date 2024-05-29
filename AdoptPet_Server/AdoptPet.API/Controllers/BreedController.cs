@@ -50,7 +50,7 @@ namespace AdoptPet.API.Controllers
             try
             {
                 var breeds = await breedService.GetAllAsync(pageNumber, pageSize);
-                return Ok(new Success<List<Breed>> { Status = true, Title = "", Messages = [], Data = breeds.Items.ToList() });
+                return Ok(new Success<List<Breed>> { Status = true, Title = "", Messages = [], Data = breeds.Items!.ToList() });
             }
             catch (InvalidDataException ex)
             {

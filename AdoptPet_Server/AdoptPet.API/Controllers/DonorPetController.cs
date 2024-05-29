@@ -45,7 +45,7 @@ namespace AdoptPet.API.Controllers
             try
             {
                 var donorPets = await donorPetService.GetAllAsync(pageNumber, pageSize);
-                return Ok(new Success<List<DonorPet>> { Status = true, Messages = [], Data = donorPets.Items.ToList() });
+                return Ok(new Success<List<DonorPet>> { Status = true, Messages = [], Data = donorPets.Items!.ToList() });
             }
             catch (InvalidDataException ex)
             {

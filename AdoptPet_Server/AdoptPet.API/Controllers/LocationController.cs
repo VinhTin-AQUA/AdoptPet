@@ -45,7 +45,7 @@ namespace AdoptPet.API.Controllers
             try
             {
                 var locations = await locationService.GetAllAsync(pageNumber, pageSize);
-                return Ok(new Success<List<Location>> { Status = true, Messages = [], Data = locations.Items.ToList() });
+                return Ok(new Success<List<Location>> { Status = true, Messages = [], Data = locations.Items!.ToList() });
             }
             catch (InvalidDataException ex)
             {
