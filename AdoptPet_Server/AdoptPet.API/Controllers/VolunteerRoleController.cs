@@ -26,7 +26,7 @@ namespace AdoptPet.API.Controllers
             try
             {
                 var roles = await _volunteerRoleService.GetAllAsync(pageNumber, pageSize);
-                return Ok(new Success<List<VolunteerRole>> { Status = true, Title = "", Messages = [], Data = roles.Items.ToList() });
+                return Ok(new Success<List<VolunteerRole>> { Status = true, Title = "", Messages = [], Data = roles.Items!.ToList() });
             }
             catch (InvalidDataException ex)
             {

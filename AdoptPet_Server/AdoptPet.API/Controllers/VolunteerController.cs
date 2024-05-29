@@ -2,8 +2,6 @@
 using AdoptPet.Application.DTOs.Volunteer;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Domain.Entities;
-using AdoptPet.Infrastructure.Data;
-using AdoptPet.Infrastructure.Repositories;
 using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlTypes;
@@ -24,7 +22,6 @@ namespace AdoptPet.API.Controllers
         {
             this.volunteerService = volunteerService;
             this.locationService = locationService;
-            this.volunteerRoleXVolunteerRepository = volunteerRoleXVolunteerRepository;
             this.accountRepository = accountRepository;
         }
 
@@ -35,7 +32,7 @@ namespace AdoptPet.API.Controllers
             try
             {
                 var r = await volunteerService.GetAllAsync(pageNumber, pageSize);
-                return Ok(new Success<List<Volunteer>> { Status = true, Data = r.Items.ToList() });
+                return Ok(new Success<List<Volunteer>> { Status = true, Data = r.Items!.ToList() });
             }
             catch (InvalidDataException ex)
             {
