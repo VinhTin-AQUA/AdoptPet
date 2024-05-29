@@ -7,6 +7,7 @@ namespace AdoptPet.Domain.Entities
         public int Id { get; set; }
         public DateTime LastDonation { get; set; }
         public decimal TotalDonation { get; set; }
+        public DateTime CreatedAt { get; set; }
         public bool IsDeleted { get; set; }
 
         // khoa ngoai

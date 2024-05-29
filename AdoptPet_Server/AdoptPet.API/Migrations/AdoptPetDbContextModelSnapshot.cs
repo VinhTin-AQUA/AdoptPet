@@ -17,7 +17,7 @@ namespace AdoptPet.API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -187,6 +187,9 @@ namespace AdoptPet.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DonorId")
                         .HasColumnType("int");
 
@@ -219,6 +222,9 @@ namespace AdoptPet.API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DonorPetId")
                         .HasColumnType("int");
@@ -857,11 +863,13 @@ namespace AdoptPet.API.Migrations
 
             modelBuilder.Entity("AdoptPet.Domain.Entities.PetImage", b =>
                 {
-                    b.HasOne("AdoptPet.Domain.Entities.Pet", null)
+                    b.HasOne("AdoptPet.Domain.Entities.Pet", "Pet")
                         .WithMany("PetImages")
                         .HasForeignKey("PetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Pet");
                 });
 
             modelBuilder.Entity("AdoptPet.Domain.Entities.Volunteer", b =>
