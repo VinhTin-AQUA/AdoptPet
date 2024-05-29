@@ -12,9 +12,6 @@ namespace AdoptPet.Domain.Entities
         public bool IsDeleted { get; set; }
 
         // khoa ngoai
-        public int DonorId { get; set; }
-        public Donor? Donor { get; set; }
-        public int PetId { get; set; }
-        public Pet? Pet { get; set; }
+        public DonorPet DonorPet { get; set; }
     }
 }

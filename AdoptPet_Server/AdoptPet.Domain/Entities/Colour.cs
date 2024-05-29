@@ -7,5 +7,6 @@ namespace AdoptPet.Domain.Entities
         public int Id { get; set; }
         public string ColourName { get; set; } = string.Empty;
         public bool IsDeleted { get; set; }
+        public List<Pet> Pets { get; set; }
     }
 }

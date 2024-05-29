@@ -9,6 +9,6 @@ namespace AdoptPet.Domain.Entities
         public string Description { get; set; } = string.Empty;
         public bool IsDeleted { get; set; }
 
-        public ICollection<VolunteerRoleXVolunteer> VolunteerRoleXVolunteer { get; set; } = [];
+        public List<Volunteer> VolunteerRoleXVolunteer { get; set; } = [];
     }
 }

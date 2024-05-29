@@ -16,6 +16,7 @@ namespace AdoptPet.Domain.Entities
         public string UserId { get; set; } = string.Empty;
         public AppUser? User { get; set; }
 
-        public ICollection<VolunteerRoleXVolunteer> VolunteerRoleXVolunteer { get; set; } = [];
+        public List<VolunteerRole> VolunteerRoleXVolunteer { get; set; } = [];
+        public List<VolunteerAudit> volunteerAudits { get; set; } = [];
     }
 }

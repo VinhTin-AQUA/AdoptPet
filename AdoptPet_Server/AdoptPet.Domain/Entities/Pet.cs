@@ -28,11 +28,8 @@ namespace AdoptPet.Domain.Entities
         public int LocationId { get; set; }
         public Location? Location {  get; set; }
         public int? OwnerId { get; set; }
-
-        public int petBreedId;
-        public List<PetBreed> PetBreeds { get; set; } = [];
-        public List<PetColour> PetBs { get; set; } = [];
-        public int petColourId;
+        public Breed breed { get; set; }
+        public Colour colour { get; set; }
         public List<PetImage> PetImages { get; set; } = [];
     }
 }
