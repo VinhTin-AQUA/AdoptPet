@@ -10,8 +10,8 @@ namespace AdoptPet.Application.DTOs
     {
 
         public string? Name { get; set; }
-        public int[]? BreedIds { get; set; } //
-        public int[]? ColourIds { get; set; }
+        public String[]? BreedNames { get; set; } //
+        public String[]? ColourNames { get; set; }
         public byte? Gender { get; set; }
         public bool? Desexed { get; set; }
         public string? AgeRange { get; set; }
