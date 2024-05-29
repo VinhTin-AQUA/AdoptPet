@@ -47,11 +47,6 @@ namespace AdoptPet.Infrastructure.Repositories
                             PetEntryDate = u.PetEntryDate,
                             Status = u.Status,
                             IsDeleted = u.IsDeleted,
-                            PetBreeds = u.PetBreeds.Select(uc => new PetBreed
-                            {
-                                BreedId = uc.BreedId,
-                                Breed = uc.Breed
-                            }).ToList(),
                             PetImages = u.PetImages.Select(pi => new PetImage
                             {
                                 ImgPath = pi.ImgPath,
@@ -88,18 +83,6 @@ namespace AdoptPet.Infrastructure.Repositories
                     PetEntryDate = u.PetEntryDate,
                     Status = u.Status,
                     IsDeleted = u.IsDeleted,
-                    PetBreeds = u.PetBreeds.Select(uc => new PetBreed
-                    {
-                        BreedId = uc.BreedId,
-                        Breed = uc.Breed
-                    }).ToList(),
-                    PetColours = u.PetColours.Select(pc => new PetColour
-                    {
-                        Id = pc.Id,
-                        ColourId = pc.ColourId,
-                        Colour = pc.Colour,
-                        IsDeleted = pc.IsDeleted,
-                    }).ToList(),
                     PetImages = u.PetImages.Select(pi => new PetImage
                     {
                         ImgPath = pi.ImgPath,
@@ -121,18 +104,18 @@ namespace AdoptPet.Infrastructure.Repositories
             }
 
             // Filter by Breed (if provided)
-            if (searchCriteria.BreedIds != null && searchCriteria.BreedIds.Length > 0)
+            if (searchCriteria.BreedNames != null && searchCriteria.BreedNames.Length > 0)
             {
-                query = query.Join(_context.PetBreeds, p => p.Id, pb => pb.PetId, (p, pb) => new { Pet = p, PetBreed = pb })
-                             .Where(x => searchCriteria.BreedIds.Contains(x.PetBreed.BreedId))
+                query = query.Join(_context.Breeds, p => p.Id, b => b.Id, (p, pb) => new { Pet = p, Breed = pb })
+                             .Where(x => searchCriteria.BreedNames.Contains(x.Breed.BreedName))
                              .Select(x => x.Pet);
             }
 
             // Filter by Color (if provided)
-            if (searchCriteria.ColourIds != null && searchCriteria.ColourIds.Length > 0)
+            if (searchCriteria.ColourNames != null && searchCriteria.ColourNames.Length > 0)
             {
-                query = query.Join(_context.PetColours, p => p.Id, pc => pc.PetId, (p, pc) => new { Pet = p, PetColour = pc })
-                             .Where(x => searchCriteria.ColourIds.Contains(x.PetColour.ColourId))
+                query = query.Join(_context.Colours, p => p.Id, c => c.Id, (p, c) => new { Pet = p, Colour = c })
+                             .Where(x => searchCriteria.ColourNames.Contains(x.Colour.ColourName))
                              .Select(x => x.Pet);
             }
 
@@ -169,10 +152,8 @@ namespace AdoptPet.Infrastructure.Repositories
         public async Task<PaginatedResult<Pet>> SearchPetsByBreedAsync(int breedId, int pageNumber, int pageSize)
         {
             var listPets = from pet in _context.Pets
-                           join petBreed in _context.PetBreeds
-                           on pet.Id equals petBreed.PetId
                            join Breed in _context.Breeds
-                           on petBreed.BreedId equals Breed.Id
+                           on pet.breed.Id equals Breed.Id
                            where Breed.Id == breedId
                            && pet.IsDeleted == false // Assuming you have a flag for soft deletes
                            select pet;
@@ -190,7 +171,7 @@ namespace AdoptPet.Infrastructure.Repositories
 
         public Task<int> SoftDelete(Pet pet)
         {
-            pet.IsDeleted = true;
+            pet.IsDeleted = !pet.IsDeleted;
             _context.Pets.Update(pet);
             return _context.SaveChangesAsync();
         }
