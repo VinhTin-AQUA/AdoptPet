@@ -186,7 +186,6 @@ namespace AdoptPet.Infrastructure.Repositories
             _context.Pets.Update(model);
             return _context.SaveChangesAsync();
         }
-
        
     }
 }

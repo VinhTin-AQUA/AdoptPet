@@ -21,12 +21,12 @@ namespace AdoptPet.Infrastructure.Services
             {
                 throw new ArgumentNullException($"Adding Model is null");
             }
-            int affectedRows =await genericRepository.AddAsync(model);
-            if (affectedRows == 0)
+            int generatedVolunteerId =await genericRepository.AddAsync(model);
+            if(generatedVolunteerId == 0)
             {
                 throw new SqlNullValueException($"Adding volunteer is failed");
             }
-            return affectedRows;
+            return generatedVolunteerId;
         }
 
         public async Task DeletePermanentlyAsync(Volunteer model)

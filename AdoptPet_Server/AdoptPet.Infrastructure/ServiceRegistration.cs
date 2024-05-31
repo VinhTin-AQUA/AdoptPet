@@ -1,6 +1,7 @@
 ﻿using AdoptPet.Application.Interfaces;
 using AdoptPet.Application.Interfaces.IRepositories;
 using AdoptPet.Application.Interfaces.IService;
+using AdoptPet.Application.Profiles;
 using AdoptPet.Domain.Entities;
 using AdoptPet.Domain.Settings;
 using AdoptPet.Infrastructure.Data;
@@ -22,7 +23,9 @@ namespace AdoptPet.Infrastructure
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString"), b => b.MigrationsAssembly("AdoptPet.API"));
             }, ServiceLifetime.Transient);
-                
+
+            //AutoMapper
+            services.AddAutoMapper(typeof(PetImageMappingProfile).Assembly);
             // identity
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AdoptPetDbContext>() // provide our context

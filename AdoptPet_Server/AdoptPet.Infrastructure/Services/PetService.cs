@@ -46,25 +46,6 @@ namespace AdoptPet.Infrastructure.Services
             return await _repository.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
         }
 
-// <<<<<<< HEAD
-//         public async Task<Pet?> GetByIdAsync(int id)
-// =======
-//         public async Task<PaginatedResult<Pet>> SearchPetsByCriteria(SearchCriteria searchCriteria, int pageNumber, int pageSize)
-//         {
-//             if(searchCriteria == null)
-//             {
-//                 return await _repository.GetAllAsync(pageNumber, pageSize);
-//             }
-//             return await _repository.SearchPetByCriteria(searchCriteria, pageNumber, pageSize);
-//         }
-
-//         public async Task<Pet> GetByIdAsync(int id)
-// >>>>>>> 5301649906a4cfdf71e82b861361376d70da3e02
-//         {
-//             var pet = await _repository.GetByIdAsync(id);
-
-//             return pet;
-//         }
 
         public async Task<PaginatedResult<Pet>> SearchPetsByCriteria(SearchCriteria searchCriteria, int pageNumber, int pageSize)
         {
@@ -169,7 +150,7 @@ namespace AdoptPet.Infrastructure.Services
         public async Task<int?> AddAsync(Pet model, List<IFormFile> formFile)
         {
             String invalidFileNames;
-            if (formFile == null && _imageService.ValidateImagesExtension(formFile, out invalidFileNames))
+            if (formFile == null && _imageService.ValidateImagesExtension(formFile!, out invalidFileNames))
             {
                 // add ", " between file names
                 invalidFileNames = String.Join(", ", invalidFileNames);
@@ -180,14 +161,23 @@ namespace AdoptPet.Infrastructure.Services
                 throw new ArgumentException("Pet is null");
             }
 
-            int generatedId = await _repository.AddAsync(model);
-            if (generatedId == 0)
+            // add location
+            if(model.Location != null)
+            {
+                var generatedLocationId = await _locationRepository.AddAsync(model.Location);
+                model.LocationId = generatedLocationId;
+            }
+
+            // add pet
+            int generatedPetId = await _repository.AddAsync(model);
+            if (generatedPetId == 0)
             {
                 throw new SqlNullValueException("Adding pet is failed");
             }
+            // add pet image
             if (formFile == null|| !formFile.Any())
             {
-                model.PetImages.Add(new PetImage { PetId = generatedId ,ImgPath = _globalSettings.DefaultImage, IsDeleted = false  });
+                model.PetImages.Add(new PetImage { PetId = generatedPetId ,ImgPath = _globalSettings.DefaultImage, IsDeleted = false  });
             }
             else
             {
@@ -196,12 +186,12 @@ namespace AdoptPet.Infrastructure.Services
                 // save image path to database
                 foreach (var imagePath in imagePaths)
                 {
-                    model.PetImages.Add(new PetImage { PetId = generatedId, ImgPath = imagePath, IsDeleted = false });
+                    model.PetImages.Add(new PetImage { PetId = generatedPetId, ImgPath = imagePath, IsDeleted = false });
                 }
             }
             int affectedRows = await _petImageRepository.AddManyImagesAsync(model.PetImages);
 
-            return generatedId;
+            return generatedPetId;
         }
 
         public async Task<int?> UpdateAsync(int id, Pet pet, List<IFormFile> formFile)
@@ -248,6 +238,14 @@ namespace AdoptPet.Infrastructure.Services
                     petToUpdate.PetImages.Add(new PetImage { PetId = id, ImgPath = imagePath, IsDeleted = false });
                 }
                 affectedRows = await _petImageRepository.AddManyImagesAsync(petToUpdate.PetImages);
+            }
+            if(pet.Location != null)
+            {
+                var affectedRowsLocation = await _locationRepository.UpdateAsync(pet.Location);
+                if(affectedRowsLocation == 0)
+                {
+                    throw new InvalidOperationException("Can't update location of pet");
+                }
             }
             return affectedRows;
         }
