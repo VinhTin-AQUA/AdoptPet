@@ -42,12 +42,12 @@
 						>Ủng hộ</a
 					>
 
-					<a
+					<!-- <a
 						class="menu-item"
 						routerLink="/adopt-pet/news"
 						routerLinkActive="actived" [routerLinkActiveOptions]="{exact: true}"
 						>Tin tức</a
-					>
+					> -->
 
 					<a
 						class="menu-item"
@@ -74,7 +74,7 @@
 					<!-- profile -->
 					<a routerLink="/profile" class="pt-5 flex justify-center items-center mb-6 text-md font-semibold text-lime-500">
 						<img class="w-7 h-7 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="/assets/logo.png" alt="Bordered avatar">
-						<span class="ml-2"> Hồ Vĩnh Tín</span>
+						<span class="ml-2"> {{userStore.firstName()}} {{userStore.lastName()}}</span>
 					</a>
 
 				</div>

@@ -14,6 +14,8 @@ export class DonorPetAuditComponent {
 	donorPetAudits: DonorPetAudit[] = [];
 	isShowDelete: boolean = false;
 	donorPetAuditDelete: any;
+	pageNumber: number = 1;
+	pageSize: number = 10;
 
 	constructor(private donorPetAuditServiceService: DonorPetAuditServiceService) {}
 
@@ -41,7 +43,7 @@ export class DonorPetAuditComponent {
 	onDeleteRole() {
 		if (this.donorPetAuditDelete === null) {
 			this.donorPetAuditDelete = null;
-				this.isShowDelete = false;
+			this.isShowDelete = false;
 			return;
 		}
 
@@ -59,5 +61,16 @@ export class DonorPetAuditComponent {
 				this.isShowDelete = false;
 			},
 		});
+	}
+
+	previousPage() {
+		this.pageNumber--;
+		if (this.pageNumber <= 0) {
+			this.pageNumber = 1;
+		}
+	}
+
+	nextPage() {
+		this.pageNumber++;
 	}
 }

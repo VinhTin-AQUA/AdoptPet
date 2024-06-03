@@ -180,39 +180,45 @@
     
             <div class="animal-list">
     
-                <a class="animal-item">
-                    <img src="https://www.hanoipetadoption.com/admin/user-content/Animal/c1dffd23-4123-4146-8cb4-45960705cafd.jpeg" alt="">
-    
-                    <h1 class="name-item">Akira</h1>
-                    <p>Giới tính: <span>Đực</span></p>
-                    <p>Tuổi: <span>trẻ</span></p>
-                    <p>Tiêm phòng: <span>chưa rõ</span></p>
-                </a>
-    
-                <a class="animal-item">
-                    <img src="https://www.hanoipetadoption.com/admin/user-content/Animal/811c9cb6-0866-4640-a83c-43b17aedec39.jpg" alt="">
-                    <h1 class="name-item">Aki</h1>
-                    <p>Giới tính: <span>Cái</span></p>
-                    <p>Tuổi: <span>trẻ</span></p>
-                    <p>Tiêm phòng: <span>Có</span></p>
-                </a>
-    
-                <a class="animal-item">
-                    <img src="https://www.hanoipetadoption.com/admin/user-content/Animal/204adf79-e01f-4fd2-930b-761a3721d019.jpeg" alt="">
-                    <h1 class="name-item">Poppy</h1>
-                    <p>Giới tính: <span>Đực</span></p>
-                    <p>Tuổi: <span>Trưởng thành</span></p>
-                    <p>Tiêm phòng: <span>Chưa rõ</span></p>
-                </a>
-    
-                <a class="animal-item">
-                    <img src="https://www.hanoipetadoption.com/admin/user-content/Animal/f1250d40-13d0-4ef8-90a4-703cf4d1a670.jpeg" alt="">
-                    <h1 class="name-item">Sữa</h1>
-                    <p>Giới tính: <span>Cái</span></p>
-                    <p>Tuổi: <span>trẻ</span></p>
-                    <p>Tiêm phòng: <span>Có</span></p>
-                </a>
-    
+                @for (pet of pets; track $index) {
+					<a class="animal-item">
+						@if(pet.petImages.length > 0) {
+						<img
+							src="{{ baseImg }}/{{ pet.petImages[0].imgPath }}"
+							alt="Image"
+							class="absolute inset-0 w-full h-full object-cover"
+						/>
+						} @else {
+						<img
+							src="https://www.hanoipetadoption.com/admin/user-content/Animal/c1dffd23-4123-4146-8cb4-45960705cafd.jpeg"
+							alt=""
+						/>
+						}
+		
+						<h1 class="name-item">{{ pet.petName }}</h1>
+						<p>
+							Giới tính: @if(pet.petGender === 0) {
+							<span>Cái</span>
+							} @else if(pet.petGender === 1) {
+							<span>Đực</span>
+							} @else {
+							<span>Chưa rõ</span>
+							}
+						</p>
+						<p>
+							Tuổi: <span>{{ pet.petAge }}</span>
+						</p>
+						<p>
+							Tiêm phòng: @if(pet.petVaccined === 0) {
+							<span>Chưa tiêm</span>
+							} @else if(pet.petVaccined === 1) {
+							<span>Đã tiêm</span>
+							} @else {
+							<span>Chưa rõ</span>
+							}
+						</p>
+					</a>
+					}
             </div>
     
             <a class="btn-primary" routerLink="/adopt-pet/adopt">
