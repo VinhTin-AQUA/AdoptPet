@@ -50,20 +50,20 @@ namespace AdoptPet.API.Controllers
         //    var results = await _petService.SearchPetsByBreedAsync(breedId, pageNumber, pageSize);
         //    return Ok(results);
         //}
-        //[HttpGet]
-        //[Route("search-by-criteria")]
-        //public async Task<IActionResult> SearchByCriteria([FromQuery] SearchCriteria searchCriteria, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
-        //{
-        //    try
-        //    {
-        //        var result = await _petService.SearchPetsByCriteria(searchCriteria, pageNumber, pageSize);
-        //        return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = result.Items.ToList() });
-        //    }
-        //    catch (InvalidDataException ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+        [HttpGet]
+        [Route("search-by-criteria")]
+        public async Task<IActionResult> SearchByCriteria([FromQuery] SearchCriteria searchCriteria, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        {
+            try
+            {
+                var result = await _petService.SearchPetsByCriteria(searchCriteria, pageNumber, pageSize);
+                return Ok(new Success<List<Pet>> { Status = true, Messages = [], Data = result.Items.ToList() });
+            }
+            catch (InvalidDataException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpGet]
         [Route("get-pet-by-id/{id}")]
