@@ -46,7 +46,7 @@ namespace AdoptPet.API.Controllers
             try
             {
                 var colours = await colourService.GetAllAsync(pageNumber, pageSize);
-                return Ok();
+                return Ok(colours);
             }
             catch (InvalidDataException ex)
             {

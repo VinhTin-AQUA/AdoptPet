@@ -87,7 +87,7 @@ namespace AdoptPet.API.Controllers
 
         [HttpPost]
         [Route("add-pet")]
-        public async Task<IActionResult> Add([FromForm] Pet pet, List<IFormFile> Images)
+        public async Task<IActionResult> Add([FromForm] Pet pet, [FromForm] List<IFormFile> Images)
         {
             try
             {

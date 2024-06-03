@@ -19,4 +19,8 @@ export class PetService {
   getPet(petId: number) {
     return this.http.get(this.baseApi + '/get-pet-by-id/' + petId);
   }
+
+  addPet(pet: any) {
+    return this.http.post(this.baseApi + `/add-pet`,pet)
+  }
 }

@@ -25,4 +25,8 @@ export class LocationService {
 	getSavedLocation(pageNumber: number, pageSize: number) {
 		return this.http.get(this.baseApi + `/get-all-location?pageNumber=${pageNumber}&pageSize=${pageSize}`);
 	}
+
+	getLocations(pageNumber:number, pageSize:number) {
+		return this.http.get(this.baseApi + `/get-all-location?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+	}
 }
