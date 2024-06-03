@@ -90,7 +90,7 @@ namespace AdoptPet.Application.Services
             };
         }
 
-        public async Task<List<PetImageDTO>> GetAllPetImageByPetId(int petId)
+        public async Task<ListPetImage> GetAllPetImageByPetId(int petId)
         {
             if (petId <= 0)
             {
@@ -103,7 +103,13 @@ namespace AdoptPet.Application.Services
                 throw new InvalidOperationException($"No PetImages found for Pet with ID {petId}.");
             }
             var imageDtos = _mapper.Map<List<PetImageDTO>>(images);
-            return imageDtos;
+            
+            return new ListPetImage
+            {
+                NormalImages = (List<PetImageDTO>)imageDtos.Where(i => i.ImageType == ImageType.Normal),
+                PanoramaImages = (List<PetImageDTO>)imageDtos.Where(i => i.ImageType == ImageType.Panorama),
+                Rotated360Images = (List<PetImageDTO>)imageDtos.Where(i => i.ImageType == ImageType.Rotated360)
+            };
         }
 
         public async Task<PetImageDTO?> GetByIdAsync(int id)
