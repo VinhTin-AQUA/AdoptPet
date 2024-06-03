@@ -97,68 +97,65 @@
 			</div>
 
 			<div class="find-animal">
-				<div class="pet-form">
-					<!-- gioi tinh -->
-					<div class="form-group">
-						<label>Giới tính</label>
-						<select>
-							<option selected value="0">Tất cả</option>
-							<option value="0">Đực</option>
-							<option value="1">Cái</option>
-							<option value="2">Chưa rõ</option>
-						</select>
-					</div>
+				<form [formGroup]="petSearchForm">
+					<div class="pet-form">
+						<div class="form-group">
+							<label>Giới tính</label>
+							<select formControlName="gender">
+								<option selected value="0">Tất cả</option>
+								<option value="0">Đực</option>
+								<option value="1">Cái</option>
+								<option value="2">Chưa rõ</option>
+							</select>
+						</div>
 
-					<!-- do tuoi -->
-					<div class="form-group">
-						<label>Độ tuổi</label>
-						<input type="number" value="1" />
-					</div>
+						<!-- do tuoi -->
+						<div class="form-group">
+							<label>Độ tuổi</label>
+							<input formControlName="ageRange" type="text" value="1" />
+						</div>
 
-					<!-- triệt sản -->
-					<div class="form-group">
-						<label>Triệt sản</label>
-						<select>
-							<option selected value="0">Tất cả</option>
-							<option value="1">Có</option>
-							<option value="0">Không</option>
-						</select>
-					</div>
+						<!-- triệt sản -->
+						<div class="form-group">
+							<label>Triệt sản</label>
+							<select formControlName="desexed">
+								<option value="1">Có</option>
+								<option value="0">Không</option>
+							</select>
+						</div>
 
-					<!-- mau -->
-					<div class="form-group">
-						<label>Màu</label>
-						<select>
-							<option selected value="0">Tất cả</option>
-							@for (color of colors; track $index) {
-							<option value="{{ color.id }}">{{ color.colourName }}</option>
-							}
-						</select>
-					</div>
+						<!-- mau -->
+						<div class="form-group">
+							<label>Màu</label>
+							<select multiple formControlName="colourNames">
+								@for (color of colors; track $index) {
+								<option value="{{ color.colourName }}">{{ color.colourName }}</option>
+								}
+							</select>
+						</div>
 
-					<!-- giong -->
-					<div class="form-group">
-						<label>Giống</label>
-						<select>
-							<option selected value="0">Tất cả</option>
+						<!-- giong -->
+						<div class="form-group">
+							<label>Giống</label>
+							<select multiple formControlName="breedNames">
+								@for (breed of breeds; track $index) {
+								<option value="{{ breed.id }}">{{ breed.breedName }}</option>
+								}
+							</select>
+						</div>
 
-							@for (breed of breeds; track $index) {
-							<option value="{{ breed.id }}">{{ breed.breedName }}</option>
-							}
-						</select>
-					</div>
+						<!-- ten -->
+						<div class="form-group">
+							<label>Tên</label>
+							<input formControlName="name" type="text" />
+						</div>
 
-					<!-- ten -->
-					<div class="form-group">
-						<label>Tên</label>
-						<input type="text" />
+						<!-- tim kiem -->
+						<div class="form-group w-full">
+							<button (click)="search()" class="btn-primary">Tìm kiếm</button>
+						</div>
 					</div>
-
-					<!-- tim kiem -->
-					<div class="form-group w-full">
-						<button class="btn-primary">Tìm kiếm</button>
-					</div>
-				</div>
+				</form>
 			</div>
 
 			<div class="pet-result">
@@ -167,7 +164,7 @@
 					<a routerLink="/adopt-pet/adopt-pet-detail/{{ pet.id }}" class="pet-item">
 						<div class="relative" style="height: 0; padding-top: 100%">
 							@if(pet.petImages.length > 0) {
-								<img
+							<img
 								src="{{ baseImg }}/{{ pet.petImages[0].imgPath }}"
 								alt="Image"
 								class="absolute inset-0 w-full h-full object-cover"
@@ -207,8 +204,9 @@
 								<button
 									class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
 									(click)="previousPage()"
-									>Previous</button
 								>
+									Previous
+								</button>
 							</li>
 
 							<!-- <li>
@@ -222,8 +220,8 @@
 							<li aria-current="page">
 								<button
 									class="relative block rounded bg-success-100 px-3 py-1.5 text-sm font-medium text-success-700 transition duration-300 focus:outline-none dark:bg-green-950 dark:text-success-500"
-									
-									>{{pageNumber}}
+								>
+									{{ pageNumber }}
 									<span
 										class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]"
 										>(current)</span
@@ -242,10 +240,10 @@
 							<li>
 								<button
 									class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none active:bg-neutral-100"
-									
 									(click)="nextPage()"
-									>Next</button
 								>
+									Next
+								</button>
 							</li>
 						</ul>
 					</nav>
