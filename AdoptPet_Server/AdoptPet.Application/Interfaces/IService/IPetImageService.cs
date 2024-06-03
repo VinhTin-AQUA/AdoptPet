@@ -7,7 +7,7 @@ namespace AdoptPet.Application.Interfaces.IService
 {
     public interface IPetImageService : IGenericService<PetImageDTO>
     {
-        public Task<List<PetImageDTO>> GetAllPetImageByPetId(int petId);
+        public Task<ListPetImage> GetAllPetImageByPetId(int petId);
         public Task<int> UpdateManyImagesAsync(List<PetImageDTO> petImageDtos);
         public Task<int> AddManyImagesAsync(List<PetImageDTO> petImageDtos);
     }

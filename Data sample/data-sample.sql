@@ -83,7 +83,8 @@ go
 DBCC CHECKIDENT ('dbo.Volunteers', RESEED, 0)
 go
 
-
+use AdoptPet 
+go
 /* insert colours */
 INSERT INTO Colours(ColourName, IsDeleted) VALUES ('Apricot', 0)
 go
