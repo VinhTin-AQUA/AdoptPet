@@ -21,10 +21,18 @@
                         class="w-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:border-gray-600 dark:placeholder-gray-400"
                         placeholder="John"
                         required
+                        multiple
+                        (change)="onImageSelected($event)"
                     />
                 </div>
 
-                <div class="w-full max-h-[500px]">
+                <div class="columns-2 md:columns-3 lg:columns-4 gap-3">
+
+                    @for (image of dataImages; track $index) {
+                        <div class="break-inside-avoid mb-2">
+                            <img [src]="image" alt="">
+                        </div>
+                    }
 
                 </div>
             </div>
@@ -53,20 +61,21 @@
                             />
                         </div>
 
-                        <!-- email -->
+                        <!-- giong -->
                         <div>
                             <label
                                 for="last_name"
                                 class="block mb-2 text-sm font-medium text-gray-900"
-                                >Email chủ thú cưng <span class="text-red-600">*</span></label
+                                >Giống <span class="text-red-600">*</span></label
                             >
-                            <input
-                                type="email"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                                placeholder="name@gmail.com"
-                                required
-                                formControlName="email"
-                            />
+
+                            <select formControlName="breedId"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                                @for (breed of breeds; track $index) {
+                                    <option value="{{breed.id}}">{{breed.breedName}}</option>
+                                }
+                            </select>
+                            
                         </div>
 
                         <!-- do tuôi -->
@@ -82,94 +91,40 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="ngày cụ thể hoặc số tuổi hoặc khoản"
                                 required
-                                formControlName="age"
+                                formControlName="petAge"
                             />
+                        </div>
+
+                         <!-- colour -->
+                         <div>
+                            <label
+                                for="last_name"
+                                class="block mb-2 text-sm font-medium text-gray-900"
+                                >Màu <span class="text-red-600">*</span></label
+                            >
+
+                            <select formControlName="colourId"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
+                                @for (color of colors; track $index) {
+                                    <option value="{{color.id}}">{{color.colourName}}</option>
+                                }
+                            </select>
+                            
                         </div>
                     </div>
                 </div>
 
-                <!-- dia diem -->
+                
                 <div class="p-4 border mt-4 rounded-md">
                     <h1 class="py-2">Địa điểm</h1>
                     <div class="grid gap-6 mb-6 md:grid-cols-2">
 
-                        <!-- tinh thanh pho -->
-                        <div>
-                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Tỉnh thành phố <span class="text-red-600">*</span></label
-                            >
-                            <select (change)="onProviceChanged($event)"
-                                formControlName="province"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
-                               
-                                @for (p of provinces; track $index) {
-                                    <option data-id="{{p.province_id}}" value="{{p.province_name}}">{{p.province_name}}</option>
-                                }
-                            </select>
-                        </div>
-
-
-                        <!-- quan huyen -->
-                        <div>
-                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Quận / Huyện <span class="text-red-600">*</span></label
-                            >
-                            <!-- <input
-                                type="tel"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                                placeholder="Quận 1"
-                                required
-                                formControlName="district"
-                                (change)="onDistrictChanged()"
-                            /> -->
-
-                            <select (change)="onDistrictChanged($event)"
-                                formControlName="district"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
-                            
-                                @for (d of districts; track $index) {
-                                    <option data-id="{{d.district_id}}" value="{{d.district_name}}">{{d.district_name}}</option>
-                                }
-                            </select>
-                        </div>
-
-                        <!-- xa -->
-                        <div>
-                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Thị xã / Phường <span class="text-red-600">*</span></label
-                            >
-                            <!-- <input
-                                type="tel"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                                placeholder="Quận 1"
-                                required
-                                formControlName="ward"
-                                (change)="onWardsChanged()"
-                            /> -->
-
-                            <select (change)="onWardsChanged($event)"
-                            formControlName="ward"
+                            <select formControlName="locationId"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:">
-                        
-                            @for (w of wards; track $index) {
-                                <option value="{{w.ward_name}}">{{w.ward_name}}</option>
-                            }
-                        </select>
-                        </div>
-
-                        <!-- so nha -->
-                        <div>
-                            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900"
-                                >Số nhà</label
-                            >
-                            <input
-                                type="tel"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                                placeholder="221"
-                                required
-                                formControlName="street"
-                            />
-                        </div>
+                                @for (location of locations; track $index) {
+                                    <option value="{{location.id}}">{{location.street}} {{location.wards}} {{location.districtCity}} {{location.provinceCity}} </option>
+                                }
+                            </select>
                     </div>
                 </div>
                 
@@ -190,7 +145,7 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
                                 placeholder="2kg"
                                 required
-                                formControlName="weight"
+                                formControlName="petWeight"
                             />
                         </div>
 
@@ -286,44 +241,7 @@
                     </div>
                 </div>
                 
-                <!-- <div class="mb-6">
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
-                        >Email address</label
-                    >
-                    <input
-                        type="email"
-                        id="email"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                        placeholder="john.doe@company.com"
-                        required
-                    />
-                </div> -->
-
-                <!-- <div class="mb-6">
-                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
-                        >Địa chỉ</label
-                    >
-                    <input
-                        type="password"
-                        id="password"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                        placeholder="•••••••••"
-                        required
-                    />
-                </div>
-
-                <div class="mb-6">
-                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
-                        >Password</label
-                    >
-                    <input
-                        type="password"
-                        id="password"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:"
-                        placeholder="•••••••••"
-                        required
-                    />
-                </div> -->
+               
                 
                 <div class="mb-6">
                     <label
@@ -339,7 +257,7 @@
                         required
                     /> -->
 
-                    <textarea class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:" name="" id="" cols="30" rows="10"></textarea>
+                    <textarea formControlName="petDescription" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark: dark:" name="" id="" cols="30" rows="10"></textarea>
                 </div>
 
                 <button
