@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LocationService } from '../../../services/location.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VolunteerService } from '../../../services/volunteer.service';
@@ -30,7 +30,8 @@ export class AddVolunteerComponent {
 		private formBuilder: FormBuilder,
 		private locationService: LocationService,
 		private volunteerService: VolunteerService,
-		private volunteerRoleService: VolunteerRoleService
+		private volunteerRoleService: VolunteerRoleService,
+		private router: Router
 	) {}
 
 	ngOnInit() {
@@ -128,7 +129,8 @@ export class AddVolunteerComponent {
 
 		this.volunteerService.addVolunteer(data).subscribe({
 			next: (res: any) => {
-				console.log(res);
+				// console.log(res);
+				this.router.navigateByUrl('/admin/volunteer-manager')
 			},
 			error: err => {
 				console.log(err.error);

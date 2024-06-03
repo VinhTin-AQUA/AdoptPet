@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AccountService } from '../../services/account.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../components/header/header.component';
+import { UserStore } from '../../shared/stores/UserStore';
+
 
 @Component({
 	selector: 'app-signin',
@@ -13,7 +15,8 @@ import { HeaderComponent } from '../../components/header/header.component';
 })
 export class SigninComponent {
 	signUpForm!: FormGroup;
-  isLoginFailed: boolean = false;
+	isLoginFailed: boolean = false;
+	userStore = inject(UserStore);
 
 	constructor(
 		private accountService: AccountService,
@@ -29,7 +32,7 @@ export class SigninComponent {
 	}
 
 	onSignIn() {
-    this.isLoginFailed = false;
+		this.isLoginFailed = false;
 		this.accountService
 			.signin(
 				this.signUpForm.controls['email'].value,
@@ -40,11 +43,11 @@ export class SigninComponent {
 					console.log(res);
 					this.accountService.checkSignIn(res.data);
 					this.accountService.saveJwt(res.data);
-          this.router.navigateByUrl('/')
+					this.router.navigateByUrl('/');
 				},
 				error: err => {
 					console.log(err.error);
-          this.isLoginFailed = true;
+					this.isLoginFailed = true;
 				},
 			});
 	}

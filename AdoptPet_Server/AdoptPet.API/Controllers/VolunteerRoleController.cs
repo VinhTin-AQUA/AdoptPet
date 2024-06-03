@@ -1,5 +1,6 @@
 ﻿using AdoptPet.Application.DTOs;
 using AdoptPet.Domain.Entities;
+using AdoptPet.Infrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query;
@@ -12,9 +13,9 @@ namespace AdoptPet.API.Controllers
     [ApiController]
     public class VolunteerRoleController : ControllerBase
     {
-        private readonly VolunteerRoleService _volunteerRoleService;
+        private readonly IGenericService<VolunteerRole> _volunteerRoleService;
 
-        public VolunteerRoleController(VolunteerRoleService volunteerRoleService)
+        public VolunteerRoleController(IGenericService<VolunteerRole> volunteerRoleService)
         {
             _volunteerRoleService = volunteerRoleService;
         }
