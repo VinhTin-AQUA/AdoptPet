@@ -309,11 +309,13 @@
 			@for (pet of pets; track $index) {
 			<a routerLink="/adopt-pet/adopt-pet-detail/{{pet.id}}" class="animal-item">
 				<div class="relative" style="height: 0; padding-top: 100%">
-					<img
+					@if(pet.petImages.length > 0) {
+						<img
 						src="{{ baseImg }}/{{ pet.petImages[0].imgPath }}"
 						alt="Image"
 						class="absolute inset-0 w-full h-full object-cover"
 					/>
+					}
 				</div>
 
 				<h1 class="name-item">{{ pet.petName }}</h1>

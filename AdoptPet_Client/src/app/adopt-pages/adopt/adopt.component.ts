@@ -20,8 +20,9 @@ export class AdoptComponent {
 	pageSize: number = 5;
 	colors: Color[] = [];
 	breeds: Breed[] = [];
-  pets: PetDto[] = []
-  baseImg = environment.baseImgUrl;
+	pets: PetDto[] = [];
+	baseImg = environment.baseImgUrl;
+
 
 	constructor(
 		private petService: PetService,
@@ -32,7 +33,7 @@ export class AdoptComponent {
 	ngOnInit() {
 		this.getColor();
 		this.getBreeds();
-    this.getPets();
+		this.getPets();
 	}
 
 	private getColor() {
@@ -59,14 +60,32 @@ export class AdoptComponent {
 		});
 	}
 
-  private getPets() {
-    this.petService.getAllPets(this.pageNumber, this.pageSize).subscribe({
-      next: (res: any) => {
-        // console.log(res.data);
-        this.pets = res.data;
-      }, error: (err) => {
-        console.log(err);
-      }
-    })
-  }
+	private getPets() {
+		this.petService.getAllPets(this.pageNumber, this.pageSize).subscribe({
+			next: (res: any) => {
+				// console.log(res.data);
+				this.pets = res.data;
+			},
+			error: err => {
+				console.log(err);
+			},
+		});
+	}
+
+	previousPage() {
+		this.pageNumber--;
+		if(this.pageNumber <= 0) {
+			this.pageNumber = 1
+		}
+		this.getPets();
+	}
+
+	nextPage() {
+		this.pageNumber++;
+		this.getPets();
+	}
+
+	search () {
+		
+	}
 }
