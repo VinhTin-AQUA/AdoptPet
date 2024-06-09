@@ -45,8 +45,11 @@ namespace AdoptPet.Infrastructure.Repositories
                             PetVaccined = u.PetVaccined,
                             PetMicrochipped = u.PetMicrochipped,
                             PetEntryDate = u.PetEntryDate,
+                            Latitude = u.Latitude,
+                            Longitude = u.Longitude,
                             Status = u.Status,
                             IsDeleted = u.IsDeleted,
+                            OwnerId = u.OwnerId,
                             PetImages = u.PetImages.Select(pi => new PetImage
                             {
                                 ImgPath = pi.ImgPath,

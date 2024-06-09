@@ -8,6 +8,7 @@ import { ResetPasswordComponent } from './account/reset-password/reset-password.
 import { PageNotFoundComponent } from './sharedPages/page-not-found/page-not-found.component';
 import { NoticeComponent } from './sharedPages/notice/notice.component';
 import { ConfirmEmailComponent } from './account/confirm-email/confirm-email.component';
+import { AdoptMapComponent } from './adopt-map/adopt-map.component';
 
 export const routes: Routes = [
 	{ path: '', redirectTo: 'adopt-pet', pathMatch: 'full' },
@@ -21,6 +22,9 @@ export const routes: Routes = [
 	{
 		path: 'adopt-pet',
 		loadChildren: () => import('./adopt-pages/adopt-page.routes').then(r => r.adoptRoutes),
+	},
+	{
+		path: 'adopt-map', component: AdoptMapComponent, title: 'Adopt map',
 	},
 	{
 		path: 'admin',

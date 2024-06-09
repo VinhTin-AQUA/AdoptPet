@@ -18,7 +18,7 @@ builder.Services.AddSwaggerGen();
 // allow cors
 builder.Services.AddCors(c =>
 {
-    c.AddPolicy("AllowOrigin", option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+    c.AddPolicy("AllowAnyOrigin", option => option.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
 });
 builder.Services.Configure<GlobalSettings>(builder.Configuration.GetSection("GlobalSettings"));
 
@@ -32,7 +32,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.StatusCode == 200 &&
+        context.Response.Headers["Content-Type"].ToString().StartsWith("image"))
+    {
+        context.Response.Headers.Add("Access-Control-Allow-Origin", "*"); // Or your specific origin
+    }
+});
 app.UseHttpsRedirection();
 
 app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
