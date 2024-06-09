@@ -175,7 +175,7 @@
   
 // }
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Map, NavigationControl, Popup, Marker, GeolocateControl } from 'maplibre-gl';
+import { Map, NavigationControl, Popup, Marker, GeolocateControl,FullscreenControl } from 'maplibre-gl';
 import { MapService } from '../services/map.service';
 import { environment } from '../../environments/environment.development';
 import { RouterLink } from '@angular/router';
@@ -242,6 +242,7 @@ export class AdoptMapComponent implements OnInit {
     });
 
     this.map.addControl(new NavigationControl());
+    this.map.addControl(new FullscreenControl());
     this.map.addControl(new GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true
