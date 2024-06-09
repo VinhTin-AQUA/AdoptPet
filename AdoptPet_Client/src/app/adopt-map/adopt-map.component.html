@@ -1,3 +1,13 @@
 <app-header></app-header>
-<div class="map-container" id="map" style="width: 100%; height: 100vh;"></div>
+<div class="map-container">
+    <div class="search-container" style="margin-top: 5rem;">
+        <input type="text" (input)="searchMarkers($event)" placeholder="Search marker...">
+      </div>
+    <div  id="map" style="width: 100%; height: 100vh;"></div>
+
+</div>
+  
 <app-footer></app-footer>
+
+  
+  
