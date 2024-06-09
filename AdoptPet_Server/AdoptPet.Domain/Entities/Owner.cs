@@ -8,6 +8,8 @@ namespace AdoptPet.Domain.Entities
         public bool IsDeleted { get; set; }
         public string Name { get; set; } = string.Empty;
         public string UserId { get; set; } = string.Empty;
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         // khoa ngoai
         public int LocationId { get; set; }
