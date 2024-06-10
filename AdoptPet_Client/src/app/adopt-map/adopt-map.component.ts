@@ -263,8 +263,8 @@ export class AdoptMapComponent implements OnInit {
       const el = document.createElement('div');
       const img = document.createElement('img');
       img.src = environment.baseImgUrl + feature.properties.avatarUrl;
-      img.style.width = '50px';
-      img.style.height = '50px';
+      img.style.width = '70px';
+      img.style.height = '70px';
       img.style.border = '2px solid #fff';
       img.style.borderRadius = '0%';
       img.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';

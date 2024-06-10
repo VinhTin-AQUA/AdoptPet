@@ -122,7 +122,10 @@ export class AdoptComponent {
 		// console.log(dataSearch);
 		this.petService.search(dataSearch, this.pageNumber, this.pageSize).subscribe({
 			next: (res: any) => {
-				console.log(res.data);
+				// console.log(res.data);
+				console.log(dataSearch);
+				// console.log(res);
+				
 				if (res.data.length > 0) {
 					this.pets = res.data;
 				}

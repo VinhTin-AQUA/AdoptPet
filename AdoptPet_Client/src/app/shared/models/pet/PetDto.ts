@@ -1,3 +1,5 @@
+import { Breed } from "../breed/breed";
+import { Color } from "../color/Color";
 import { PetBreed } from "./PetBreed";
 import { PetColour } from "./PetColour";
 import { PetImage } from "./PetImage";
@@ -22,8 +24,8 @@ export interface PetDto {
 	volunteerId: number;
 	ownerId: number;
 
-	petBreeds: PetBreed[];
-	petColours: PetColour[];
+	breed: Breed;
+	colour: Color;	
 
 	petImages: PetImage[];
 }

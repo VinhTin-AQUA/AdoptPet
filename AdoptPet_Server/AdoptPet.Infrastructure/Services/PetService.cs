@@ -27,7 +27,7 @@ namespace AdoptPet.Infrastructure.Services
         public async Task<PaginatedResult<Pet>> GetAllAsync(int pageNumber, int pageSize)
         {
             int totalItems = await _repository.TotalItems();
-            String  validationMessage = await IPetService.ValidateNumber(totalItems,pageNumber, pageSize);
+            String ? validationMessage = await IPetService.ValidateNumber(totalItems,pageNumber, pageSize);
             if (!String.IsNullOrEmpty(validationMessage))
             {
                 throw new InvalidDataException(validationMessage);
@@ -76,19 +76,19 @@ namespace AdoptPet.Infrastructure.Services
             return pet;
         }
 
-        public async Task<int?> AddAsync(Pet pet)
+        public async Task<int?> AddAsync(Pet? pet)
         {
             if(pet == null)
             {
                 throw new ArgumentException("Pet is null");
             }
 
-            int affectedRows = await _repository.AddAsync(pet);
-            if (affectedRows == 0)
+            int generatedId = await _repository.AddAsync(pet);
+            if (generatedId <= 0 )
             {
                 throw new SqlNullValueException("Adding pet is failed");
             }
-            return affectedRows;
+            return generatedId;
         }
 
         public async Task<int?> UpdateAsync(int id, Pet pet)

@@ -65,7 +65,7 @@ public class AdoptMapController : ControllerBase
             {
                 id = o.Id,
                 name = o.Name,
-                avatarUrl = "/pets/c584cca9e274088f9117155052758c17c6254d47e261e7f46d7e988326ed4385.png",
+                avatarUrl = "/pets/05d89bae9f17f7168bbd731933fc5557e56540af1cef16e841dd1808414c51fe.png",
                 entityType = "owner"
             }
         });

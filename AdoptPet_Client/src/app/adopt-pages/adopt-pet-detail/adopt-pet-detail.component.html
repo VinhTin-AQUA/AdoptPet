@@ -20,7 +20,11 @@
 			<div class="grid grid-cols-2 gap-3">
 				<div class="pet-image">
 					<div class="image">
+						@if(pet.petImages.length > 0) {
 						<img src="{{ baseImg }}/{{ pet.petImages[0].imgPath }}" alt="" />
+						} @else {
+						<img src="/assets/pet-no-image.jpg" alt="" />
+						}
 					</div>
 				</div>
 
@@ -28,43 +32,55 @@
 					<h1 class="text-3xl">{{ pet.petName }}</h1>
 
 					<div class="breed">
-						<h1>
-							Giống: @for (petBreed of pet.petBreeds; track $index) {
-							<span>{{ petBreed.breed.breedName }}</span>,
+						<h1>Giống: 
+							@if(pet.breed !== null) {
+							<span>{{ pet.breed.breedName }}</span>
+							} @else {
+							<span>Chưa xác định</span>
 							}
 						</h1>
 					</div>
 
 					<div class="color">
 						<h1>
-							Màu sắc: @for (petColour of pet.petColours; track $index) {
-							<span>{{ petColour.colour.colourName }}</span>,
+							Màu sắc:
+							@if(pet.colour !== null) {
+								<span>{{pet.colour.colourName}}</span>
+							} @else {
+								<span>Chưa rõ</span>
 							}
 						</h1>
 					</div>
 
 					<div class="age">
-						<h1>Tuổi: <span>{{pet.petAge}}</span></h1>
+						<h1>
+							Tuổi: <span>{{ pet.petAge }}</span>
+						</h1>
 					</div>
 
 					<div class="weight">
-						<h1>Cân nặng: <span>{{pet.petWeight}}</span></h1>
+						<h1>
+							Cân nặng: <span>{{ pet.petWeight }}</span>
+						</h1>
 					</div>
 
 					<div class="gender">
-						<h1>Giới tính: 
-                            @if(pet.petGender === 0) {
-                                <span>Cái</span>
-                                } @else if(pet.petGender === 1) {
-                                <span>Đực</span>
-                                } @else {
-                                <span>Chưa rõ</span>
-                                }
-                        </h1>
+						<h1>
+							Giới tính: @if(pet.petGender === 0) {
+							<span>Cái</span>
+							} @else if(pet.petGender === 1) {
+							<span>Đực</span>
+							} @else {
+							<span>Chưa rõ</span>
+							}
+						</h1>
 					</div>
 
 					<div class="gender">
-						<h1>Ngày nhận nuôi: <span>{{pet.petEntryDate | date:"dd-mm-yyyy"}}</span></h1>
+						<h1>
+							Ngày nhận nuôi:
+							<span>{{ pet.petEntryDate | date : 'dd-mm-yyyy' }}</span>
+						</h1>
 					</div>
 
 					<div class="">
@@ -211,7 +227,7 @@
 				<h1 class="text-3xl pb-4">Tìm Hiểu Về Thú Cưng</h1>
 
 				<p class="font-thin">
-					{{pet.petDescription}}
+					{{ pet.petDescription }}
 				</p>
 			</div>
 
@@ -220,16 +236,11 @@
 				<h1 class="text-3xl pb-5">Thư Viện Ảnh</h1>
 
 				<div class="columns-1 sm:columns-3 gap-3">
-					
 					@for (img of pet.petImages; track $index) {
-						<div class="break-inside-avoid mb-2">
-							<img
-								src="{{baseImg}}/{{img.imgPath}}"
-								alt=""
-							/>
-						</div>
+					<div class="break-inside-avoid mb-2">
+						<img src="{{ baseImg }}/{{ img.imgPath }}" alt="" />
+					</div>
 					}
-					
 				</div>
 			</div>
 		</div>

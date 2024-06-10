@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PetService } from '../../../services/pet.service';
 import { PetDto } from '../../../shared/models/pet/PetDto';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment.development';
 
 @Component({
@@ -15,7 +15,9 @@ export class PetDetailComponent {
 	pet: PetDto | null = null;
 	baseImg = environment.baseImgUrl;
 
-	constructor(private petService: PetService, private activatedRoute: ActivatedRoute) {}
+	constructor(private petService: PetService, 
+		private router: Router,
+		private activatedRoute: ActivatedRoute) {}
 
 	ngOnInit() {
 		this.activatedRoute.params.subscribe({
@@ -33,5 +35,18 @@ export class PetDetailComponent {
 				this.pet = res;
 			},
 		});
+	}
+
+	deletePet() {
+		if(this.pet !== null) {
+			this.petService.deletePet(this.pet.id).subscribe({
+				next: (res: any) => {
+					this.router.navigateByUrl('/admin/pet-manager')
+				}, error: (err) => {
+					console.log(err.error);
+					
+				}
+			})
+		}
 	}
 }

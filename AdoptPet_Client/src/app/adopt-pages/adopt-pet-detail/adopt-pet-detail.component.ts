@@ -14,8 +14,8 @@ import { DatePipe } from '@angular/common';
 })
 export class AdoptPetDetailComponent {
 	petId: number = -1;
-  pet: PetDto | null = null;
-  baseImg = environment.baseImgUrl;
+	pet: PetDto | null = null;
+	baseImg = environment.baseImgUrl;
 
 	constructor(private activatedRoute: ActivatedRoute, private petService: PetService) {}
 
@@ -33,7 +33,7 @@ export class AdoptPetDetailComponent {
 		this.petService.getPet(this.petId).subscribe({
 			next: (res: any) => {
 				console.log(res);
-        this.pet = res;
+        		this.pet = res;
 			},
 			error: err => {
 				console.log(err);

@@ -38,4 +38,8 @@ export class PetService {
 
     return this.http.get(this.baseApi + `/search-by-criteria?${breedNames}name=${dataSearch.name}&${colourNames}&gender=${dataSearch.gender}&desexed=${dataSearch.desexed}&ageRange=${dataSearch.ageRange}&pageNumber=${pageNumber}&pageSize=${pageSize}`,dataSearch)
   }
+
+  deletePet(id: number) {
+    return this.http.delete(this.baseApi + `/soft-delete-pet/${id}`)
+  }
 }

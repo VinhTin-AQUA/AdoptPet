@@ -18,16 +18,22 @@
 
 					<div class="breed">
 						<h1>
-							Giống: @for (breedBreed of pet.petBreeds; track $index) {
-							<span class="font-thin">{{ breedBreed.breed.breedName }} </span>, }
+							@if(pet.breed !== null) {
+								<span>{{ pet.breed.breedName }}</span>
+								} @else {
+								<span>Chưa xác địnhF</span>
+								}
 						</h1>
 					</div>
 
 					<div class="color">
 						<h1>
-							Màu sắc: @for (color of pet.petColours; track $index) {
-							<span class="font-thin">{{ color.colour.colourName }}</span
-							>, }
+							Màu sắc:
+							@if(pet.colour !== null) {
+								<span>{{pet.colour.colourName}}</span>
+							} @else {
+								<span>Chưa rõ</span>
+							}
 						</h1>
 					</div>
 
@@ -116,6 +122,12 @@
 					}
 					
 				</div>
+			</div>
+
+			<div>
+				<button 
+				(click)="deletePet()"
+				class="py-2 px-4 rounded-md block search ml-2 bg-red-400 text-white hover:bg-red-700 duration-150">Xóa thú cưng</button>
 			</div>
 		</div>
 	</div>
